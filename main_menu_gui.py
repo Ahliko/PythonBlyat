@@ -1,10 +1,9 @@
 import pygame as pg
 import pygame_menu as pm
+from Environnement_ecran import EnvironnementEcran
 
-import Environnement_ecran as ee
 
-
-class MainMenu(ee.EnvironnementEcran):
+class MainMenu(EnvironnementEcran):
     def __init__(self):
         super().__init__(1920, 1080, (255, 255, 255), 60)
         self.main_menu = None
@@ -53,18 +52,17 @@ class MainMenu(ee.EnvironnementEcran):
             events = pg.event.get()
             for event in events:
                 if event.type == pg.QUIT:
-                    pg.quit()
-                    exit()
+                    break
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                    print("Touche Echap")
-                    pg.quit()
-                    exit()
+                    break
 
             if self.main_menu.is_enabled():
                 self.main_menu.update(events)
             if self.main_menu.is_enabled():
                 self.main_menu.draw(self.ecran)
             pg.display.update()
+        pg.quit()
+        exit()
 
 
 if __name__ == "__main__":

@@ -34,5 +34,3 @@ class SettingsMenu:
                 self.settings_menu.update(events)
                 self.settings_menu.draw(self.previous_menu.ecran)
             pg.display.update()
-        pg.quit()
-        exit(0)
