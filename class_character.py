@@ -44,4 +44,10 @@ class Character:
         self.decrease_health(wounds)
 
     def decrease_health(self, amount):
-        self._hp =- amount
+        if self._shield > 0:
+            self._shield -= amount
+            if self.shield < 0:
+                self._hp += self._shield
+                self._shield = 0
+        else :
+            self._hp =- amount
