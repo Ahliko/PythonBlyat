@@ -11,6 +11,7 @@ class Character:
         self._hp = max_health
         self._atk = atk
         self._def = _def
+        self._shield = 0
         self._critdmg = 50 # dégats crit %
         self._critrate = 5 # chances de coup crit
 
