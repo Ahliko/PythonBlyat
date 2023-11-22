@@ -14,6 +14,7 @@ class Character:
         self._shield = 0
         self._critdmg = 50 # dégats crit %
         self._critrate = 5 # chances de coup crit
+        self._ultime = 0
 
     def __str__(self):
         return f"name : {self._name}, HPMAX : {self._maxhp}, HP {self._hp}, ATK : {self._atk}, DEF : {self._def}, TC : {self._critrate}, DC : {self._critdmg}"
@@ -36,6 +37,7 @@ class Character:
             return
         damages = int(self.compute_damages())
         print(f"⚔️ {self._name} attack with {damages} damages in your face ! (attack: {self._atk})")
+        self._ultime += 10
         target.defense(damages)
 
     def defense(self, damages):
