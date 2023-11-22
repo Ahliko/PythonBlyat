@@ -13,4 +13,3 @@ class Harmony(Character):
             target._critrate += 35
         elif boost == 3:
             target._atk += int((target._atk * (25 / 100)))
-        pass
