@@ -24,7 +24,6 @@ class MainMenu(EnvironnementEcran):
                               self.texte_rect.top - border_thickness,
                               self.texte_rect.width + 2 * border_thickness,
                               self.texte_rect.height + 2 * border_thickness)
-        # self.ecran.fill(self.fond)
         pg.draw.rect(self.ecran, border_color, border_rect)
         self.ecran.blit(self.texte, self.texte_rect)
         pg.display.flip()
