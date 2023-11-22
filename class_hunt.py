@@ -2,13 +2,17 @@ from class_character import Character
 
 class Hunt(Character):
     def ability(self, who: Character):
-        old_atk = self._atk
-        old_critrate = self._critrate
-        old_critdmg = self._critdmg
-        self._atk += int((self._atk * (15 / 100)))
-        self._critrate += 30
-        self._critdmg += int(self._critdmg * (20 / 100))
+        old_atk = self.atk
+        old_critrate = self.critrate
+        old_critdmg = self.critdmg
+        self.atk += (self.atk * (15 / 100))
+        self.critrate += 30
+        self.critdmg += self.critdmg * (20 / 100)
         self.attack(who)
-        self._atk = old_atk
-        self._critdmg = old_critdmg
-        self._critrate = old_critrate
+        self.atk = old_atk
+        self.critdmg = old_critdmg
+        self.critrate = old_critrate
+
+
+perso = Hunt("Nom", 350, 200, 100)
+perso.ability(perso)
