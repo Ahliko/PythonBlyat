@@ -5,7 +5,7 @@ random.seed()
 
 
 class Character:
-    def __init__(self, name: str, max_health: int, atk: int, _def: int) -> None:
+    def __init__(self, name: str, max_health: int, atk: int, _def: int, max_ult_pts: int) -> None:
         self.__name = name
         self.__maxhp = max_health
         self.__hp = max_health
@@ -14,7 +14,8 @@ class Character:
         self.__shield = 0  # shield
         self.__critdmg = 50  # dégats crit %
         self.__critrate = 5  # chances de coup crit
-        self.__ultime = 0 # points d'ultime
+        self.__max_ult_pts = max_ult_pts
+        self.__ult_pts = 0 # points d'ultime
 
     def __str__(self):
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
@@ -34,7 +35,9 @@ class Character:
         return damages - self.__def
 
     def attack(self, target: Character):
-        self.__ultime += 15
+        self.__ult_pts += 15
+        if self.__ult_pts > self.__max_ult_pts:
+            self.__ult_pts = self.__max_ult_pts
         if not self.is_alive():
             return
         damages = int(self.compute_damages())
@@ -104,6 +107,22 @@ class Character:
     @critrate.setter
     def critrate(self, amount):
         self.__critrate = amount
+
+    @property
+    def max_ult_pts(self):
+        return self.__max_ult_pts
+
+    @max_ult_pts.setter
+    def max_ult_pts(self, amount):
+        self.__max_ult_pts = amount
+
+    @property
+    def ult_pts(self):
+        return self.__ult_pts
+    
+    @ult_pts.setter
+    def ult_pts(self, amount):
+        self.__ult_pts = amount
 
     @property
     def name(self):
