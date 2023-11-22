@@ -41,9 +41,8 @@ class MainMenu(EnvironnementEcran):
         pg.font.init()
         self.change_font("Arial", 30)
         pg.display.set_caption('PythonBlyat - MainMenu')
-        # button = Button(30, 30, 400, 100, self.font, 'Button One (onePress)', self.on_click_play)
         self.main_menu = pm.Menu('Welcome', self.largeur, self.hauteur, theme=pm.themes.THEME_ORANGE)
-        label = self.main_menu.add.label('PythonBlyat', font_size=50)
+        self.main_menu.add.label('PythonBlyat', font_size=50)
         self.main_menu.add.button('Play', self.on_click_play)
         self.main_menu.add.button('Settings', self.on_click_settings)
         while self.main_menu.is_enabled():
@@ -54,7 +53,6 @@ class MainMenu(EnvironnementEcran):
                     break
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                     break
-
             if self.main_menu.is_enabled():
                 self.main_menu.update(events)
             if self.main_menu.is_enabled():
