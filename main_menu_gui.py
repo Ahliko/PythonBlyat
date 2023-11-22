@@ -1,16 +1,22 @@
 import pygame as pg
-import pygame_menu as pm
+from CustomButton import Button
+from CustomLabel import Label
 from Environnement_ecran import EnvironnementEcran
 
 
 class MainMenu(EnvironnementEcran):
     def __init__(self):
         super().__init__(1920, 1080, (255, 255, 255), 60)
-        self.main_menu = None
+        self.__quit = False
         self.texte_rect = None
         self.texte = None
         self.font = None
-        self.surface = pg.Surface((200, 200))
+        self.__background = pg.image.load("mainmenu_background.jpg")
+        self.__surface = pg.Surface((200, 200))
+
+    @property
+    def background(self):
+        return self.__background
 
     def change_font(self, font: str, taille: int):
         self.font = pg.font.SysFont(font, taille)
@@ -30,33 +36,37 @@ class MainMenu(EnvironnementEcran):
 
     def on_click_play(self):
         print("Button play clicked")
-        self.main_menu.disable()
 
     def on_click_settings(self):
         from settings_gui import SettingsMenu
         settings_menu = SettingsMenu(self)
         settings_menu.run()
 
+    def update_screen(self, **kwargs):
+        self.ecran.blit(self.background, (0, 0))
+        for i in kwargs:
+            kwargs[i].draw(self.ecran)
+
     def run(self):
         pg.font.init()
         self.change_font("Arial", 30)
         pg.display.set_caption('PythonBlyat - MainMenu')
-        self.main_menu = pm.Menu('Welcome', self.largeur, self.hauteur, theme=pm.themes.THEME_ORANGE)
-        self.main_menu.add.label('PythonBlyat', font_size=50)
-        self.main_menu.add.button('Play', self.on_click_play)
-        self.main_menu.add.button('Settings', self.on_click_settings)
-        while self.main_menu.is_enabled():
+        bouton_play = Button((self.largeur / 2) - 100, self.hauteur / 2, 200, 100, self.font, 'Play',
+                             self.on_click_play, False, ('#2a75a1', '#666666', '#333333'))
+        bouton_settings = Button((self.largeur / 2) - 100, (self.hauteur / 2) + 150, 200, 100, self.font, 'Settings',
+                                 self.on_click_settings, False, ('#2a75a1', '#666666', '#333333'))
+        label_title = Label("PythonBlyat", 100, (0, 0, 0), (self.largeur / 2, self.hauteur / 2 - 50), None, True)
+        self.update_screen(play=bouton_play, settings=bouton_settings, title=label_title)
+        pg.display.flip()
+        while not self.__quit:
             self.clock.tick(self.framerate)
             events = pg.event.get()
             for event in events:
                 if event.type == pg.QUIT:
-                    break
+                    self.__quit = True
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                    break
-            if self.main_menu.is_enabled():
-                self.main_menu.update(events)
-            if self.main_menu.is_enabled():
-                self.main_menu.draw(self.ecran)
+                    self.__quit = True
+            self.update_screen(play=bouton_play, settings=bouton_settings, title=label_title)
             pg.display.update()
         pg.quit()
         exit()
