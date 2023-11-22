@@ -14,6 +14,7 @@ class Character:
         self.__shield = 0  # shield
         self.__critdmg = 50  # dégats crit %
         self.__critrate = 5  # chances de coup crit
+        self.__ultime = 0 # points d'ultime
 
     def __str__(self):
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
@@ -33,6 +34,7 @@ class Character:
         return damages - self.__def
 
     def attack(self, target: Character):
+        self.__ultime += 15
         if not self.is_alive():
             return
         damages = int(self.compute_damages())
@@ -72,11 +74,11 @@ class Character:
         self.__atk = amount
 
     @property
-    def defense(self):
+    def _def(self):
         return self.__def
 
-    @defense.setter
-    def defense(self, amount):
+    @_def.setter
+    def _def(self, amount):
         self.__def = amount
 
     @property
@@ -106,4 +108,3 @@ class Character:
     @property
     def name(self):
         return self.__name
-
