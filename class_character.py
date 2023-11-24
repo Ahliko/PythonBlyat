@@ -15,6 +15,7 @@ class Character:
         self.__critrate = 5  # chances de coup crit
         self.__ultime = 0 # points d'ultime
         self.__turn = True # si il peut jouer ou non
+        self.__speed = 0
 
     def __str__(self):
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
@@ -121,3 +122,11 @@ class Character:
     @turn.setter
     def turn(self, boolean):
         self.__turn = boolean
+
+    @property
+    def speed(self):
+        self.__speed
+
+    @speed.setter
+    def speed(self, amount):
+        self.__speed = amount
