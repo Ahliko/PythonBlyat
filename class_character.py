@@ -130,3 +130,11 @@ class Character:
     @speed.setter
     def speed(self, amount):
         self.__speed = amount
+
+    @property
+    def ultime(self):
+        return self.__ultime
+    
+    @ultime.setter
+    def ultime(self, amount):
+        self.__ultime = amount
