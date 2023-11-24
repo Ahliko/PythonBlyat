@@ -53,6 +53,7 @@ class CharacterMenu1():
         label_selection = Label("Choose your character1", 50, (0, 0, 0), (self.previous_menu.largeur / 2, self.previous_menu.hauteur / 2 - 150),
                                 None, True)
         self.update_screen(next=bouton_next, back=bouton_back, choice1=bouton_choice1, choice2=bouton_choice2, choice3=bouton_choice3, title=label_title, text=label_selection)
+        pg.display.flip()
         while not self.__quit:
             self.previous_menu.clock.tick(self.previous_menu.framerate)
             events = pg.event.get()

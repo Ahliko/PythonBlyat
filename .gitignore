@@ -6,4 +6,5 @@ __pycache__/*
 .vscode
 .vscode/*
 .env_pb
-.env_pb/*
+/.env_pb/*
+/.env_pb
