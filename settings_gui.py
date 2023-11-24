@@ -32,7 +32,7 @@ class SettingsMenu:
                         40, min=10, max=170, step=10, initial=self.previous_menu.framerate, colour=(255, 255, 255))
         label = Label("Settings", 100, (0, 0, 0), (self.previous_menu.largeur / 2, self.previous_menu.hauteur / 2 - 50),
                       None, True)
-        button = Button((self.previous_menu.largeur / 2), (self.previous_menu.hauteur / 2) + 50, 400, 100,
+        button = Button((self.previous_menu.largeur / 2), (self.previous_menu.hauteur / 2) + 50, 400, 50,
                         self.previous_menu.font,
                         'Return to main menu', self.disable,
                         False, ('#2a75a1', '#666666', '#333333'), center=True)
