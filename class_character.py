@@ -14,13 +14,18 @@ class Character:
         self.__critdmg = 50  # dégats crit %
         self.__critrate = 5  # chances de coup crit
         self.__ultime = 0 # points d'ultime
+        self.__turn = True # si il peut jouer ou non
 
     def __str__(self):
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
                 f" TC : {self.__critrate}, DC : {self.__critdmg}")
 
     def is_alive(self):
-        return self.__hp > 0
+        if self.__hp <= 0:
+            self.__turn = False
+            return False
+        else :
+            return True
 
     def compute_damages(self):
         nb = random.randint(0, 100)
@@ -38,6 +43,7 @@ class Character:
             return
         damages = int(self.compute_damages())
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
+        self.__turn = False
         target.defense(damages)
 
     def defense(self, damages):
@@ -107,3 +113,11 @@ class Character:
     @property
     def name(self):
         return self.__name
+    
+    @property
+    def turn(self):
+        return self.__turn
+    
+    @turn.setter
+    def turn(self, boolean):
+        self.__turn = boolean
