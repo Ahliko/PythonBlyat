@@ -21,28 +21,18 @@ class MainMenu(EnvironnementEcran):
     def change_font(self, font: str, taille: int):
         self.font = pg.font.SysFont(font, taille)
 
-    def afficher_texte(self, texte: str, couleur: tuple[int, int, int], position: tuple[int, int],
-                       border_thickness: int = 5, border_color: tuple[int, int, int] = (255, 0, 0)):
-        self.texte = self.font.render(texte, True, couleur)
-        self.texte_rect = self.texte.get_rect()
-        self.texte_rect.center = position
-        border_rect = pg.Rect(self.texte_rect.left - border_thickness,
-                              self.texte_rect.top - border_thickness,
-                              self.texte_rect.width + 2 * border_thickness,
-                              self.texte_rect.height + 2 * border_thickness)
-        pg.draw.rect(self.ecran, border_color, border_rect)
-        self.ecran.blit(self.texte, self.texte_rect)
-        pg.display.flip()
-
     def on_click_play(self):
+        pg.event.wait(self.framerate // 6)
         from selectCharacter1_gui import CharacterMenu1
         character1_menu = CharacterMenu1(self)
         character1_menu.run()
 
     def on_click_settings(self):
+        pg.event.wait(self.framerate // 6)
         from settings_gui import SettingsMenu
         settings_menu = SettingsMenu(self)
         settings_menu.run()
+
     def on_click_exit(self):
         self.__quit = True
 

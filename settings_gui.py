@@ -17,7 +17,7 @@ class SettingsMenu:
 
     def disable(self):
         self.__quit = True
-        pg.event.wait(100)
+        pg.event.wait(self.previous_menu.framerate // 6)
 
     def update_screen(self, **kwargs):
         self.previous_menu.ecran.blit(self.previous_menu.background, (0, 0))
