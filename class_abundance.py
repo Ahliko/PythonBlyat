@@ -11,7 +11,7 @@ class Abundance(Character):
             target.hp = heal
 
     @staticmethod
-    def ultime(self, target : []):
+    def use_ultime(self, target: []):
         heal = int(target.hp + (target.maxhp * (15 / 100) + 40))
         if self.ultime >= 130:
             for i in target:
@@ -21,7 +21,6 @@ class Abundance(Character):
                     i.hp = heal
         else:
             print("vous n'avez pas assez de points d'ultime")
-
 
 
 if __name__ == "__main__":
