@@ -15,12 +15,13 @@ class Engine:
     def next_turn(self, lst: list):
         occ = 0
         for charac in lst:
-            if charac.turn:
+            if charac.turn == False:
                 occ += 1
         if occ == len(lst):
             self.__turng += 1
             for charac in lst:
                 charac.turn = True
+            self.next_character(lst)
         else:
             self.next_character(lst)
 
