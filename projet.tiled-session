@@ -13,11 +13,11 @@
             "scaleInEditor": 1
         },
         "carte.tmx": {
-            "scale": 2,
+            "scale": 0.4731,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 174.5,
-                "y": 61.25
+                "x": 861.3400972310294,
+                "y": 385.7535404777002
             }
         },
         "tileset_dungeon.tsx": {
@@ -31,15 +31,16 @@
     "map.tileHeight": 8,
     "map.tileWidth": 8,
     "map.width": 240,
+    "mapScene.enableWorlds": true,
     "openFiles": [
-        "carte.tmx",
         "RPG Nature Tileset.tsx",
-        "tileset_dungeon.tsx"
+        "tileset_dungeon.tsx",
+        "carte.tmx"
     ],
     "project": "projet.tiled-project",
     "recentFiles": [
-        "tileset_dungeon.tsx",
         "RPG Nature Tileset.tsx",
+        "tileset_dungeon.tsx",
         "carte.tmx"
     ],
     "tileset.lastUsedFormat": "tsx",
