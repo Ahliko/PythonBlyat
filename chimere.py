@@ -17,9 +17,3 @@ class Chimere(Character):
         else:
             print("comp")
             self.competence(lst)
-
-Chi = Chimere("Scar", 100, 12, 2)
-Lelfe = Character("ed", 100, 12, 4)
-Nain = Character("al", 100, 12, 2)
-lst = [Lelfe, Nain]
-Chi.choice(lst)
