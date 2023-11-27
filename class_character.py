@@ -53,6 +53,15 @@ class Character:
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         self.__turn = False
         target.defense(damages)
+
+    def aoe(self, target : list):
+        if not self.is_alive():
+            return
+        damages = int(self.compute_damages())
+        print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
+        self.turn = False
+        for charac in target:
+            charac.defense(damages)
         
 
     def defense(self, damages: int) -> None:
