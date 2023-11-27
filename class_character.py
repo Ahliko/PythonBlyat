@@ -3,7 +3,7 @@ import random
 
 
 class Character:
-    def __init__(self, name: str, max_health: int, atk: int, _def: int) -> None:
+    def __init__(self, name: str, max_health: int, atk: int, _def: int, maxultpts: int) -> None:
         self.__name: str = name
         self.__maxhp: int = max_health
         self.__hp: int = max_health
@@ -12,14 +12,15 @@ class Character:
         self.__shield: int = 0  # shield
         self.__critdmg: int = 50  # dégats crit %
         self.__critrate: int = 5  # chances de coup crit
-        self.__ultime: int = 0  # points d'ultime
+        self.__ultpts: int = 0  # points d'ultime
+        self.__maxultpts: int = maxultpts
         self.__turn: bool = True  # s'il peut jouer ou non
         self.__speed: int = 0
         random.seed()
 
     def __str__(self) -> str:
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
-                f" TC : {self.__critrate}, DC : {self.__critdmg}")
+                f" TC : {self.__critrate}, DC : {self.__critdmg}, needs {self.__maxultpts} ULTPTS")
 
     def is_alive(self) -> bool:
         if self.__hp <= 0:
@@ -36,19 +37,28 @@ class Character:
 
     def compute_wounds(self, damages: int) -> int:
         return damages - self.__def
+    
+    def add_ultpts(self, amount: int) -> None:
+        if (self.__ultpts + amount < self.__maxultpts):
+            self.__ultpts += amount
+        else:
+            print("ULT READY")
+            self.__ultpts = self.__maxultpts
 
     def attack(self, target: Character) -> None:
         if not self.is_alive():
             return
-        self.__ultime += 15
+        self.add_ultpts(15)
         damages = int(self.compute_damages())
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         self.__turn = False
         target.defense(damages)
+        
 
     def defense(self, damages: int) -> None:
         wounds = self.compute_wounds(damages)
         print(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
+        self.add_ultpts(10)
         self.decrease_health(wounds)
 
     def decrease_health(self, amount: int) -> None:
@@ -131,9 +141,17 @@ class Character:
         self.__speed = amount
 
     @property
-    def ultime(self) -> int:
-        return self.__ultime
+    def ultpts(self) -> int:
+        return self.__ultpts
 
-    @ultime.setter
-    def ultime(self, amount: int) -> None:
-        self.__ultime = amount
+    @ultpts.setter
+    def ultpts(self, amount: int) -> None:
+        self.__ultpts = amount
+
+    @property
+    def maxultpts(self) -> int:
+        return self.__maxultpts
+    
+    @maxultpts.setter
+    def maxultpts(self, amount: int) -> None:
+        self.__maxultpts = amount
