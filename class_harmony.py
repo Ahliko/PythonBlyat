@@ -2,8 +2,6 @@ from __future__ import annotations
 import random
 from class_character import Character
 
-from class_hunt import Hunt
-
 random.seed()
 
 
