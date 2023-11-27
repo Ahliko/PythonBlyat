@@ -21,19 +21,19 @@ class MainMenu(EnvironnementEcran):
     def change_font(self, font: str, taille: int):
         self.font = pg.font.SysFont(font, taille)
 
-    def on_click_play(self):
-        pg.event.wait(self.framerate // 6)
+    def __on_click_play(self):
+        pg.event.wait(self.framerate * 100 // 6)
         from selectCharacter1_gui import CharacterMenu1
         character1_menu = CharacterMenu1(self)
         character1_menu.run()
 
-    def on_click_settings(self):
-        pg.event.wait(self.framerate // 6)
+    def __on_click_settings(self):
+        pg.event.wait(self.framerate * 100 // 6)
         from settings_gui import SettingsMenu
         settings_menu = SettingsMenu(self)
         settings_menu.run()
 
-    def on_click_exit(self):
+    def __on_click_exit(self):
         self.__quit = True
 
     def update_screen(self, **kwargs):
@@ -46,11 +46,11 @@ class MainMenu(EnvironnementEcran):
         self.change_font("Arial", 30)
         pg.display.set_caption('PythonBlyat - MainMenu')
         bouton_play = Button((self.largeur / 2) - 100, self.hauteur / 2, 200, 50, self.font, 'Play',
-                             self.on_click_play, False, ('#2a75a1', '#666666', '#333333'))
+                             self.__on_click_play, False, ('#2a75a1', '#666666', '#333333'))
         bouton_settings = Button((self.largeur / 2) - 100, (self.hauteur / 2) + 60, 200, 50, self.font, 'Settings',
-                                 self.on_click_settings, False, ('#2a75a1', '#666666', '#333333'))
+                                 self.__on_click_settings, False, ('#2a75a1', '#666666', '#333333'))
         bouton_exit = Button((self.largeur / 2) - 100, (self.hauteur / 2) + 120, 200, 50, self.font, 'Exit',
-                             self.on_click_exit, False, ('#2a75a1', '#666666', '#333333'))
+                             self.__on_click_exit, False, ('#2a75a1', '#666666', '#333333'))
         label_title = Label("PythonBlyat", 100, (0, 0, 0), (self.largeur / 2, self.hauteur / 2 - 50), None, True)
         self.update_screen(play=bouton_play, settings=bouton_settings, quit=bouton_exit, title=label_title)
         pg.display.flip()
