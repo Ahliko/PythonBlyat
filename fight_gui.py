@@ -11,7 +11,7 @@ class MainMenu(EnvironnementEcran):
         self.texte_rect = None
         self.texte = None
         self.font = None
-        self.__background = pg.image.load("Zboulbizboulba.png")
+        self.__background = pg.image.load("../../Downloads/Zboulbizboulba.png")
         self.__surface = pg.Surface((200, 200))
 
     @property
@@ -34,7 +34,7 @@ class MainMenu(EnvironnementEcran):
         print("You have activated the special ability \"To take one's heels\", you run away like a coward...")
 
     def update_screen(self, **kwargs):
-        self.ecran.blit(self.background, (0, 0))
+        self.ecran.blit(self.background, (-50, 100))
         for i in kwargs:
             kwargs[i].draw(self.ecran)
 
@@ -42,14 +42,15 @@ class MainMenu(EnvironnementEcran):
         pg.font.init()
         self.change_font("Arial", 30)
         pg.display.set_caption('PythonBlyat - Fight')
-        bouton_attack_de_base = Button((self.largeur / 2) - 400, (self.hauteur / 2) + 180, 200, 50, self.font, 'Attack de base',
+        bouton_attack_de_base = Button((self.largeur / 2) - 350, (self.hauteur / 2) + 180, 200, 50, self.font, 'Attack de base',
                                 self.on_click_attacks, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_competences = Button((self.largeur / 2) - 400, (self.hauteur / 2) + 240, 200, 50, self.font, 'Compétences',
+        bouton_competences = Button((self.largeur / 2) - 350, (self.hauteur / 2) + 240, 200, 50, self.font, 'Compétences',
                               self.on_click_items, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_ultime = Button((self.largeur / 2) - 400, (self.hauteur / 2) + 300, 200, 50, self.font, 'Ultime',
+        bouton_ultime = Button((self.largeur / 2) - 350, (self.hauteur / 2) + 300, 200, 50, self.font, 'Ultime',
                                self.on_click_escape, False, ('#2a75a1', '#666666', '#333333'))
-
-        self.update_screen(attack=bouton_attack_de_base, competences=bouton_competences, ultime=bouton_ultime)
+        label_stats = Label("Stats", 100, (0, 0, 0), (self.largeur / 2 + 50, self.hauteur / 2 + 350), None, True)
+        label_ennemi_stats = Label("Stats_ennemi", 100, (0, 0, 0), (self.largeur / 2 + 500, self.hauteur / 2 - 250), None, True)
+        self.update_screen(attack=bouton_attack_de_base, competences=bouton_competences, ultime=bouton_ultime, stats=label_stats, ennemi_stats=label_ennemi_stats)
         pg.display.flip()
         while not self.__quit:
             self.clock.tick(self.framerate)
@@ -59,7 +60,7 @@ class MainMenu(EnvironnementEcran):
                     self.__quit = True
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                     self.__quit = True
-            self.update_screen(attack=bouton_attack_de_base, competences=bouton_competences, ultime=bouton_ultime)
+            self.update_screen(attack=bouton_attack_de_base, competences=bouton_competences, ultime=bouton_ultime, stats=label_stats, ennemi_stats=label_ennemi_stats)
             pg.display.update()
         pg.quit()
         exit()
