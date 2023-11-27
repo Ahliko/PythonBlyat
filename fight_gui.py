@@ -31,17 +31,17 @@ class FightMenu:
             i.draw(self.main_menu.ecran)
 
     def __widgets_init(self):
-        bouton_attack_de_base = Button((self.largeur / 2) - 350, (self.hauteur / 2) + 180, 200, 50, self.font,
+        bouton_attack_de_base = Button((self.main_menu.largeur / 2) - 350, (self.main_menu.hauteur / 2) + 180, 200, 50, self.main_menu.font,
                                        'Attack de base',
                                        self.__on_click_attacks, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_competences = Button((self.largeur / 2) - 350, (self.hauteur / 2) + 240, 200, 50, self.font,
+        bouton_competences = Button((self.main_menu.largeur / 2) - 350, (self.main_menu.hauteur / 2) + 240, 200, 50, self.main_menu.font,
                                     'Compétences',
                                     self.__on_click_items, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_ultime = Button((self.largeur / 2) - 350, (self.hauteur / 2) + 300, 200, 50, self.font,
+        bouton_ultime = Button((self.main_menu.largeur / 2) - 350, (self.main_menu.hauteur / 2) + 300, 200, 50, self.main_menu.font,
                                'Ultime',
                                self.__on_click_escape, False, ('#2a75a1', '#666666', '#333333'))
-        label_stats = Label("Stats", 100, (0, 0, 0), (self.largeur / 2 + 50, self.hauteur / 2 + 350), None, True)
-        label_ennemi_stats = Label("Stats_ennemi", 100, (0, 0, 0), (self.largeur / 2 + 500, self.hauteur / 2 - 250),
+        label_stats = Label("Stats", 100, (0, 0, 0), (self.main_menu.largeur / 2 + 50, self.main_menu.hauteur / 2 + 350), None, True)
+        label_ennemi_stats = Label("Stats_ennemi", 100, (0, 0, 0), (self.main_menu.largeur / 2 + 500, self.main_menu.hauteur / 2 - 250),
                                    None, True)
         return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_ennemi_stats]
     def run(self):
