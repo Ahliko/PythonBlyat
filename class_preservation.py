@@ -8,7 +8,7 @@ class Preservation(Character):
         return self.shield
 
     def use_ultime(self, target: []):
-        if self.ultime >= 150:
+        if self.ultime == self.max_ult_pts:
             for i in target:
                 i.shield = int(i.shield + (i._def * (40 / 100) + 20))
         else:
