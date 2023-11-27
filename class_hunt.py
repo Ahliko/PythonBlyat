@@ -18,7 +18,8 @@ class Hunt(Character):
             self.ult_pts = self.max_ult_pts
 
     def ultimate(self, target: Character) -> bool:
-        if self.ult_pts == self.max_ult_pts:
+        if self.ultpts == self.maxultpts:
+            print(f"{self.name} utlise son ultime !")
             old_atk = self.atk
             self.atk = (self.atk * (240 / 100))
             self.attack(target)
@@ -26,4 +27,4 @@ class Hunt(Character):
         else:
             print("Vous n'avez pas assez de points d'ultime")
             return
-        self.ult_pts = 0
+        self.ultpts = 0

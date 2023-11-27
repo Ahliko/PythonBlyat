@@ -31,6 +31,7 @@ class Character:
 
     def is_alive(self) -> bool:
         if self.__hp <= 0:
+            print(f"{self.name} est mort!")
             self.__turn = False
             return False
         else:
@@ -50,25 +51,27 @@ class Character:
         if (self.__ultpts + amount < self.__maxultpts):
             self.__ultpts += amount
         else:
-            print("ULT READY")
+            print(f"{self.name} : ULT READY")
             self.__ultpts = self.__maxultpts
 
     def check_buffs(self) -> None:
-        print(f"buffs remaining : {self.__buf['remaining']}")
         if self.__buf["remaining"] > 0:
             self.__buf["remaining"] -= 1
-        else:
+        if self.__buf["remaining"] == 0:
             self.__atk = self.__buf["atk"]
             self.__critrate = self.__buf["critrate"]
             self.__critdmg = self.__buf["critdmg"]
 
     def attack(self, target: Character) -> None:
-        self.check_buffs()
         if not self.is_alive():
+            return
+        elif not target.is_alive():
+            print(f"Impossible d'attaquer {target.name}, il est déjà vaincu!")
             return
         self.add_ultpts(15)
         damages = int(self.compute_damages())
-        print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
+        print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
+        self.check_buffs()
         self.__turn = False
         target.defense(damages)
 
@@ -85,6 +88,8 @@ class Character:
     def defense(self, damages: int) -> None:
         wounds = self.compute_wounds(damages)
         print(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
+        if self.is_alive():
+            print(f"{self.hp} HP restants")
         self.add_ultpts(10)
         self.decrease_health(wounds)
 
