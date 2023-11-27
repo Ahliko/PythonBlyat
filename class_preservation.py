@@ -2,7 +2,7 @@ from class_character import Character
 
 
 class Preservation(Character):
-    def protection(self, target: Character):
+    def ability(self, target: Character):
         target.shield = int(target.shield + (target.maxhp * (15 / 100)))
         self.ultime += 20
         return self.shield
