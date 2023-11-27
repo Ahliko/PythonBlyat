@@ -16,7 +16,14 @@ class Character:
         self.__maxultpts: int = maxultpts
         self.__turn: bool = True  # s'il peut jouer ou non
         self.__speed: int = 0
+        self.__buf: dict = {
+            "atk": self.__atk,
+            "critrate": self.__critrate,
+            "critdmg": self.__critdmg,
+            "remaining": 0
+        }
         random.seed()
+
 
     def __str__(self) -> str:
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
@@ -31,6 +38,7 @@ class Character:
 
     def compute_damages(self) -> int | float:
         if random.randint(0, 100) <= self.__critrate:
+            print("CRIT DAMAGE")
             return self.__atk + (self.__atk * (self.__critdmg / 100))
         else:
             return self.__atk
@@ -45,7 +53,17 @@ class Character:
             print("ULT READY")
             self.__ultpts = self.__maxultpts
 
+    def check_buffs(self) -> None:
+        print(f"buffs remaining : {self.__buf['remaining']}")
+        if self.__buf["remaining"] > 0:
+            self.__buf["remaining"] -= 1
+        else:
+            self.__atk = self.__buf["atk"]
+            self.__critrate = self.__buf["critrate"]
+            self.__critdmg = self.__buf["critdmg"]
+
     def attack(self, target: Character) -> None:
+        self.check_buffs()
         if not self.is_alive():
             return
         self.add_ultpts(15)
@@ -155,3 +173,8 @@ class Character:
     @maxultpts.setter
     def maxultpts(self, amount: int) -> None:
         self.__maxultpts = amount
+
+    @property
+    def buf(self):
+        return self.__buf
+    
