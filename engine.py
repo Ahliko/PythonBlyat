@@ -1,6 +1,6 @@
 from __future__ import annotations
 from class_character import Character
-
+import random
 
 class Engine:
     def __init__(self) -> None:
@@ -25,6 +25,23 @@ class Engine:
         else:
             self.next_character(lst)
 
+    def random_monster(self):
+        ennemis = []
+        nb = 1
+        for i in range(3):
+            random.seed()
+            rd = random.randint(1, 3)
+            match rd:
+                case 1:
+                    ab = Character("aberration" + str(nb), 100, 3, 3)
+                    ennemis.append(ab)
+                case 2:
+                    ch = Character("chimere" + str(nb), 100, 4, 5)
+                    ennemis.append(ch)
+                case 3:
+                    print("cc")
+        return ennemis
+
     @property
     def turng(self):
         return self.__turng
@@ -33,10 +50,6 @@ class Engine:
     def turng(self, amount):
         self.__turng = amount
 
-
-Lelfe = Character("CC", 100, 10, 122)
-Lelfe.turn = False
-Nain = Character("GH", 100, 122, 1)
-Nain.turn = False
 engine = Engine()
-print(engine.next_character([Lelfe, Nain]))
+lst = engine.random_monster()
+print(lst[0])
