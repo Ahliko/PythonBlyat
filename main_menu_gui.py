@@ -1,73 +1,63 @@
 import pygame as pg
 from CustomButton import Button
 from CustomLabel import Label
-from Environnement_ecran import EnvironnementEcran
+from game import Game
 
 
-class MainMenu(EnvironnementEcran):
-    def __init__(self):
-        super().__init__(1920, 1080, (255, 255, 255), 60)
+class MainMenu:
+    def __init__(self, game: Game):
+        self.__game = game
+        self.__init_main_menu()
+        self.__widgets = self.__widgets_init()
         self.__quit = False
-        self.texte_rect = None
-        self.texte = None
-        self.font = None
-        self.__background = pg.image.load("mainmenu_background.jpg")
-        self.__surface = pg.Surface((200, 200))
-
-    @property
-    def background(self):
-        return self.__background
-
-    def change_font(self, font: str, taille: int):
-        self.font = pg.font.SysFont(font, taille)
 
     def __on_click_play(self):
-        pg.event.wait(self.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100 // 6)
         from selectCharacter1_gui import CharacterMenu1
-        character1_menu = CharacterMenu1(self)
+        character1_menu = CharacterMenu1(self.__game)
         character1_menu.run()
 
     def __on_click_settings(self):
-        pg.event.wait(self.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100 // 6)
         from settings_gui import SettingsMenu
-        settings_menu = SettingsMenu(self)
+        settings_menu = SettingsMenu(self.__game)
         settings_menu.run()
 
     def __on_click_exit(self):
         self.__quit = True
 
-    def update_screen(self, **kwargs):
-        self.ecran.blit(self.background, (0, 0))
-        for i in kwargs:
-            kwargs[i].draw(self.ecran)
+    def __init_main_menu(self) -> None:
+        self.__game.change_font("Arial", 30)
+        pg.display.set_caption('PythonBlyat - MainMenu')
+        pg.display.flip()
+
+    def __widgets_init(self) -> list[Button, Label]:
+        bouton_play = Button((self.__game.largeur / 2) - 100, self.__game.hauteur / 2, 200, 50, self.__game.font,
+                             'Play',
+                             self.__on_click_play, False, ('#2a75a1', '#666666', '#333333'))
+        bouton_settings = Button((self.__game.largeur / 2) - 100, (self.__game.hauteur / 2) + 60, 200, 50,
+                                 self.__game.font,
+                                 'Settings',
+                                 self.__on_click_settings, False, ('#2a75a1', '#666666', '#333333'))
+        bouton_exit = Button((self.__game.largeur / 2) - 100, (self.__game.hauteur / 2) + 120, 200, 50,
+                             self.__game.font,
+                             'Exit',
+                             self.__on_click_exit, False, ('#2a75a1', '#666666', '#333333'))
+        label_title = Label("PythonBlyat", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
+                            None,
+                            True)
+        return [bouton_play, bouton_settings, bouton_exit, label_title]
 
     def run(self):
-        pg.font.init()
-        self.change_font("Arial", 30)
-        pg.display.set_caption('PythonBlyat - MainMenu')
-        bouton_play = Button((self.largeur / 2) - 100, self.hauteur / 2, 200, 50, self.font, 'Play',
-                             self.__on_click_play, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_settings = Button((self.largeur / 2) - 100, (self.hauteur / 2) + 60, 200, 50, self.font, 'Settings',
-                                 self.__on_click_settings, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_exit = Button((self.largeur / 2) - 100, (self.hauteur / 2) + 120, 200, 50, self.font, 'Exit',
-                             self.__on_click_exit, False, ('#2a75a1', '#666666', '#333333'))
-        label_title = Label("PythonBlyat", 100, (0, 0, 0), (self.largeur / 2, self.hauteur / 2 - 50), None, True)
-        self.update_screen(play=bouton_play, settings=bouton_settings, quit=bouton_exit, title=label_title)
-        pg.display.flip()
         while not self.__quit:
-            self.clock.tick(self.framerate)
+            self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:
                 if event.type == pg.QUIT:
                     self.__quit = True
                 elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
                     self.__quit = True
-            self.update_screen(play=bouton_play, settings=bouton_settings, quit=bouton_exit, title=label_title)
+            self.__game.update_screen(self.__widgets)
             pg.display.update()
         pg.quit()
         exit()
-
-
-if __name__ == "__main__":
-    menu = MainMenu()
-    menu.run()

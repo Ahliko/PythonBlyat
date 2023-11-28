@@ -1,5 +1,5 @@
 import pygame as pg
-from main_menu_gui import MainMenu
+from game import Game
 import pygame_widgets
 from pygame_widgets.slider import Slider
 from CustomLabel import Label
@@ -7,40 +7,38 @@ from CustomButton import Button
 
 
 class SettingsMenu:
-    def __init__(self, previous_menu: MainMenu):
-        self.main_menu = previous_menu
-        self.settings_menu = None
+    def __init__(self, game: Game):
+        self.__game = game
         self.__quit = False
+        self.__widgets = self.__widgets_init()
 
     def change_framerate(self, value):
-        self.main_menu.framerate = value
+        self.__game.framerate = value
 
     def disable(self):
         self.__quit = True
-        pg.event.wait(self.main_menu.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100 // 6)
 
-    def update_screen(self, **kwargs):
-        self.main_menu.ecran.blit(self.main_menu.background, (0, 0))
-        for i in kwargs:
-            kwargs[i].draw(self.main_menu.ecran)
+    def __widgets_init(self) -> list[Button, Label]:
+        label = Label("Settings", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
+                      None, True)
+        button = Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50,
+                        self.__game.font,
+                        'Return to main menu', self.disable,
+                        False, ('#2a75a1', '#666666', '#333333'), center=True)
+        return [button, label]
 
     def run(self):
         pg.display.set_caption('PythonBlyat - SettingsMenu')
-        slider = Slider(self.main_menu.ecran, (self.main_menu.largeur // 2) - 100,
-                        (self.main_menu.hauteur // 2) + 140,
+        slider = Slider(self.__game.ecran, (self.__game.largeur // 2) - 100,
+                        (self.__game.hauteur // 2) + 140,
                         200,
-                        40, min=10, max=170, step=10, initial=self.main_menu.framerate, colour=(255, 255, 255))
-        label = Label("Settings", 100, (0, 0, 0), (self.main_menu.largeur / 2, self.main_menu.hauteur / 2 - 50),
-                      None, True)
-        button = Button((self.main_menu.largeur / 2), (self.main_menu.hauteur / 2) + 50, 400, 50,
-                        self.main_menu.font,
-                        'Return to main menu', self.disable,
-                        False, ('#2a75a1', '#666666', '#333333'), center=True)
-        self.update_screen(return_button=button, title=label)
+                        40, min=10, max=170, step=10, initial=self.__game.framerate, colour=(255, 255, 255))
+        self.__game.update_screen(self.__widgets)
         pg.display.flip()
         while not self.__quit:
-            self.main_menu.framerate = slider.getValue()
-            self.main_menu.clock.tick(self.main_menu.framerate)
+            self.__game.framerate = slider.getValue()
+            self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:
                 if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
@@ -50,6 +48,6 @@ class SettingsMenu:
                 elif event.type == pg.QUIT:
                     pg.quit()
                     exit()
-            self.update_screen(return_button=button, title=label)
+            self.__game.update_screen(self.__widgets)
             pygame_widgets.update(events)
             pg.display.update()
