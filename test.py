@@ -76,12 +76,19 @@ class Player(pygame.sprite.Sprite):
         self.current_image = 0
         self.direction = 'down'
         self.images = {
-            'down': [self.get_image(0, 0), self.get_image(self.__space_image_width, 0), self.get_image(self.__space_image_width * 2, 0), self.get_image(self.__space_image_width * 3, 0)],
-            'right': [self.get_image(0, self.__space_image_height), self.get_image(self.__space_image_width, self.__space_image_height), self.get_image(self.__space_image_width * 2, self.__space_image_height),
+            'down': [self.get_image(0, 0), self.get_image(self.__space_image_width, 0),
+                     self.get_image(self.__space_image_width * 2, 0), self.get_image(self.__space_image_width * 3, 0)],
+            'right': [self.get_image(0, self.__space_image_height),
+                      self.get_image(self.__space_image_width, self.__space_image_height),
+                      self.get_image(self.__space_image_width * 2, self.__space_image_height),
                       self.get_image(self.__space_image_width * 3, self.__space_image_height)],
-            'up': [self.get_image(0, self.__space_image_height * 2), self.get_image(self.__space_image_width, self.__space_image_height * 2), self.get_image(self.__space_image_width * 2, self.__space_image_height * 2),
+            'up': [self.get_image(0, self.__space_image_height * 2),
+                   self.get_image(self.__space_image_width, self.__space_image_height * 2),
+                   self.get_image(self.__space_image_width * 2, self.__space_image_height * 2),
                    self.get_image(self.__space_image_width * 3, self.__space_image_height * 2)],
-            'left': [self.get_image(0, self.__space_image_height * 3), self.get_image(self.__space_image_width, self.__space_image_height * 3), self.get_image(self.__space_image_width * 2, self.__space_image_height * 3),
+            'left': [self.get_image(0, self.__space_image_height * 3),
+                     self.get_image(self.__space_image_width, self.__space_image_height * 3),
+                     self.get_image(self.__space_image_width * 2, self.__space_image_height * 3),
                      self.get_image(self.__space_image_width * 3, self.__space_image_height * 3)]
 
         }
@@ -97,7 +104,7 @@ class Player(pygame.sprite.Sprite):
                 self.current_image = 0
 
             self.image = self.images[self.direction][self.current_image]
-    
+
     def change_direction(self, direction):
         self.direction = direction
 
