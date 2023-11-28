@@ -14,7 +14,7 @@ class Test:
         tmx_data = pytmx.util_pygame.load_pygame("carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
-        map_layer.zoom = 2
+        map_layer.zoom = 3
 
         player_position = tmx_data.get_object_by_name("Player")
         self.player = Player(player_position.x, player_position.y)
@@ -66,22 +66,23 @@ class Test:
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.sprite_sheet = pygame.image.load("test.png")
+        self.sprite_sheet = pygame.image.load("test2.png")
+        self.__space_image_width = 8
+        self.__space_image_height = 16
         self.image = self.get_image(0, 0)
         self.rect = self.image.get_rect()
         self.position = [x, y]
         self.speed = 2
         self.current_image = 0
         self.direction = 'down'
-        self.__space_image = 64
         self.images = {
-            'down': [self.get_image(0, 0), self.get_image(self.__space_image, 0), self.get_image(self.__space_image * 2, 0), self.get_image(self.__space_image * 3, 0)],
-            'right': [self.get_image(0, 128), self.get_image(self.__space_image, 128), self.get_image(self.__space_image * 2, 128),
-                      self.get_image(self.__space_image * 3, 128)],
-            'up': [self.get_image(0, 128 * 2), self.get_image(self.__space_image, 128 * 2), self.get_image(self.__space_image * 2, 128 * 2),
-                   self.get_image(self.__space_image * 3, 128 * 2)],
-            'left': [self.get_image(0, 128 * 3), self.get_image(self.__space_image, 128 * 3), self.get_image(self.__space_image * 2, 128 * 3),
-                     self.get_image(self.__space_image * 3, 128 * 3)]
+            'down': [self.get_image(0, 0), self.get_image(self.__space_image_width, 0), self.get_image(self.__space_image_width * 2, 0), self.get_image(self.__space_image_width * 3, 0)],
+            'right': [self.get_image(0, self.__space_image_height), self.get_image(self.__space_image_width, self.__space_image_height), self.get_image(self.__space_image_width * 2, self.__space_image_height),
+                      self.get_image(self.__space_image_width * 3, self.__space_image_height)],
+            'up': [self.get_image(0, self.__space_image_height * 2), self.get_image(self.__space_image_width, self.__space_image_height * 2), self.get_image(self.__space_image_width * 2, self.__space_image_height * 2),
+                   self.get_image(self.__space_image_width * 3, self.__space_image_height * 2)],
+            'left': [self.get_image(0, self.__space_image_height * 3), self.get_image(self.__space_image_width, self.__space_image_height * 3), self.get_image(self.__space_image_width * 2, self.__space_image_height * 3),
+                     self.get_image(self.__space_image_width * 3, self.__space_image_height * 3)]
 
         }
 
@@ -124,8 +125,8 @@ class Player(pygame.sprite.Sprite):
         self.update()
 
     def get_image(self, x, y):
-        image = pygame.Surface([64, 128])
-        image.blit(self.sprite_sheet, (0, 0), (x, y, 64, 128))
+        image = pygame.Surface([self.__space_image_width, self.__space_image_height])
+        image.blit(self.sprite_sheet, (0, 0), (x, y, self.__space_image_width, self.__space_image_height))
         image.set_colorkey((0, 0, 0))
         return image
 
