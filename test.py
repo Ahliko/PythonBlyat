@@ -1,3 +1,5 @@
+import random
+
 import pygame
 import pytmx
 import pyscroll
@@ -28,19 +30,20 @@ class Test:
         pressed = pygame.key.get_pressed()
         if pressed[pygame.K_UP]:
             self.player.move_up()
-            self.player.change_animation('up')
+            self.player.change_direction('up')
         elif pressed[pygame.K_DOWN]:
             self.player.move_down()
-            self.player.change_animation('down')
+            self.player.change_direction('down')
         if pressed[pygame.K_LEFT]:
             self.player.move_left()
-            self.player.change_animation('left')
+            self.player.change_direction('left')
         elif pressed[pygame.K_RIGHT]:
             self.player.move_right()
-            self.player.change_animation('right')
+            self.player.change_direction('right')
 
     def update(self):
         self.group.update()
+        self.player.animate()
         for sprite in self.group.sprites():
             if sprite.feet.collidelist(self.walls) > -1:
                 sprite.move_back()
@@ -68,20 +71,37 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.position = [x, y]
         self.speed = 2
+        self.current_image = 0
+        self.direction = 'down'
+        self.__space_image = 64
         self.images = {
-            'down': self.get_image(0, 0),
-            'left': self.get_image(0, 128 * 3),
-            'right': self.get_image(0, 128),
-            'up': self.get_image(0, 128 * 2)
+            'down': [self.get_image(0, 0), self.get_image(self.__space_image, 0), self.get_image(self.__space_image * 2, 0), self.get_image(self.__space_image * 3, 0)],
+            'right': [self.get_image(0, 128), self.get_image(self.__space_image, 128), self.get_image(self.__space_image * 2, 128),
+                      self.get_image(self.__space_image * 3, 128)],
+            'up': [self.get_image(0, 128 * 2), self.get_image(self.__space_image, 128 * 2), self.get_image(self.__space_image * 2, 128 * 2),
+                   self.get_image(self.__space_image * 3, 128 * 2)],
+            'left': [self.get_image(0, 128 * 3), self.get_image(self.__space_image, 128 * 3), self.get_image(self.__space_image * 2, 128 * 3),
+                     self.get_image(self.__space_image * 3, 128 * 3)]
+
         }
+
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
         self.old_position = self.position.copy()
 
+    def animate(self):
+        if random.randint(0, 10) % 10 == 0:
+            self.current_image += 1
+
+            if self.current_image >= len(self.images[self.direction]):
+                self.current_image = 0
+
+            self.image = self.images[self.direction][self.current_image]
+    
+    def change_direction(self, direction):
+        self.direction = direction
+
     def save_location(self):
         self.old_position = self.position.copy()
-
-    def change_animation(self, name):
-        self.image = self.images[name]
 
     def move_right(self):
         self.position[0] += self.speed
