@@ -66,9 +66,9 @@ class Test:
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.sprite_sheet = pygame.image.load("test2.png")
-        self.__space_image_width = 8
-        self.__space_image_height = 16
+        self.sprite_sheet = pygame.image.load("test3.png")
+        self.__space_image_width = 16
+        self.__space_image_height = 32
         self.image = self.get_image(0, 0)
         self.rect = self.image.get_rect()
         self.position = [x, y]
