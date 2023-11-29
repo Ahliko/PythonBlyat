@@ -6,6 +6,13 @@ class Engine:
     def __init__(self) -> None:
         self.__turng: int = 1
 
+
+    @staticmethod
+    def sort_speed(lst : list) -> None:
+        sorted_list = sorted(lst, key=lambda x: x.speed)
+        sorted_list.reverse()
+        return sorted_list
+
     def next_character(self, lst: list):
         for charac in lst:
             if charac.turn:
@@ -28,16 +35,17 @@ class Engine:
     def random_monster(self):
         ennemis = []
         nb = 1
+        
         for i in range(3):
             random.seed()
             rd = random.randint(1, 3)
             match rd:
                 case 1:
-                    ab = Character("aberration" + str(nb), 100, 3, 3)
-                    ennemis.append(ab)
+                    ab = Character("aberration" + str(nb), 100, 3, 3, 3, 9)
+                    ennemis.insert(i, ab)
                 case 2:
-                    ch = Character("chimere" + str(nb), 100, 4, 5)
-                    ennemis.append(ch)
+                    ch = Character("chimere" + str(nb), 100, 4, 5, 7, 7)
+                    ennemis.insert(i, ch)
                 case 3:
                     print("cc")
         return ennemis
@@ -52,4 +60,3 @@ class Engine:
 
 engine = Engine()
 lst = engine.random_monster()
-print(lst[0])
