@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="240" height="135" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="7">
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="240" height="135" tilewidth="8" tileheight="8" infinite="0" nextlayerid="4" nextobjectid="9">
  <tileset firstgid="1" source="tileset_dungeon.tsx"/>
  <tileset firstgid="1025" source="0x72_16x16DungeonTileset.v5.tsx"/>
  <layer id="1" name="Background" width="240" height="135">
@@ -288,5 +288,11 @@
   <object id="3" type="wall" x="1915.05" y="-0.456915" width="5.00987" height="1081.22"/>
   <object id="4" type="wall" x="0.710152" y="0.744557" width="1911.08" height="22.378"/>
   <object id="5" type="wall" x="-0.378622" y="1060.08" width="1915.42" height="20.8862"/>
+  <object id="7" name="Monster" x="320" y="162">
+   <point/>
+  </object>
+  <object id="8" x="606.667" y="-22">
+   <point/>
+  </object>
  </objectgroup>
 </map>

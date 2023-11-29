@@ -19,6 +19,9 @@ class CharacterMenu3:
         if self.__game.characters.get("character3") is None:
             print("You must choose a character")
             return
+        from carte import Carte
+        carte = Carte(self.__game)
+        carte.run()
         self.__widgets = self.__widgets_init()
 
     def __on_click_back(self):

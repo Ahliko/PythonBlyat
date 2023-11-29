@@ -43,8 +43,11 @@ class Game(EnvironnementEcran):
     def change_font(self, font: str, taille: int):
         self.__font = pg.font.SysFont(font, taille)
 
-    def update_screen(self, lst_widgets: list[Button, Label]):
-        self.ecran.blit(self.__background, (0, 0))
+    def update_screen(self, lst_widgets: list[Button, Label], background: pg.Surface = None):
+        if background is None:
+            self.ecran.blit(self.__background, (0, 0))
+        else:
+            self.ecran.blit(background, (0, 0))
         for i in lst_widgets:
             i.draw(self.ecran)
 
