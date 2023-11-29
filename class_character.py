@@ -17,6 +17,8 @@ class Character:
         self.__turn: bool = True  # s'il peut jouer ou non
         self.__speed: int = 0
         self.__buf: dict = {
+            "id": 0,
+            "ability": False,
             "atk": self.__atk,
             "critrate": self.__critrate,
             "critdmg": self.__critdmg,
@@ -55,6 +57,15 @@ class Character:
             self.__ultpts = self.__maxultpts
 
     def check_buffs(self) -> None:
+        if self.__buf["ability"]:
+            if self.__buf["id"] == 1:
+                self.__critdmg -= 20
+            elif self.__buf["id"] == 2:
+                self.__critrate -= 35
+            elif self.__buf["id"] == 3:
+                self.__atk -= int((self.__atk * (25 / 100)))
+            self.__buf["ability"] = False
+            self.__buf["id"] = 0
         if self.__buf["remaining"] > 0:
             self.__buf["remaining"] -= 1
         if self.__buf["remaining"] == 0:
