@@ -14,13 +14,17 @@ class Harmony(Character):
         if boost == 1:
             print(f"({target.critdmg} CRITDMG -> {target.critdmg + 20} CRITDMG)")
             target.critdmg += 20
+            target.buf["id"] = 1
         elif boost == 2:
             print(f"({target.critrate} CRITRATE -> {target.critrate + 35} CRITRATE)")
             target.critrate += 35
+            target.buf["id"] = 2
         elif boost == 3:
             print(f"({target.atk} ATK -> {int(target.atk + target.atk * (25 / 100))} ATK)")
             target.atk += int((target.atk * (25 / 100)))
+            target.buf["id"] = 3
         target.buf["remaining"] = 1
+        target.buf["ability"] = True
 
     def ultime(self, target : []):
         if self.ultpts == self.maxultpts:
@@ -30,7 +34,7 @@ class Harmony(Character):
                     i.atk += int(i.atk * (25 / 100))
                     i.critrate += 30
                     i.critdmg += 15
-                    i.buf["remaining"] = 2
+                    i.buf["remaining"] += 2
         else:
             print("Vous n'avez pas assez de points d'ultime")
 
