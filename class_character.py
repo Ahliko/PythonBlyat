@@ -3,7 +3,7 @@ import random
 
 
 class Character:
-    def __init__(self, name: str, max_health: int, atk: int, _def: int, maxultpts: int) -> None:
+    def __init__(self, name: str, max_health: int, atk: int, _def: int, maxultpts: int, speed : int) -> None:
         self.__name: str = name
         self.__maxhp: int = max_health
         self.__hp: int = max_health
@@ -15,7 +15,7 @@ class Character:
         self.__ultpts: int = 0  # points d'ultime
         self.__maxultpts: int = maxultpts
         self.__turn: bool = True  # s'il peut jouer ou non
-        self.__speed: int = 0
+        self.__speed: int = speed
         self.__buf: dict = {
             "id": 0,
             "ability": False,
@@ -204,5 +204,3 @@ class Character:
     def buf(self):
         return self.__buf
     
-
-# test
