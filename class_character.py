@@ -74,6 +74,7 @@ class Character:
         self.check_buffs()
         self.__turn = False
         target.defense(damages)
+        return [self.name, Character.name, target.defense(damages)]
 
     def aoe(self, target : list):
         if not self.is_alive():
