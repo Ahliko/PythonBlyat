@@ -204,3 +204,5 @@ class Character:
     def buf(self):
         return self.__buf
     
+
+# test
