@@ -5,18 +5,18 @@ import random
 class Character:
     def __init__(self, name: str) -> None:
         self.__name: str = name
-        self.__maxhp: int = 1
-        self.__hp: int = 1
-        self.__atk: int = 1
-        self.__def: int = 1
-        self.__shield: int = 0  # shield
+        self.__maxhp: int
+        self.__hp: int 
+        self.__atk: int 
+        self.__def: int 
+        self.__shield: int # shield
         self.__critdmg: int = 50  # dégats crit %
         self.__critrate: int = 5  # chances de coup crit
         self.__ultpts: int = 0  # points d'ultime
         self.__maxultpts: int = 0
         self.__turn: bool = True  # s'il peut jouer ou non
         self.__speed: int = 0
-        self.__competence_need_turn: int = 0
+        self.__cooldown: int = 0
         self.__competence: bool = True
         self.__buf: dict = {
             "id": 0,
