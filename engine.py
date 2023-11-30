@@ -6,13 +6,13 @@ from class_preservation import Preservation
 from class_hunt import Hunt
 import random
 
+
 class Engine:
     def __init__(self) -> None:
         self.__turng: int = 1
 
-
     @staticmethod
-    def sort_speed(lst : list) -> None:
+    def sort_speed(lst: list) -> list:
         sorted_list = sorted(lst, key=lambda x: x.speed)
         sorted_list.reverse()
         return sorted_list
@@ -37,13 +37,14 @@ class Engine:
         else:
             self.next_character(lst)
 
-    def competence_cooldown(self, lst: list):
+    @staticmethod
+    def competence_cooldown(lst: list):
         for charac in lst:
             if charac.cooldown > 0:
                 charac.cooldown -= 1
 
-
-    def random_monster(self):
+    @staticmethod
+    def random_monster():
         ennemis = []
         nb = 1
         for i in range(3):
@@ -68,10 +69,11 @@ class Engine:
     def turng(self, amount):
         self.__turng = amount
 
-engine = Engine()
-Lelfe = Hunt("elfe", 5, 10)
-print(Lelfe.atk)
-Lelfe.ability(Lelfe)
-Lelfe.ability(Lelfe)
-print(Lelfe.atk)
 
+if __name__ == "__main__":
+    engine = Engine()
+    Lelfe = Hunt("elfe", 5, 10)
+    print(Lelfe.atk)
+    Lelfe.ability(Lelfe)
+    Lelfe.ability(Lelfe)
+    print(Lelfe.atk)
