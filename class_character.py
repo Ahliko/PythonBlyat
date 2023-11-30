@@ -5,11 +5,11 @@ import random
 class Character:
     def __init__(self, name: str, critrate : int, critdamage : int) -> None:
         self.__name: str = name
-        self.__maxhp: int
-        self.__hp: int 
-        self.__atk: int 
-        self.__def: int 
-        self.__shield: int # shield
+        self.__maxhp: int = 0
+        self.__hp: int = self.__maxhp
+        self.__atk: int = 0
+        self.__def: int  = 0
+        self.__shield: int = 0
         self.__critdmg: int = critdamage # dégats crit %
         self.__critrate: int = critrate # chances de coup crit
         self.__ultpts: int = 0  # points d'ultime
