@@ -15,6 +15,7 @@ class Preservation(Character):
     def ability(self, target: Character):
         target.shield = int(target.shield + (target.maxhp * (15 / 100)))
         self.ultime += 20
+        self.competence = False
         return self.shield
 
     def use_ultime(self, target: list):

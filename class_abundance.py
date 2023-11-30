@@ -10,13 +10,14 @@ class Abundance(Character):
         self.maxultpts = 125
         self.speed = 10
 
-    @staticmethod
-    def ability(target: Character):
+    def ability(self, target: Character):
         heal = int(target.hp + (target.maxhp * (15 / 100)))
         if target.maxhp <= heal:
             target.hp = target.maxhp
         else:
             target.hp = heal
+        self.competence = False
+        
 
     def ultime(self, target: []):
         if self.ultpts == self.maxultpts:
