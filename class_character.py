@@ -3,19 +3,20 @@ import random
 
 
 class Character:
-    def __init__(self, name: str, max_health: int, atk: int, _def: int, maxultpts: int, speed : int) -> None:
+    def __init__(self, name: str) -> None:
         self.__name: str = name
-        self.__maxhp: int = max_health
-        self.__hp: int = max_health
-        self.__atk: int = atk
-        self.__def: int = _def
+        self.__maxhp: int = 1
+        self.__hp: int = 1
+        self.__atk: int = 1
+        self.__def: int = 1
         self.__shield: int = 0  # shield
         self.__critdmg: int = 50  # dégats crit %
         self.__critrate: int = 5  # chances de coup crit
         self.__ultpts: int = 0  # points d'ultime
-        self.__maxultpts: int = maxultpts
+        self.__maxultpts: int = 0
         self.__turn: bool = True  # s'il peut jouer ou non
-        self.__speed: int = speed
+        self.__speed: int = 0
+        self.__competence: bool = True
         self.__buf: dict = {
             "id": 0,
             "ability": False,
@@ -203,4 +204,12 @@ class Character:
     @property
     def buf(self):
         return self.__buf
+    
+    @property
+    def competence(self):
+        return self.__competence
+    
+    @competence.setter
+    def competence(self, boolean: bool) -> None:
+        self.__competence = boolean
     

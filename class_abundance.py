@@ -1,6 +1,15 @@
 from class_character import Character
 
 class Abundance(Character):
+    def __init__(self, name: str, critrate: int, critdmg: int):
+        super().__init__(name, critrate, critdmg)
+        self.maxhp = 650
+        self.hp = self.maxhp
+        self.atk = 30
+        self._def = 20
+        self.maxultpts = 125
+        self.speed = 10
+
     @staticmethod
     def ability(target: Character):
         heal = int(target.hp + (target.maxhp * (15 / 100)))

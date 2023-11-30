@@ -7,8 +7,16 @@ random.seed()
 
 class Harmony(Character):
 
-    @staticmethod
-    def ability(target: Character):
+    def __init__(self, name: str, critrate: int, critdmg: int):
+        super().__init__(name, critrate, critdmg)
+        self.maxhp = 700
+        self.hp = self.maxhp
+        self.atk = 50
+        self._def = 25
+        self.maxultpts = 130
+        self.speed = 11
+
+    def ability(self, target: Character):
         print(f"Les stats de {target.name} ont été améliorés ", end="")
         boost = random.randint(1, 3)
         if boost == 1:
@@ -24,7 +32,9 @@ class Harmony(Character):
             target.atk += int((target.atk * (25 / 100)))
             target.buf["id"] = 3
         target.buf["remaining"] = 1
-        target.buf["ability"] = True
+        target.buf["ability"] = True 
+        self.competence = False
+        
 
     def ultime(self, target : []):
         if self.ultpts == self.maxultpts:
