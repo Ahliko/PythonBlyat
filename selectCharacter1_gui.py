@@ -1,5 +1,4 @@
 import pygame as pg
-
 from game import Game
 from CustomButton import Button
 from CustomLabel import Label

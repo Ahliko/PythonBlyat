@@ -1,7 +1,6 @@
 import pygame
 import pytmx
 import pyscroll
-
 from CustomButton import Button
 from game import Game
 
@@ -11,6 +10,7 @@ class Carte:
         pygame.display.set_caption('PythonBlyat - Carte Donjon')
         self.clock = pygame.time.Clock()
         self.__game = game
+        self.__quit = False
 
         tmx_data = pytmx.util_pygame.load_pygame("carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
@@ -23,6 +23,9 @@ class Carte:
         monster_position = tmx_data.get_object_by_name("Monster")
         self.monster = Monster(monster_position.x, monster_position.y)
 
+        vendor_position = tmx_data.get_object_by_name("Vendor")
+        self.vendor = Vendor(vendor_position.x, vendor_position.y)
+
         self.walls = [pygame.Rect(obj.x, obj.y, obj.width, obj.height) for obj in tmx_data.objects if
                       obj.type == "wall"]
 
@@ -30,6 +33,7 @@ class Carte:
         self.group.center(self.player.rect.center)
         self.group.add(self.player)
         self.group.add(self.monster)
+        self.group.add(self.vendor)
         self.__widgets = None
 
         self.shop_button = pygame.image.load("shop_button.png")
@@ -75,6 +79,7 @@ class Carte:
         self.group.update()
         self.player.animate()
         self.monster.animate()
+        self.vendor.animate()
         # self.__game.ecran.blit(self.shop_button, (100, (self.__game.hauteur - 100)))
 
         for i in self.__widgets:
@@ -89,13 +94,14 @@ class Carte:
         while True:
             self.player.save_location()
             self.monster.save_location()
+            self.vendor.save_location()
             self.handle_input()
             self.update()
             self.group.center(self.player.rect.center)
             self.group.draw(self.__game.ecran)
             pygame.display.flip()
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                     pygame.quit()
                     exit()
             self.clock.tick(60)
@@ -166,7 +172,6 @@ class Player(pygame.sprite.Sprite):
             self.position[0] -= self.speed * 2
             self.start_fight()
 
-
     def move_left(self):
         if not self.carte.check_collision(self, [self.carte.monster]):
             self.position[0] -= self.speed
@@ -233,6 +238,78 @@ class Monster(pygame.sprite.Sprite):
                 self.get_image(self.__space_start_image_width, self.__space_image_height * 2),
                 self.get_image(self.__space_image_width, self.__space_image_height * 2),
                 self.get_image(self.__space_image_width * 2, self.__space_image_height * 2),
+            ]
+        }
+
+        self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
+        self.old_position = self.position.copy()
+
+    def animate(self):
+        if self.sleep == 10:
+            self.sleep = 0
+            self.current_image += 1
+
+            if self.current_image >= len(self.images[self.direction]):
+                self.current_image = 0
+
+            self.image = self.images[self.direction][self.current_image]
+        else:
+            self.sleep += 1
+
+    def change_direction(self, direction):
+        self.direction = direction
+
+    def save_location(self):
+        self.old_position = self.position.copy()
+
+    def move_right(self):
+        self.position[0] += self.speed
+
+    def move_left(self):
+        self.position[0] -= self.speed
+
+    def move_up(self):
+        self.position[1] -= self.speed
+
+    def move_down(self):
+        self.position[1] += self.speed
+
+    def update(self):
+        self.rect.topleft = self.position
+        self.feet.midbottom = self.rect.midbottom
+
+    def move_back(self):
+        self.position = self.old_position.copy()
+        self.update()
+
+    def get_image(self, x, y):
+        image = pygame.Surface([self.__space_image_width, self.__space_image_height])
+        image.blit(self.sprite_sheet, (0, 0), (x, y, self.__space_image_width, self.__space_image_height))
+        image.set_colorkey((0, 0, 0))
+        return image
+
+
+class Vendor(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.sprite_sheet = pygame.image.load("vendor.png")
+        self.__space_start_image_width = 0
+        self.__space_start_image_height = 0
+        self.__space_image_width = 32
+        self.__space_image_height = 32 + 1
+        self.image = self.get_image(0, 0)
+        self.rect = self.image.get_rect()
+        self.sleep = 0
+        self.position = [x, y]
+        self.speed = 1
+        self.current_image = 0
+        self.direction = 'Idle'
+        self.images = {
+            'Idle': [
+                self.get_image(self.__space_start_image_width, self.__space_start_image_height),
+                self.get_image(self.__space_image_width, self.__space_start_image_height),
+                self.get_image(self.__space_image_width * 2, self.__space_start_image_height),
+                self.get_image(self.__space_image_width * 3, self.__space_start_image_height)
             ]
         }
 
