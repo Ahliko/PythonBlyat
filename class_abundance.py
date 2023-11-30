@@ -9,6 +9,7 @@ class Abundance(Character):
         self._def = 20
         self.maxultpts = 125
         self.speed = 10
+        self.competence_need_turn = 3
 
     def ability(self, target: Character):
         heal = int(target.hp + (target.maxhp * (15 / 100)))

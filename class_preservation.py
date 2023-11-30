@@ -11,6 +11,7 @@ class Preservation(Character):
         self._def = 60
         self.maxultpts = 130
         self.speed = 9
+        self.competence_need_turn = 3
 
     def ability(self, target: Character):
         target.shield = int(target.shield + (target.maxhp * (15 / 100)))

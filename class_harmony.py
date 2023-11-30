@@ -15,6 +15,7 @@ class Harmony(Character):
         self._def = 25
         self.maxultpts = 130
         self.speed = 11
+        self.competence_need_turn = 2
 
     def ability(self, target: Character):
         print(f"Les stats de {target.name} ont été améliorés ", end="")

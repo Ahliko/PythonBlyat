@@ -11,6 +11,7 @@ class Hunt(Character):
         self._def = 15
         self.maxultpts = 100
         self.speed = 14
+        self.competence_need_turn = 2
 
     def ability(self, target: Character):
         old_atk = self.atk

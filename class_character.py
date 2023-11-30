@@ -16,6 +16,7 @@ class Character:
         self.__maxultpts: int = 0
         self.__turn: bool = True  # s'il peut jouer ou non
         self.__speed: int = 0
+        self.__competence_need_turn: int = 0
         self.__competence: bool = True
         self.__buf: dict = {
             "id": 0,
@@ -212,4 +213,12 @@ class Character:
     @competence.setter
     def competence(self, boolean: bool) -> None:
         self.__competence = boolean
+
+    @property
+    def competence_need_turn(self):
+        return self.__competence_need_turn
+    
+    @competence_need_turn.setter
+    def competence_need_turn(self, amount: int) -> None:
+        self.__competence_need_turn = amount
     
