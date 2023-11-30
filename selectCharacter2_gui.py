@@ -37,6 +37,9 @@ class CharacterMenu2:
     def __on_click_choice3(self):
         self.__game.characters.update({"character2": 3})
 
+    def __on_click_choice4(self):
+        self.__game.characters.update({"character2": 4})
+
     def __widgets_init(self) -> list[Button, Label]:
         bouton_next = Button((self.__game.largeur / 2) + 615,
                              (self.__game.hauteur / 2) + 360, 130, 40,
@@ -46,25 +49,29 @@ class CharacterMenu2:
                              (self.__game.hauteur / 2) + 360, 130, 40,
                              self.__game.font, 'Back',
                              self.__on_click_back, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_choice1 = Button((self.__game.largeur / 2) - 450,
+        bouton_choice1 = Button((self.__game.largeur / 2) - 400,
                                 (self.__game.hauteur / 2), 130, 40,
                                 self.__game.font, 'Choice1',
                                 self.__on_click_choice1, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_choice2 = Button((self.__game.largeur / 2) - 60,
+        bouton_choice2 = Button((self.__game.largeur / 2) - 200,
                                 (self.__game.hauteur / 2), 130, 40,
                                 self.__game.font, 'Choice2',
                                 self.__on_click_choice2, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_choice3 = Button((self.__game.largeur / 2) + 350,
+        bouton_choice3 = Button((self.__game.largeur / 2),
                                 (self.__game.hauteur / 2), 130, 40,
                                 self.__game.font, 'Choice3',
                                 self.__on_click_choice3, False, ('#2a75a1', '#666666', '#333333'))
+        bouton_choice4 = Button((self.__game.largeur / 2) + 200,
+                                (self.__game.hauteur / 2), 130, 40,
+                                self.__game.font, 'Choice4',
+                                self.__on_click_choice4, False, ('#2a75a1', '#666666', '#333333'))
         label_title = Label("PythonBlyat", 100, (0, 0, 0), (
             self.__game.largeur / 2, self.__game.hauteur / 2 - 300), None,
                             True)
         label_selection = Label("Choose your character 2", 50, (0, 0, 0), (
             self.__game.largeur / 2, self.__game.hauteur / 2 - 150),
                                 None, True)
-        return [bouton_next, bouton_back, bouton_choice1, bouton_choice2, bouton_choice3, label_title, label_selection]
+        return [bouton_next, bouton_back, bouton_choice1, bouton_choice2, bouton_choice3, bouton_choice4, label_title, label_selection]
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Select Second Character')
