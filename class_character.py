@@ -3,15 +3,15 @@ import random
 
 
 class Character:
-    def __init__(self, name: str, critrate: int, critdamage: int) -> None:
+    def __init__(self, name: str, critrate : int, critdamage : int) -> None:
         self.__name: str = name
-        self.__maxhp: int = 100
+        self.__maxhp: int = 0
         self.__hp: int = self.__maxhp
-        self.__atk: int = 10  # attaque
-        self.__def: int = 5  # défense
-        self.__shield: int  # shield
-        self.__critdmg: int = critdamage  # dégats crit %
-        self.__critrate: int = critrate  # chances de coup crit
+        self.__atk: int = 0
+        self.__def: int  = 0
+        self.__shield: int = 0
+        self.__critdmg: int = critdamage # dégats crit %
+        self.__critrate: int = critrate # chances de coup crit
         self.__ultpts: int = 0  # points d'ultime
         self.__maxultpts: int = 0
         self.__turn: bool = True  # s'il peut jouer ou non
@@ -26,6 +26,7 @@ class Character:
             "remaining": 0
         }
         random.seed()
+
 
     def __str__(self) -> str:
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
@@ -48,7 +49,7 @@ class Character:
 
     def compute_wounds(self, damages: int) -> int:
         return damages - self.__def
-
+    
     def add_ultpts(self, amount: int) -> None:
         if (self.__ultpts + amount < self.__maxultpts):
             self.__ultpts += amount
@@ -87,7 +88,7 @@ class Character:
         target.defense(damages)
         return [self.name, Character.name, target.defense(damages)]
 
-    def aoe(self, target: list):
+    def aoe(self, target : list):
         if not self.is_alive():
             return
         damages = int(self.compute_damages())
@@ -95,6 +96,7 @@ class Character:
         self.turn = False
         for charac in target:
             charac.defense(damages)
+        
 
     def defense(self, damages: int) -> None:
         wounds = self.compute_wounds(damages)
@@ -194,7 +196,7 @@ class Character:
     @property
     def maxultpts(self) -> int:
         return self.__maxultpts
-
+    
     @maxultpts.setter
     def maxultpts(self, amount: int) -> None:
         self.__maxultpts = amount
@@ -206,7 +208,8 @@ class Character:
     @property
     def cooldown(self):
         return self.__cooldown
-
+    
     @cooldown.setter
     def cooldown(self, amount: int) -> None:
         self.__cooldown = amount
+    

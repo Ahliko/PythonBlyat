@@ -26,10 +26,11 @@ class Hunt(Character):
         self.atk = old_atk
         self.critdmg = old_critdmg
         self.critrate = old_critrate
-        self.ult_pts += 30
+        self.ultpts += 30
         self.cooldown = 2
-        if self.ult_pts > self.max_ult_pts:
-            self.ult_pts = self.max_ult_pts
+        if self.ultpts > self.maxultpts:
+            self.ultpts = self.maxultpts
+        self.turn = False
 
     def ultimate(self, target: Character) -> bool:
         if self.ultpts == self.maxultpts:
