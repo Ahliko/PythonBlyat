@@ -1,0 +1,59 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "carte.tmx",
+    "expandedProjectPaths": [
+        "."
+    ],
+    "fileStates": {
+        "0x72_16x16DungeonTileset.v5.tsx": {
+            "scaleInDock": 4.7605,
+            "scaleInEditor": 1
+        },
+        "RPG Nature Tileset.tsx": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "carte.tmx": {
+            "scale": 1.5,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 467.66666666666663,
+                "y": 345
+            }
+        },
+        "tileset_dungeon.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 1
+        }
+    },
+    "last.imagePath": "/home/ahliko/Ynov/PythonBlyat",
+    "map.height": 135,
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 8,
+    "map.tileWidth": 8,
+    "map.width": 240,
+    "mapScene.enableWorlds": true,
+    "openFiles": [
+        "RPG Nature Tileset.tsx",
+        "tileset_dungeon.tsx",
+        "carte.tmx",
+        "0x72_16x16DungeonTileset.v5.tsx"
+    ],
+    "project": "projet.tiled-project",
+    "recentFiles": [
+        "RPG Nature Tileset.tsx",
+        "tileset_dungeon.tsx",
+        "0x72_16x16DungeonTileset.v5.tsx",
+        "carte.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.tileSize": {
+        "height": 8,
+        "width": 8
+    },
+    "tileset.transparentColor": "#000000",
+    "tileset.useTransparentColor": true
+}
