@@ -9,15 +9,17 @@ class Abundance(Character):
         self._def = 20
         self.maxultpts = 125
         self.speed = 10
-        self.competence_need_turn = 3
 
     def ability(self, target: Character):
+        if self.cooldown > 0:
+            print("Vous ne pouvez pas utiliser cette compétence pour le moment")
+            return self.cooldown
         heal = int(target.hp + (target.maxhp * (15 / 100)))
         if target.maxhp <= heal:
             target.hp = target.maxhp
         else:
             target.hp = heal
-        self.competence = False
+        self.cooldown = 3
         
 
     def ultime(self, target: []):

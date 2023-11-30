@@ -11,9 +11,11 @@ class Hunt(Character):
         self._def = 15
         self.maxultpts = 100
         self.speed = 14
-        self.competence_need_turn = 2
 
     def ability(self, target: Character):
+        if self.cooldown > 0:
+            print("Vous ne pouvez pas utiliser cette compétence pour le moment")
+            return self.cooldown
         old_atk = self.atk
         old_critrate = self.critrate
         old_critdmg = self.critdmg
@@ -25,7 +27,7 @@ class Hunt(Character):
         self.critdmg = old_critdmg
         self.critrate = old_critrate
         self.ult_pts += 30
-        self.competence = False
+        self.cooldown = 2
         if self.ult_pts > self.max_ult_pts:
             self.ult_pts = self.max_ult_pts
 

@@ -15,9 +15,11 @@ class Harmony(Character):
         self._def = 25
         self.maxultpts = 130
         self.speed = 11
-        self.competence_need_turn = 2
 
     def ability(self, target: Character):
+        if self.cooldown > 0:
+            print("Vous ne pouvez pas utiliser cette compétence pour le moment")
+            return self.cooldown
         print(f"Les stats de {target.name} ont été améliorés ", end="")
         boost = random.randint(1, 3)
         if boost == 1:
@@ -34,7 +36,7 @@ class Harmony(Character):
             target.buf["id"] = 3
         target.buf["remaining"] = 1
         target.buf["ability"] = True 
-        self.competence = False
+        self.cooldown = 2
         
 
     def ultime(self, target : []):

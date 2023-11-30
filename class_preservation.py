@@ -11,12 +11,14 @@ class Preservation(Character):
         self._def = 60
         self.maxultpts = 130
         self.speed = 9
-        self.competence_need_turn = 3
 
     def ability(self, target: Character):
+        if self.cooldown > 0:
+            print("Vous ne pouvez pas utiliser cette compétence pour le moment")
+            return self.cooldown
         target.shield = int(target.shield + (target.maxhp * (15 / 100)))
         self.ultime += 20
-        self.competence = False
+        self.cooldown = 3
         return self.shield
 
     def use_ultime(self, target: list):

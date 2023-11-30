@@ -1,5 +1,9 @@
 from __future__ import annotations
 from class_character import Character
+from class_harmony import Harmony
+from class_abundance import Abundance
+from class_preservation import Preservation
+from class_hunt import Hunt
 import random
 
 class Engine:
@@ -25,17 +29,23 @@ class Engine:
             if charac.turn == False:
                 occ += 1
         if occ == len(lst):
-            self.__turng += 1
             for charac in lst:
                 charac.turn = True
+                self.competence_cooldown(lst)
+            self.turng += 1
             self.next_character(lst)
         else:
             self.next_character(lst)
 
+    def competence_cooldown(self, lst: list):
+        for charac in lst:
+            if charac.cooldown > 0:
+                charac.cooldown -= 1
+
+
     def random_monster(self):
         ennemis = []
         nb = 1
-        
         for i in range(3):
             random.seed()
             rd = random.randint(1, 3)
@@ -59,4 +69,9 @@ class Engine:
         self.__turng = amount
 
 engine = Engine()
-lst = engine.random_monster()
+Lelfe = Hunt("elfe", 5, 10)
+print(Lelfe.atk)
+Lelfe.ability(Lelfe)
+Lelfe.ability(Lelfe)
+print(Lelfe.atk)
+
