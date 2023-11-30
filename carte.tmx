@@ -296,21 +296,21 @@
   <object id="8" name="Vendor" x="500" y="162">
    <point/>
   </object>
-  <object id="11" x="67.5" y="90.25" width="9.25" height="19.75"/>
-  <object id="12" x="35.625" y="58.125" width="9.25" height="19.75"/>
-  <object id="13" x="99.375" y="58.375" width="9.25" height="19.75"/>
-  <object id="14" x="67.375" y="33.625" width="9.25" height="19.75"/>
-  <object id="15" x="1040.88" y="451.375" width="14.25" height="19.75"/>
-  <object id="16" x="888.625" y="440.375" width="14.25" height="30"/>
-  <object id="17" x="891.625" y="361.875" width="9.25" height="19.75"/>
-  <object id="18" x="939.875" y="362.625" width="9.25" height="19.75"/>
-  <object id="19" x="968.625" y="410.375" width="14.25" height="12.5"/>
-  <object id="20" x="1032.5" y="410.25" width="15.75" height="13.8158"/>
-  <object id="21" x="1000.38" y="394" width="14.25" height="12.5"/>
-  <object id="22" x="953.125" y="380.75" width="110.75" height="18.25"/>
-  <object id="23" x="952.875" y="341.25" width="4" height="57.75"/>
-  <object id="25" x="883.25" y="340.875" width="4" height="154.75"/>
-  <object id="26" x="883.875" y="340.625" width="21" height="19.75"/>
-  <object id="27" x="935.75" y="340.125" width="21" height="19.75"/>
+  <object id="11" type="wall" x="67.5" y="90.25" width="9.25" height="19.75"/>
+  <object id="12" type="wall" x="35.625" y="58.125" width="9.25" height="19.75"/>
+  <object id="13" type="wall" x="99.375" y="58.375" width="9.25" height="19.75"/>
+  <object id="14" type="wall" x="67.375" y="33.625" width="9.25" height="19.75"/>
+  <object id="15" type="wall" x="1040.88" y="451.375" width="14.25" height="19.75"/>
+  <object id="16" type="wall" x="888.625" y="440.375" width="14.25" height="30"/>
+  <object id="17" type="wall" x="891.625" y="361.875" width="9.25" height="19.75"/>
+  <object id="18" type="wall" x="939.875" y="362.625" width="9.25" height="19.75"/>
+  <object id="19" type="wall" x="968.625" y="410.375" width="14.25" height="12.5"/>
+  <object id="20" type="wall" x="1032.5" y="410.25" width="15.75" height="13.8158"/>
+  <object id="21" type="wall" x="1000.38" y="394" width="14.25" height="12.5"/>
+  <object id="22" type="wall" x="953.125" y="380.75" width="110.75" height="18.25"/>
+  <object id="23" type="wall" x="952.875" y="341.25" width="4" height="57.75"/>
+  <object id="25" type="wall" x="883.25" y="340.875" width="4" height="154.75"/>
+  <object id="26" type="wall" x="883.875" y="340.625" width="21" height="19.75"/>
+  <object id="27" type="wall" x="935.75" y="340.125" width="21" height="19.75"/>
  </objectgroup>
 </map>
