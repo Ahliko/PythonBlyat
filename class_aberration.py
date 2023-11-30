@@ -1,7 +1,7 @@
-from class_character import Character
+from class_monster import Monster
 import random
 
-class Aberration(Character):
+class Aberration(Monster):
     def competence(self, target : list):
         random.seed()
         charach_to_att = random.randint(0, len(target)-1)
@@ -10,11 +10,4 @@ class Aberration(Character):
         self.atk = boost
         self.attack(target[charach_to_att])
         self.atk = old_atk
-
-    def choice(self, lst : list):
-        ch = random.randint(0, 100)
-        charach_to_att = random.randint(0, len(lst)-1)
-        if ch < 80:
-            self.attack(lst[charach_to_att])
-        else:
-            self.competence(lst)
+        self.cooldown = 2

@@ -1,19 +1,14 @@
-from __future__ import annotations
 from class_character import Character
 import random
 
-class Chimere(Character):
-    random.seed()
-
-    def competence(self, target : list):
-        self.aoe(target)
-
+class Monster(Character):
     def choice(self, lst : list):
         ch = random.randint(0, 100)
         charach_to_att = random.randint(0, len(lst)-1)
         if ch < 80:
-            print("attack")
             self.attack(lst[charach_to_att])
         else:
-            print("comp")
-            self.competence(lst)
+            if self.cooldown > 0:
+                self.attack(lst[charach_to_att])
+            else:
+                self.competence(lst)
