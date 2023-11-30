@@ -12,7 +12,7 @@ class Carte:
         self.clock = pygame.time.Clock()
         self.__game = game
 
-        tmx_data = pytmx.util_pygame.load_pygame("carte.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("assets/carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__game.ecran.get_size())
         map_layer.zoom = 3
@@ -32,7 +32,7 @@ class Carte:
         self.group.add(self.monster)
         self.__widgets = None
 
-        self.shop_button = pygame.image.load("shop_button.png")
+        self.shop_button = pygame.image.load("assets/shop_button.png")
         self.shop_button = pygame.transform.scale(self.shop_button, (343, 147))
         self.shop_button_rect = self.shop_button.get_rect()
 
@@ -105,7 +105,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, carte):
         super().__init__()
         self.carte = carte
-        self.sprite_sheet = pygame.image.load("test3.png")
+        self.sprite_sheet = pygame.image.load("assets/test3.png")
         self.__space_image_width = 16
         self.__space_image_height = 32
         self.image = self.get_image(0, 0)
@@ -206,7 +206,7 @@ class Player(pygame.sprite.Sprite):
 class Monster(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.sprite_sheet = pygame.image.load("monster.png")
+        self.sprite_sheet = pygame.image.load("assets/monster.png")
         self.__space_start_image_width = 0
         self.__space_start_image_height = 1
         self.__space_image_width = 32

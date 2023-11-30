@@ -9,7 +9,7 @@ class Game(EnvironnementEcran):
         super().__init__(1920, 1080, (255, 255, 255), 60)
         pg.font.init()
         self.__font = None
-        self.__background = pg.image.load("mainmenu_background.jpg")
+        self.__background = pg.image.load("assets/mainmenu_background.jpg")
         self.__characters = {
             "character1": None,
             "character2": None,

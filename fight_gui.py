@@ -9,9 +9,9 @@ class FightMenu:
     def __init__(self, game: Game):
         self.__game = game
         self.__quit = False
-        self.__sound = pg.mixer.Sound("Testicular Tango.mp3")
+        self.__sound = pg.mixer.Sound("assets/Testicular Tango.mp3")
         self.__widgets = None
-        self.__background = pg.image.load("Fight.png")
+        self.__background = pg.image.load("assets/Fight.png")
         self.__sound.play(-1)
 
     def __on_click_attacks(self):
