@@ -101,7 +101,7 @@ class Carte:
             self.group.draw(self.__game.ecran)
             pygame.display.flip()
             for event in pygame.event.get():
-                if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE) or event.type == pygame.QUIT:
                     pygame.quit()
                     exit()
             self.clock.tick(60)
