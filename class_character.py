@@ -3,15 +3,16 @@ import random
 
 
 class Character:
-    def __init__(self, name: str, critrate : int, critdamage : int) -> None:
+    def __init__(self, _id: int, name: str, critrate: int, critdamage: int) -> None:
         self.__name: str = name
         self.__maxhp: int = 0
+        self.__id: int = _id
         self.__hp: int = self.__maxhp
         self.__atk: int = 0
-        self.__def: int  = 0
+        self.__def: int = 0
         self.__shield: int = 0
-        self.__critdmg: int = critdamage # dégats crit %
-        self.__critrate: int = critrate # chances de coup crit
+        self.__critdmg: int = critdamage  # dégats crit %
+        self.__critrate: int = critrate  # chances de coup crit
         self.__ultpts: int = 0  # points d'ultime
         self.__maxultpts: int = 0
         self.__turn: bool = True  # s'il peut jouer ou non
@@ -26,7 +27,6 @@ class Character:
             "remaining": 0
         }
         random.seed()
-
 
     def __str__(self) -> str:
         return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
@@ -49,7 +49,7 @@ class Character:
 
     def compute_wounds(self, damages: int) -> int:
         return damages - self.__def
-    
+
     def add_ultpts(self, amount: int) -> None:
         if (self.__ultpts + amount < self.__maxultpts):
             self.__ultpts += amount
@@ -86,9 +86,9 @@ class Character:
         self.check_buffs()
         self.__turn = False
         target.defense(damages)
-        return [self.name, Character.name, target.defense(damages)]
+        return [self.name, Character.name]
 
-    def aoe(self, target : list):
+    def aoe(self, target: list):
         if not self.is_alive():
             return
         damages = int(self.compute_damages())
@@ -96,15 +96,16 @@ class Character:
         self.turn = False
         for charac in target:
             charac.defense(damages)
-        
 
     def defense(self, damages: int) -> None:
         wounds = self.compute_wounds(damages)
+        if wounds < 0:
+            wounds = 0
         print(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
-        if self.is_alive():
-            print(f"{self.hp} HP restants")
         self.add_ultpts(10)
         self.decrease_health(wounds)
+        if self.is_alive():
+            print(f"{self.__hp} HP restants")
 
     def decrease_health(self, amount: int) -> None:
         self.__hp -= amount
@@ -169,6 +170,10 @@ class Character:
     def name(self) -> str:
         return self.__name
 
+    @name.setter
+    def name(self, name: str) -> None:
+        self.__name = name
+
     @property
     def turn(self) -> bool:
         return self.__turn
@@ -196,7 +201,7 @@ class Character:
     @property
     def maxultpts(self) -> int:
         return self.__maxultpts
-    
+
     @maxultpts.setter
     def maxultpts(self, amount: int) -> None:
         self.__maxultpts = amount
@@ -208,8 +213,11 @@ class Character:
     @property
     def cooldown(self):
         return self.__cooldown
-    
+
     @cooldown.setter
     def cooldown(self, amount: int) -> None:
         self.__cooldown = amount
-    
+
+    @property
+    def id(self):
+        return self.__id

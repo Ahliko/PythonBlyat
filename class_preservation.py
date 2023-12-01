@@ -3,8 +3,8 @@ from class_character import Character
 
 class Preservation(Character):
 
-    def __init__(self, name: str, critrate: int, critdmg: int):
-        super().__init__(name, critrate, critdmg)
+    def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
+        super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 900
         self.hp = self.maxhp
         self.atk = 30
@@ -12,7 +12,7 @@ class Preservation(Character):
         self.maxultpts = 130
         self.speed = 9
 
-    def ability(self, target: Character):
+    def ability(self, target: Character, game):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
@@ -25,7 +25,5 @@ class Preservation(Character):
         if self.ultime == self.max_ult_pts:
             for i in target:
                 i.shield = int(i.shield + (i._def * (40 / 100) + 20))
-        else:
-            print("Vous n'avez pas assez de points d'ultime")
-            return
-        self.ultime = 0
+            self.ultpts = 0
+

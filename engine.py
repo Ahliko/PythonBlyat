@@ -64,16 +64,3 @@ class Engine:
     @turng.setter
     def turng(self, amount):
         self.__turng = amount
-
-# if __name__ == "__main__":
-#     engine = Engine()
-#     Lelfe = Hunt("elfe", 5, 10)
-#     print(Lelfe.atk)
-#     Lelfe.ability(Lelfe)
-#     Lelfe.ability(Lelfe)
-#     print(Lelfe.cooldown)
-#     engine.next_turn([Lelfe])
-#     print(Lelfe.cooldown)
-#     Lelfe.attack(Lelfe)
-#     engine.next_turn([Lelfe])
-#     print(Lelfe.cooldown)

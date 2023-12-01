@@ -48,12 +48,11 @@ class CharacterMenu2:
                              (self.__game.hauteur / 2) + 360, 130, 40,
                              self.__game.font, 'Next',
                              self.on_click_next, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_back = Button((self.__game.largeur / 2) - 745,
-                             (self.__game.hauteur / 2) + 360, 130, 40,
+        bouton_back = Button((self.__game.largeur / 2) - 745, (self.__game.hauteur / 2) + 360, 200, 40,
                              self.__game.font, 'Back',
                              self.__on_click_back, False, ('#2a75a1', '#666666', '#333333'))
         bouton_choice1 = Button(150, (self.__game.hauteur / 2), 200, 40,
-                                self.__game.font, 'Healer',
+                                self.__game.font, 'Hunt',
                                 self.__on_click_choice1, False, ('#2a75a1', '#666666', '#333333'))
         bouton_choice2 = Button((self.__game.largeur / 4) + 150, (self.__game.hauteur / 2), 200, 40,
                                 self.__game.font, 'Harmony',

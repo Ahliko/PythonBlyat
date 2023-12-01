@@ -16,6 +16,7 @@ class Game(EnvironnementEcran):
             "character3": None
         }
         self.__monsters = []
+        self.__all_characters = []
 
     @property
     def characters(self):
@@ -27,11 +28,19 @@ class Game(EnvironnementEcran):
 
     @property
     def monsters(self):
-        return self.__characters
+        return self.__monsters
 
     @monsters.setter
     def monsters(self, value):
-        self.__characters = value
+        self.__monsters = value
+
+    @property
+    def all_characters(self):
+        return self.__all_characters
+
+    @all_characters.setter
+    def all_characters(self, value):
+        self.__all_characters = value
 
     @property
     def background(self) -> pg.Surface:

@@ -1,3 +1,5 @@
+from random import randint
+
 import pygame as pg
 from CustomButton import Button
 from CustomLabel import Label
@@ -7,9 +9,9 @@ from engine import Engine
 
 class FightMenu:
     def __init__(self, game: Game):
+        self.__turn_fin = True
         self.__game = game
         self.__engine = Engine(self.__game)
-        self.__engine.random_monster()
         self.__quit = False
         self.__sound = pg.mixer.Sound("assets/Testicular Tango.mp3")
         self.__widgets = None
@@ -17,18 +19,43 @@ class FightMenu:
         self.__sound.play(-1)
 
     def __on_click_attacks(self):
-        print("choice 1 : Acid pee attack")
-        print("choice 2 : 360 Attack of Death That Kills")
-        print("choice 3 : Stinky fart attack")
-        print("choice 4 : Just fart fat")
-
-    def __on_click_items(self):
-        print("What in baaaaag ?")
-
-    def __on_click_escape(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
-        self.__disable()
-        print("You have activated the special ability \"To take one's heels\", you run away like a coward...")
+        next_carac = self.__engine.next_character(self.__game.all_characters)
+        if self.get_character(next_carac) in self.__game.characters.values():
+            while True:
+                target_monster = self.__game.all_characters[randint(0, len(self.__game.monsters) - 1)]
+                if target_monster in self.__game.monsters and target_monster.is_alive():
+                    self.__game.all_characters[self.__game.all_characters.index(self.get_character(next_carac))].attack(
+                        target_monster)
+                    break
+
+    def __on_click_ability(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        next_carac = self.__engine.next_character(self.__game.all_characters)
+        if self.get_character(next_carac) in self.__game.characters.values():
+            while True:
+                target_monster = self.__game.all_characters[randint(0, len(self.__game.monsters) - 1)]
+                if target_monster in self.__game.monsters and target_monster.is_alive():
+                    self.__game.all_characters[
+                        self.__game.all_characters.index(self.get_character(next_carac))].ability(target_monster,
+                                                                                                  self.__game)
+                    break
+
+    def __on_click_ultime(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        next_carac = self.__engine.next_character(self.__game.all_characters)
+        if self.get_character(next_carac) in self.__game.characters.values():
+            while True:
+                target_monster = self.__game.all_characters[randint(0, len(self.__game.monsters) - 1)]
+                if target_monster in self.__game.monsters and target_monster.is_alive():
+                    self.__game.all_characters[self.__game.all_characters.index(self.get_character(next_carac))].ultime(
+                        target_monster, self.__game)
+                    break
+
+    def __on_click_next(self):
+        if self.__turn_fin:
+            self.__engine.next_turn(self.__game.all_characters)
+            self.__turn_fin = False
 
     def __disable(self):
         self.__sound.stop()
@@ -36,31 +63,70 @@ class FightMenu:
         self.__sound.stop()
 
     def __widgets_init(self):
-        bouton_attack_de_base = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 180, 200, 50,
+        bouton_attack_de_base = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 180, 300, 50,
                                        self.__game.font,
                                        'Attack de base',
                                        self.__on_click_attacks, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_competences = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 240, 200, 50,
+        bouton_competences = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 240, 300, 50,
                                     self.__game.font,
                                     'Compétences',
-                                    self.__on_click_items, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_ultime = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 300, 200, 50,
+                                    self.__on_click_ability, False, ('#2a75a1', '#666666', '#333333'))
+        bouton_ultime = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 300, 300, 50,
                                self.__game.font,
                                'Ultime',
-                               self.__on_click_escape, False, ('#2a75a1', '#666666', '#333333'))
-        label_stats = Label("Stats", 100, (0, 0, 0), (self.__game.largeur / 2 + 50, self.__game.hauteur / 2 + 350),
+                               self.__on_click_ultime, False, ('#2a75a1', '#666666', '#333333'))
+        label_stats = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 + 350),
                             None, True)
-        label_ennemi_stats = Label("Stats_ennemi", 100, (0, 0, 0),
-                                   (self.__game.largeur / 2 + 500, self.__game.hauteur / 2 - 250),
-                                   None, True)
-        return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_ennemi_stats]
+        label_stats2 = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2 + 150, self.__game.hauteur / 2 + 400),
+                             None, True)
+        label_stats3 = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 + 450),
+                             None, True)
+        label_monster_stats = Label("Stats_ennemi", 50, (0, 0, 0),
+                                    (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 - 250),
+                                    None, True)
+        label_monster_stats2 = Label("Stats_ennemi", 50, (0, 0, 0),
+                                     (self.__game.largeur / 2 + 450, self.__game.hauteur / 2 - 200),
+                                     None, True)
+        label_monster_stats3 = Label("Stats_ennemi", 50, (0, 0, 0),
+                                     (self.__game.largeur / 2 + 600, self.__game.hauteur / 2 - 150),
+                                     None, True)
+        label_status = Label("Status", 50, (0, 0, 0), (self.__game.largeur / 2 - 300, self.__game.hauteur / 2 - 350),
+                             None, True)
+
+        return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_stats2, label_stats3,
+                label_monster_stats,
+                label_monster_stats2, label_monster_stats3, label_status]
+
+    def get_character(self, id):
+        for i in range(len(self.__game.all_characters)):
+            if self.__game.all_characters[i].id == id:
+                return self.__game.all_characters[i]
+
+    def update_stats(self):
+        for i in range(len(self.__game.all_characters)):
+            self.__widgets[
+                i + 3].text = f"{self.get_character(i + 1).name} : {self.get_character(i + 1).hp}/{self.get_character(i + 1).maxhp} HP | {self.get_character(i + 1).ultpts}/{self.get_character(i + 1).maxultpts} ULTPTS | {self.get_character(i + 1).cooldown} CD"
+
+    def update_status(self):
+        try:
+            self.__widgets[
+                -1].text = f"It's {self.get_character(self.__engine.next_character(self.__game.all_characters)).name} to play !"
+        except AttributeError:
+            self.__widgets[
+                -1].text = f"Next turn !"
+
+    def update_game(self):
+        pg.event.wait(3000)
+        if self.get_character(self.__engine.next_character(self.__game.all_characters)) in self.__game.monsters:
+            self.get_character(self.__engine.next_character(self.__game.all_characters)).choice(
+                [i for i in self.__game.characters.values()])
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Fight')
         self.__widgets = self.__widgets_init()
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
-        # TODO: Init fight with character
+        self.__engine.final_list()
         while not self.__quit:
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
@@ -72,5 +138,8 @@ class FightMenu:
                 elif event.type == pg.QUIT:
                     pg.quit()
                     exit()
+            self.update_stats()
+            self.update_status()
+            self.update_game()
             self.__game.update_screen(self.__widgets, self.__background)
             pg.display.update()

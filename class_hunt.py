@@ -3,8 +3,8 @@ from class_character import Character
 
 class Hunt(Character):
 
-    def __init__(self, name: str, critrate: int, critdmg: int):
-        super().__init__(name, critrate, critdmg)
+    def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
+        super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 650
         self.hp = self.maxhp
         self.atk = 100
@@ -12,7 +12,7 @@ class Hunt(Character):
         self.maxultpts = 100
         self.speed = 14
 
-    def ability(self, target: Character):
+    def ability(self, target: Character, game):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
@@ -39,6 +39,8 @@ class Hunt(Character):
             self.atk = (self.atk * (240 / 100))
             self.attack(target)
             self.atk = old_atk
+            self.ultpts = 0
+            self.turn = False
         else:
             print("Vous n'avez pas assez de points d'ultime")
             return

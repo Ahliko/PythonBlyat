@@ -34,27 +34,10 @@ class Carte:
         self.group.add(self.player)
         self.group.add(self.monster)
         self.group.add(self.vendor)
-        self.__widgets = None
-
-        self.shop_button = pygame.image.load("assets/shop_button.png")
-        self.shop_button = pygame.transform.scale(self.shop_button, (343, 147))
-        self.shop_button_rect = self.shop_button.get_rect()
 
     @property
     def game(self):
-        return self.__game
-
-    def __widgets_init(self):
-        bouton_shop = Button(100, (self.__game.hauteur - 100), 130, 40,
-                             self.__game.font, 'Go to shop',
-                             self.__on_click_shop, False, ('#2a75a1', '#666666', '#333333'))
-        return [bouton_shop]
-
-    def __on_click_shop(self):
-        pygame.event.wait(self.__game.framerate * 100 // 6)
-        from shop_gui import ShopMenu
-        shop = ShopMenu(self.__game)
-        shop.run()
+        return self.__game        
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -80,17 +63,18 @@ class Carte:
         self.player.animate()
         self.monster.animate()
         self.vendor.animate()
-        # self.__game.ecran.blit(self.shop_button, (100, (self.__game.hauteur - 100)))
-
-        for i in self.__widgets:
-            i.draw(self.__game.ecran)
-        pygame.display.update()
+        pygame.display.flip()
         for sprite in self.group.sprites():
             if sprite.feet.collidelist(self.walls) > -1:
                 sprite.move_back()
+    
+    def shop(self):
+        pygame.event.wait(self.__game.framerate * 100 // 6)
+        from shop_gui import ShopMenu
+        shop = ShopMenu(self.__game)
+        shop.run()
 
     def run(self):
-        self.__widgets = self.__widgets_init()
         while True:
             self.player.save_location()
             self.monster.save_location()
@@ -99,7 +83,6 @@ class Carte:
             self.update()
             self.group.center(self.player.rect.center)
             self.group.draw(self.__game.ecran)
-            pygame.display.flip()
             for event in pygame.event.get():
                 if (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE) or event.type == pygame.QUIT:
                     pygame.quit()
@@ -163,32 +146,48 @@ class Player(pygame.sprite.Sprite):
     def start_fight(self):
         from fight_gui import FightMenu
         fight = FightMenu(self.carte.game)
-        fight.run()
+        fight.run()        
 
     def move_right(self):
         if not self.carte.check_collision(self, [self.carte.monster]):
-            self.position[0] += self.speed
+            if not self.carte.check_collision(self, [self.carte.vendor]):
+                self.position[0] += self.speed
+            else:
+                self.position[0] -= self.speed * 2
+                self.carte.shop()
         else:
             self.position[0] -= self.speed * 2
             self.start_fight()
 
     def move_left(self):
         if not self.carte.check_collision(self, [self.carte.monster]):
-            self.position[0] -= self.speed
+            if not self.carte.check_collision(self, [self.carte.vendor]):
+                self.position[0] -= self.speed
+            else:
+                self.position[0] += self.speed * 2
+                self.carte.shop()
         else:
             self.position[0] += self.speed * 2
             self.start_fight()
 
     def move_up(self):
         if not self.carte.check_collision(self, [self.carte.monster]):
-            self.position[1] -= self.speed
+            if not self.carte.check_collision(self, [self.carte.vendor]):
+                self.position[1] -= self.speed
+            else:
+                self.position[1] += self.speed * 2
+                self.carte.shop()
         else:
             self.position[1] += self.speed * 2
             self.start_fight()
 
     def move_down(self):
         if not self.carte.check_collision(self, [self.carte.monster]):
-            self.position[1] += self.speed
+            if not self.carte.check_collision(self, [self.carte.vendor]):
+                self.position[1] += self.speed
+            else:
+                self.position[1] -= self.speed * 2
+                self.carte.shop()
         else:
             self.position[1] -= self.speed * 2
             self.start_fight()
@@ -292,8 +291,8 @@ class Monster(pygame.sprite.Sprite):
 class Vendor(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.sprite_sheet = pygame.image.load("vendor.png")
-        self.__space_start_image_width = 0
+        self.sprite_sheet = pygame.image.load("assets/vendor.png")
+        self.__space_start_image_width = 32
         self.__space_start_image_height = 0
         self.__space_image_width = 32
         self.__space_image_height = 32 + 1
@@ -307,13 +306,19 @@ class Vendor(pygame.sprite.Sprite):
         self.images = {
             'Idle': [
                 self.get_image(self.__space_start_image_width, self.__space_start_image_height),
-                self.get_image(self.__space_image_width, self.__space_start_image_height),
-                self.get_image(self.__space_image_width * 2, self.__space_start_image_height),
-                self.get_image(self.__space_image_width * 3, self.__space_start_image_height)
+                self.get_image(self.__space_start_image_width + self.__space_image_width,
+                               self.__space_start_image_height),
+                self.get_image(self.__space_start_image_width + self.__space_image_width * 2,
+                               self.__space_start_image_height),
+                self.get_image(self.__space_start_image_width + self.__space_image_width * 3,
+                               self.__space_start_image_height)
             ]
         }
 
         self.feet = pygame.Rect(0, 0, self.rect.width * 0.5, 12)
+        self.old_position = self.position.copy()
+
+    def save_location(self):
         self.old_position = self.position.copy()
 
     def animate(self):
@@ -328,31 +333,9 @@ class Vendor(pygame.sprite.Sprite):
         else:
             self.sleep += 1
 
-    def change_direction(self, direction):
-        self.direction = direction
-
-    def save_location(self):
-        self.old_position = self.position.copy()
-
-    def move_right(self):
-        self.position[0] += self.speed
-
-    def move_left(self):
-        self.position[0] -= self.speed
-
-    def move_up(self):
-        self.position[1] -= self.speed
-
-    def move_down(self):
-        self.position[1] += self.speed
-
     def update(self):
         self.rect.topleft = self.position
         self.feet.midbottom = self.rect.midbottom
-
-    def move_back(self):
-        self.position = self.old_position.copy()
-        self.update()
 
     def get_image(self, x, y):
         image = pygame.Surface([self.__space_image_width, self.__space_image_height])

@@ -7,8 +7,8 @@ random.seed()
 
 class Harmony(Character):
 
-    def __init__(self, name: str, critrate: int, critdmg: int):
-        super().__init__(name, critrate, critdmg)
+    def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
+        super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 700
         self.hp = self.maxhp
         self.atk = 50
@@ -16,7 +16,7 @@ class Harmony(Character):
         self.maxultpts = 130
         self.speed = 11
 
-    def ability(self, target: Character):
+    def ability(self, target: Character, game):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
@@ -37,9 +37,8 @@ class Harmony(Character):
         target.buf["remaining"] = 1
         target.buf["ability"] = True 
         self.cooldown = 2
-        
 
-    def ultime(self, target : []):
+    def ultime(self, target: [], game):
         if self.ultpts == self.maxultpts:
             print("UTILISATION DE LULTIME")
             for i in target:
@@ -48,6 +47,7 @@ class Harmony(Character):
                     i.critrate += 30
                     i.critdmg += 15
                     i.buf["remaining"] += 2
+            self.turn = False
+            self.ultpts = 0
         else:
             print("Vous n'avez pas assez de points d'ultime")
-

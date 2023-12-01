@@ -26,15 +26,17 @@ class CharacterMenu3:
         if self.__game.characters.get("character3") is None or self.__game.characters.get("character3")[1] == "":
             print("You must choose a character")
             return
+        i = 1
         for key, value in self.__game.characters.items():
             if value[0] == 1:
-                self.__game.characters.update({key: Hunt(value[1], 5, 10)})
+                self.__game.characters.update({key: Hunt(i, value[1], 5, 10)})
             elif value[0] == 2:
-                self.__game.characters.update({key: Harmony(value[1], 5, 10)})
+                self.__game.characters.update({key: Harmony(i, value[1], 5, 10)})
             elif value[0] == 3:
-                self.__game.characters.update({key: Abundance(value[1], 5, 10)})
+                self.__game.characters.update({key: Abundance(i, value[1], 5, 10)})
             elif value[0] == 4:
-                self.__game.characters.update({key: Preservation(value[1], 5, 10)})
+                self.__game.characters.update({key: Preservation(i, value[1], 5, 10)})
+            i += 1
         from carte import Carte
         carte = Carte(self.__game)
         carte.run()
@@ -59,11 +61,11 @@ class CharacterMenu3:
         bouton_next = Button((self.__game.largeur / 2) + 615, (self.__game.hauteur / 2) + 360, 130, 40,
                              self.__game.font, 'Next',
                              self.__on_click_next, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_back = Button((self.__game.largeur / 2) - 745, (self.__game.hauteur / 2) + 360, 130, 40,
+        bouton_back = Button((self.__game.largeur / 2) - 745, (self.__game.hauteur / 2) + 360, 200, 40,
                              self.__game.font, 'Back',
                              self.__on_click_back, False, ('#2a75a1', '#666666', '#333333'))
         bouton_choice1 = Button(150, (self.__game.hauteur / 2), 200, 40,
-                                self.__game.font, 'Healer',
+                                self.__game.font, 'Hunt',
                                 self.__on_click_choice1, False, ('#2a75a1', '#666666', '#333333'))
         bouton_choice2 = Button((self.__game.largeur / 4) + 150, (self.__game.hauteur / 2), 200, 40,
                                 self.__game.font, 'Harmony',

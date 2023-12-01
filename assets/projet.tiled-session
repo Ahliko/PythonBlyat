@@ -17,12 +17,15 @@
             "scaleInEditor": 1
         },
         "carte.tmx": {
-            "scale": 1.5,
+            "scale": 2,
             "selectedLayer": 2,
             "viewCenter": {
-                "x": 467.66666666666663,
-                "y": 345
+                "x": 836.25,
+                "y": 267.75
             }
+        },
+        "carte.tmx#0x72_16x16DungeonTileset.v5": {
+            "scaleInDock": 1
         },
         "tileset_dungeon.tsx": {
             "scaleInDock": 2,

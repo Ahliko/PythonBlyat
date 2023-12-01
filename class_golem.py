@@ -1,6 +1,7 @@
 from class_monster import Monster
 import random
 
+
 class Golem(Monster):
 
     def competence(self):
