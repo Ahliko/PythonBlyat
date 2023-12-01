@@ -51,14 +51,11 @@ class Engine:
             rd = random.randint(1, 3)
             match rd:
                 case 1:
-                    ab = Character("aberration" + str(nb), 100, 3, 3, 3, 9)
-                    ennemis.insert(i, ab)
+                    self.__game.monsters.append(Aberration("aberration" + str(nb), 5, 10))
                 case 2:
-                    ch = Character("chimere" + str(nb), 100, 4, 5, 7, 7)
-                    ennemis.insert(i, ch)
+                    self.__game.monsters.append(Chimere("chimere" + str(nb), 5, 10))
                 case 3:
-                    print("cc")
-        return ennemis
+                    self.__game.monsters.append(Golem("golem" + str(nb), 5, 10))
 
     @property
     def turng(self):
