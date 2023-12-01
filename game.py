@@ -15,6 +15,7 @@ class Game(EnvironnementEcran):
             "character2": None,
             "character3": None
         }
+        self.__monsters = []
 
     @property
     def characters(self):
@@ -22,6 +23,14 @@ class Game(EnvironnementEcran):
 
     @characters.setter
     def characters(self, value):
+        self.__characters = value
+
+    @property
+    def monsters(self):
+        return self.__characters
+
+    @monsters.setter
+    def monsters(self, value):
         self.__characters = value
 
     @property

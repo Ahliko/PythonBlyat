@@ -1,15 +1,16 @@
 from __future__ import annotations
-from class_character import Character
-from class_harmony import Harmony
-from class_abundance import Abundance
-from class_preservation import Preservation
+from class_aberration import Aberration
+from class_chimere import Chimere
+from class_golem import Golem
 from class_hunt import Hunt
 import random
+from game import Game
 
 
 class Engine:
-    def __init__(self) -> None:
+    def __init__(self, game: Game) -> None:
         self.__turng: int = 1
+        self.__game = game
 
     @staticmethod
     def sort_speed(lst: list) -> list:
@@ -26,7 +27,7 @@ class Engine:
     def next_turn(self, lst: list):
         occ = 0
         for charac in lst:
-            if charac.turn == False:
+            if not charac.turn:
                 occ += 1
         if occ == len(lst):
             for charac in lst:
@@ -43,9 +44,7 @@ class Engine:
             if charac.cooldown > 0:
                 charac.cooldown -= 1
 
-    @staticmethod
-    def random_monster():
-        ennemis = []
+    def random_monster(self):
         nb = 1
         for i in range(3):
             random.seed()
@@ -69,16 +68,15 @@ class Engine:
     def turng(self, amount):
         self.__turng = amount
 
-
-if __name__ == "__main__":
-    engine = Engine()
-    Lelfe = Hunt("elfe", 5, 10)
-    print(Lelfe.atk)
-    Lelfe.ability(Lelfe)
-    Lelfe.ability(Lelfe)
-    print(Lelfe.cooldown)
-    engine.next_turn([Lelfe])
-    print(Lelfe.cooldown)
-    Lelfe.attack(Lelfe)
-    engine.next_turn([Lelfe])
-    print(Lelfe.cooldown)
+# if __name__ == "__main__":
+#     engine = Engine()
+#     Lelfe = Hunt("elfe", 5, 10)
+#     print(Lelfe.atk)
+#     Lelfe.ability(Lelfe)
+#     Lelfe.ability(Lelfe)
+#     print(Lelfe.cooldown)
+#     engine.next_turn([Lelfe])
+#     print(Lelfe.cooldown)
+#     Lelfe.attack(Lelfe)
+#     engine.next_turn([Lelfe])
+#     print(Lelfe.cooldown)

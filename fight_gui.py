@@ -2,12 +2,14 @@ import pygame as pg
 from CustomButton import Button
 from CustomLabel import Label
 from game import Game
-from main_menu_gui import MainMenu
+from engine import Engine
 
 
 class FightMenu:
     def __init__(self, game: Game):
         self.__game = game
+        self.__engine = Engine(self.__game)
+        self.__engine.random_monster()
         self.__quit = False
         self.__sound = pg.mixer.Sound("assets/Testicular Tango.mp3")
         self.__widgets = None
