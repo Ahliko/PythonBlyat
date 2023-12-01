@@ -16,13 +16,13 @@ class Preservation(Character):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
-        target.shield = int(target.shield + (target.maxhp * (15 / 100)))
+        target.shield = int(target.maxhp * (15 / 100))
         self.ultime += 20
         self.cooldown = 3
         return self.shield
 
-    def use_ultime(self, target: list):
-        if self.ultime == self.max_ult_pts:
+    def ultime(self, target: list, game):
+        if self.ultime == self.maxultpts:
             for i in target:
                 i.shield = int(i.shield + (i._def * (40 / 100) + 20))
             self.ultpts = 0

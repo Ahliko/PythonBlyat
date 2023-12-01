@@ -35,7 +35,8 @@ class Harmony(Character):
             target.atk += int((target.atk * (25 / 100)))
             target.buf["id"] = 3
         target.buf["remaining"] = 1
-        target.buf["ability"] = True 
+        target.buf["ability"] = True
+        self.turn = False
         self.cooldown = 2
 
     def ultime(self, target: [], game):

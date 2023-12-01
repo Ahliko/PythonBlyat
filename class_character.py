@@ -74,7 +74,7 @@ class Character:
             self.__critrate = self.__buf["critrate"]
             self.__critdmg = self.__buf["critdmg"]
 
-    def attack(self, target: Character) -> None:
+    def attack(self, target: Character) -> list:
         if not self.is_alive():
             return
         elif not target.is_alive():
@@ -84,7 +84,7 @@ class Character:
         damages = int(self.compute_damages())
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
         self.check_buffs()
-        self.__turn = False
+        self.turn = False
         target.defense(damages)
         return [self.name, Character.name]
 

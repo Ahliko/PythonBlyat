@@ -4,8 +4,8 @@ from class_character import Character
 from game import Game
 
 class Abundance(Character):
-    def __init__(self, name: str, critrate: int, critdmg: int):
-        super().__init__(name, critrate, critdmg)
+    def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
+        super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 650
         self.hp = self.maxhp
         self.atk = 30
@@ -25,8 +25,9 @@ class Abundance(Character):
         if target.maxhp <= heal + target.hp:
             target.hp = target.maxhp
         else:
-            target.hp = heal
-        self.cooldown = 3
+            target.hp += heal
+        self.turn = False
+        self.cooldown != 3
         
 
     def ultime(self, target: [], game: Game):
@@ -34,10 +35,12 @@ class Abundance(Character):
             target = [i for i in game.characters.values()]
         if self.ultpts == self.maxultpts:
             for i in target:
-                heal = int(i.hp + (i.maxhp * (15 / 100) + 40))
-                if i.maxhp <= heal:
+                heal = int(i.maxhp * (15 / 100) + 40)
+                if i.maxhp <= heal + target.hp:
                     i.hp = i.maxhp
                 else:
-                    i.hp = heal
+                    i.hp += heal
+            self.turn = False
+            self.ultpts = 0
         else:
             print("Vous n'avez pas assez de points d'ultime")

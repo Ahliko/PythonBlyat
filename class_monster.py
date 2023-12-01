@@ -15,4 +15,4 @@ class Monster(Character):
             if self.cooldown > 0:
                 self.attack(lst[charach_to_att])
             else:
-                self.competence(lst)
+                self.ability(lst)

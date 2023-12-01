@@ -15,13 +15,12 @@ class Engine:
     @staticmethod
     def sort_speed(lst: list) -> list:
         sorted_list = sorted(lst, key=lambda x: x.speed)
-        sorted_list.reverse()
         return sorted_list
 
     def next_character(self, lst: list):
         for charac in lst:
-            if charac.turn:
-                return charac.name
+            if charac.turn and charac.is_alive():
+                return charac.id
         self.next_turn(lst)
 
     def next_turn(self, lst: list):
@@ -46,16 +45,31 @@ class Engine:
 
     def random_monster(self):
         nb = 1
+        id = 4
         for i in range(3):
             random.seed()
             rd = random.randint(1, 3)
             match rd:
                 case 1:
-                    self.__game.monsters.append(Aberration("aberration" + str(nb), 5, 10))
+                    self.__game.monsters.append(Aberration(id, "aberration" + f" {str(nb)}", 5, 10))
+                    nb += 1
+                    id += 1
                 case 2:
-                    self.__game.monsters.append(Chimere("chimere" + str(nb), 5, 10))
+                    self.__game.monsters.append(Chimere(id, "chimere" + f" {str(nb)}", 5, 10))
+                    nb += 1
+                    id += 1
                 case 3:
-                    self.__game.monsters.append(Golem("golem" + str(nb), 5, 10))
+                    self.__game.monsters.append(Golem(id, "golem" + f" {str(nb)}", 5, 10))
+                    nb += 1
+                    id += 1
+
+    def final_list(self):
+        self.random_monster()
+        for key, charac in self.__game.characters.items():
+            self.__game.all_characters.append(charac)
+        for charac in self.__game.monsters:
+            self.__game.all_characters.append(charac)
+        self.__game.all_characters = self.sort_speed(self.__game.all_characters)
 
     @property
     def turng(self):
