@@ -51,12 +51,12 @@ class MainMenu:
     def run(self):
         while not self.__quit:
             self.__game.clock.tick(self.__game.framerate)
-            # events = pg.event.get()
-            # for event in events:
-            #     if event.type == pg.QUIT:
-            #         self.__quit = True
-            #     elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-            #         self.__quit = True
+            events = pg.event.get()
+            for event in events:
+                if event.type == pg.QUIT:
+                    self.__quit = True
+                elif event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                    self.__quit = True
             self.__game.update_screen(self.__widgets)
             pg.display.update()
         pg.quit()
