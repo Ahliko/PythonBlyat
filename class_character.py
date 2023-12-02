@@ -36,7 +36,6 @@ class Character:
 
     def is_alive(self) -> bool:
         if self.__hp <= 0:
-            print(f"{self.name} est mort!")
             self.__turn = False
             return False
         return True
@@ -85,7 +84,7 @@ class Character:
         self.add_ultpts(15)
         damages = int(self.compute_damages())
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
-        self.check_buffs(game)
+        # self.check_buffs(game)
         self.turn = False
         target.defense(damages)
         return [self.name, Character.name]
