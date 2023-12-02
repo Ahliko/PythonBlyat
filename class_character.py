@@ -8,7 +8,7 @@ class Character:
         self.__maxhp: int = 0
         self.__id: int = _id
         self.__hp: int = self.__maxhp
-        self.__atk: int = 0
+        self.__atk: int = 999
         self.__def: int = 0
         self.__shield: int = 0
         self.__critdmg: int = critdamage  # dégats crit %
@@ -37,8 +37,7 @@ class Character:
             print(f"{self.name} est mort!")
             self.__turn = False
             return False
-        else:
-            return True
+        return True
 
     def compute_damages(self) -> int | float:
         if random.randint(0, 100) <= self.__critrate:
@@ -132,6 +131,7 @@ class Character:
 
     @atk.setter
     def atk(self, amount: int) -> None:
+        print(f"DANS LE SETTER : {amount}")
         self.__atk = amount
 
     @property

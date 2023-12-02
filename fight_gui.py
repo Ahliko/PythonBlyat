@@ -15,6 +15,7 @@ class FightMenu:
         self.__quit = False
         self.__sound = pg.mixer.Sound("assets/Testicular Tango.mp3")
         self.__widgets = None
+        self.__fin = False
         self.__background = pg.image.load("assets/Fight.png")
         self.__sound.play(-1)
 
@@ -108,15 +109,22 @@ class FightMenu:
                 i + 3].text = f"{self.get_character(i + 1).name} : {self.get_character(i + 1).hp}/{self.get_character(i + 1).maxhp} HP | {self.get_character(i + 1).ultpts}/{self.get_character(i + 1).maxultpts} ULTPTS | {self.get_character(i + 1).cooldown} CD"
 
     def update_status(self):
-        try:
-            self.__widgets[
-                -1].text = f"It's {self.get_character(self.__engine.next_character(self.__game.all_characters)).name} to play !"
-        except AttributeError:
-            self.__widgets[
-                -1].text = f"Next turn !"
+        if self.__engine.is_win([i for i in self.__game.characters.values()]):
+            self.__fin = True
+            self.__widgets[-1].text = f"Vous avez gagné !"
+        elif self.__engine.is_win([i for i in self.__game.monsters]):
+            self.__fin = True
+            self.__widgets[-1].text = f"Vous avez perdu !"
+        else:
+            self.__fin = False
+            try:
+                self.__widgets[
+                    -1].text = f"It's {self.get_character(self.__engine.next_character(self.__game.all_characters)).name} to play !"
+            except AttributeError:
+                self.__widgets[
+                    -1].text = f"Next turn !"
 
     def update_game(self):
-        pg.event.wait(3000)
         if self.get_character(self.__engine.next_character(self.__game.all_characters)) in self.__game.monsters:
             self.get_character(self.__engine.next_character(self.__game.all_characters)).choice(
                 [i for i in self.__game.characters.values()])

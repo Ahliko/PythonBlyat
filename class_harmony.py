@@ -17,6 +17,8 @@ class Harmony(Character):
         self.speed = 11
 
     def ability(self, target: Character, game):
+        if target in game.monsters:
+            target = [i for i in game.characters.values()][random.randint(0, len(game.characters) - 1)]
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
@@ -40,6 +42,8 @@ class Harmony(Character):
         self.cooldown = 2
 
     def ultime(self, target: [], game):
+        if target in game.monsters:
+            target = [i for i in game.characters.values()]
         if self.ultpts == self.maxultpts:
             print("UTILISATION DE LULTIME")
             for i in target:

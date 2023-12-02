@@ -71,6 +71,17 @@ class Engine:
             self.__game.all_characters.append(charac)
         self.__game.all_characters = self.sort_speed(self.__game.all_characters)
 
+    @staticmethod
+    def is_win(lst: list):
+        occ = 0
+        for charac in lst:
+            if not charac.is_alive():
+                occ += 1
+        if occ == len(lst):
+            return True
+        else:
+            return False
+
     @property
     def turng(self):
         return self.__turng

@@ -7,11 +7,12 @@ class Golem(Monster):
         super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 900
         self.hp = self.maxhp
-        self.atk = 30
+        self.atk = 300
         self._def = 55
         self.speed = 8
 
     def ability(self, target: list):
+        print(f"{self.name} utilise sa compétence spéciale : Bouclier de pierre")
         self.shield = self._def + (self._def * (45 / 100))
         self.turn = False
         self.cooldown = 2

@@ -36,7 +36,7 @@ class Abundance(Character):
         if self.ultpts == self.maxultpts:
             for i in target:
                 heal = int(i.maxhp * (15 / 100) + 40)
-                if i.maxhp <= heal + target.hp:
+                if i.maxhp <= heal + i.hp:
                     i.hp = i.maxhp
                 else:
                     i.hp += heal

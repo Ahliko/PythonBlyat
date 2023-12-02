@@ -1,5 +1,6 @@
 from class_character import Character
 import random
+import pygame
 
 
 class Monster(Character):
@@ -7,6 +8,7 @@ class Monster(Character):
         super().__init__(_id, name, critrate, critdmg)
 
     def choice(self, lst: list):
+        pygame.event.wait(3000)
         ch = random.randint(0, 100)
         charach_to_att = random.randint(0, len(lst) - 1)
         if ch < 80:
