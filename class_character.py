@@ -110,7 +110,11 @@ class Character:
             print(f"{self.__hp} HP restants")
 
     def decrease_health(self, amount: int) -> None:
-        self.__hp -= amount
+        print(amount)
+        if self.__hp - amount < 0:
+            self.__hp = 0
+        else:
+            self.__hp -= amount
 
     @property
     def hp(self) -> int:

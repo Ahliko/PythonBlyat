@@ -430,7 +430,7 @@
   <object id="3" type="wall" x="1065" y="23.5431" width="5.00987" height="496"/>
   <object id="4" type="wall" x="8.71015" y="24.7446" width="1064.5" height="22.378"/>
   <object id="5" type="wall" x="8.70471" y="498.747" width="1063.75" height="20.8862"/>
-  <object id="7" name="Monster" x="323.375" y="183.5">
+  <object id="7" name="Monster" type="Monster" x="323.375" y="183.5">
    <point/>
   </object>
   <object id="8" name="Vendor" x="1021.5" y="68">
@@ -462,9 +462,9 @@
   <object id="36" type="wall" x="968.375" y="46.875" width="3.75" height="62.125"/>
   <object id="41" type="wall" x="13.5" y="132.875" width="49.375" height="18.875"/>
   <object id="42" type="wall" x="85.625" y="133.125" width="50" height="18.625"/>
-  <object id="43" type=" " x="131.625" y="28.75" width="3.875" height="104.25"/>
+  <object id="43" type="wall" x="131.625" y="28.75" width="3.875" height="104.25"/>
   <object id="44" type="wall" x="14.6667" y="188.667" width="232.667" height="17.3333"/>
-  <object id="45" type="wall " x="244" y="76.6667" width="3.33333" height="112.333"/>
+  <object id="45" type="wall" x="244" y="76.6667" width="3.33333" height="112.333"/>
   <object id="47" type="wall" x="247.333" y="76.6667" width="247.667" height="19.3333"/>
   <object id="48" type="wall" x="491.667" y="76.3333" width="3" height="316"/>
   <object id="49" type="wall" x="495.333" y="148.333" width="380.667" height="20"/>

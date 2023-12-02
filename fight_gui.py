@@ -21,6 +21,7 @@ class FightMenu:
         self.__lose = False
         self.__choice = None
         self.__threads = []
+        self.__func = None
         self.__running = False
         self.__background = pg.image.load("assets/Fight.png")
         self.__sound.play(-1)
@@ -45,16 +46,14 @@ class FightMenu:
         next_carac = self.__engine.next_character(self.__game.all_characters)
         if self.get_character(next_carac) in self.__game.characters.values():
             self.show()
-            while True:
-                if self.__choice is None:
-                    continue
+            if self.__choice is not None:
                 target_monster = self.__game.monsters[self.__choice]
                 if target_monster.is_alive():
                     self.__game.all_characters[self.__game.all_characters.index(self.get_character(next_carac))].attack(
                         target_monster, self.__game)
-                    break
                 self.__choice = None
-            self.hide()
+                self.hide()
+                self.__func = None
         self.__running = False
 
     def on_ability(self):
@@ -62,55 +61,48 @@ class FightMenu:
         next_carac = self.get_character(self.__engine.next_character(self.__game.all_characters))
         if next_carac in self.__game.characters.values():
             self.show()
-            while True:
-                if self.__choice is None:
-                    print("not choice")
-                    continue
+            if self.__choice is not None:
                 if type(next_carac).__name__ == "Hunt":
                     print("hunt")
                     target = self.__game.monsters[self.__choice]
                 else:
                     print("not hunt")
                     target = [i for i in self.__game.characters.values()][self.__choice]
-                if target in self.__game.monsters and target.is_alive():
+                if target.is_alive():
                     print("target is alive")
                     self.__game.all_characters[
                         self.__game.all_characters.index(next_carac)].ability(target,
                                                                               self.__game)
-                    break
                 self.__choice = None
-            self.hide()
+                self.hide()
+                self.__func = None
         self.__running = False
 
     def on_ultime(self):
         self.__running = True
         next_carac = self.get_character(self.__engine.next_character(self.__game.all_characters))
         if next_carac in self.__game.characters.values():
-            while True:
-                if type(next_carac).__name__ == "Hunt":
-                    target = self.__game.monsters
-                else:
-                    target = [i for i in self.__game.characters.values()]
-                if target in self.__game.monsters and target.is_alive():
-                    self.__game.all_characters[self.__game.all_characters.index(next_carac)].ultime(
-                        target, self.__game)
-                    break
+            if type(next_carac).__name__ == "Hunt":
+                target = [i for i in self.__game.monsters if i.is_alive()]
+            else:
+                target = [i for i in self.__game.characters.values() if i.is_alive()]
+            self.__game.all_characters[self.__game.all_characters.index(next_carac)].ultime(
+                target, self.__game)
         self.__running = False
 
     def __on_click_attacks(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
-        self.__threads.append(threading.Thread(target=self.on_attack))
-        self.__threads[-1].start()
+        self.__func = self.on_attack
+        self.on_attack()
 
     def __on_click_ability(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
-        self.__threads.append(threading.Thread(target=self.on_ability))
-        self.__threads[-1].start()
+        pg.event.wait(self.__game.framerate * 100)
+        self.__func = self.on_ability
+        self.on_ability()
 
     def __on_click_ultime(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
-        self.__threads.append(threading.Thread(target=self.on_ultime))
-        self.__threads[-1].start()
+        self.on_ultime()
 
     def __on_click_next(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
@@ -119,6 +111,7 @@ class FightMenu:
             self.__turn_fin = False
 
     def __disable(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
         self.__sound.stop()
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__win = True
@@ -198,10 +191,10 @@ class FightMenu:
     def update_status(self):
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__fin = True
-            self.__widgets[-1].text = f"Vous avez gagné !"
+            self.__widgets[-1].text = f"Vous avez perdu !"
         elif self.__engine.is_win([i for i in self.__game.monsters]):
             self.__fin = True
-            self.__widgets[-1].text = f"Vous avez perdu !"
+            self.__widgets[-1].text = f"Vous avez gagné !"
         else:
             self.__fin = False
             try:
@@ -227,9 +220,8 @@ class FightMenu:
                               'Terminate Fight', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
                               center=True)]
         while not self.__quit:
-            for i in self.__threads:
-                if not i.is_alive():
-                    self.__threads.remove(i)
+            if self.__func is not None:
+                self.__func()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:
@@ -253,9 +245,9 @@ class FightMenu:
                 self.__game.update_screen(self.__widgets, self.__background)
             else:
                 if self.__win:
-                    return True
-                elif self.__lose:
                     return False
-                self.__game.update_screen(widgets_fin)
+                elif self.__lose:
+                    return True
+                self.__game.update_screen(widgets_fin, self.__background)
 
             pg.display.update()

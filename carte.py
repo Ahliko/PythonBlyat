@@ -181,6 +181,7 @@ class Player(pygame.sprite.Sprite):
             monster = self.carte.get_collision_sprite()
             self.position[0] -= self.speed * 2
             if self.start_fight():
+                self.carte.monsters.remove(monster)
                 monster.kill()
             else:
                 self.carte.lose()

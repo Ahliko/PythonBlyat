@@ -33,3 +33,4 @@ class Lose:
             self.__game.update_screen(widgets)
             pg.display.update()
         pg.quit()
+        exit()
