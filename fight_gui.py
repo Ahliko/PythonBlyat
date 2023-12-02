@@ -16,6 +16,8 @@ class FightMenu:
         self.__sound = pg.mixer.Sound("assets/Testicular Tango.mp3")
         self.__widgets = None
         self.__fin = False
+        self.__win = False
+        self.__lose = False
         self.__background = pg.image.load("assets/Fight.png")
         self.__sound.play(-1)
 
@@ -27,7 +29,7 @@ class FightMenu:
                 target_monster = self.__game.all_characters[randint(0, len(self.__game.monsters) - 1)]
                 if target_monster in self.__game.monsters and target_monster.is_alive():
                     self.__game.all_characters[self.__game.all_characters.index(self.get_character(next_carac))].attack(
-                        target_monster)
+                        target_monster, self.__game)
                     break
 
     def __on_click_ability(self):
@@ -60,7 +62,10 @@ class FightMenu:
 
     def __disable(self):
         self.__sound.stop()
-        self.__quit = True
+        if self.__engine.is_win([i for i in self.__game.characters.values()]):
+            self.__win = True
+        elif self.__engine.is_win(self.__game.monsters):
+            self.__lose = True
         self.__sound.stop()
 
     def __widgets_init(self):
@@ -135,6 +140,10 @@ class FightMenu:
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
         self.__engine.final_list()
+        widgets_fin = [self.__widgets[-1],
+                       Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
+                              'Terminate Fight', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
+                              center=True)]
         while not self.__quit:
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
@@ -146,8 +155,15 @@ class FightMenu:
                 elif event.type == pg.QUIT:
                     pg.quit()
                     exit()
-            self.update_stats()
             self.update_status()
-            self.update_game()
-            self.__game.update_screen(self.__widgets, self.__background)
+            if not self.__fin:
+                self.update_stats()
+                self.update_game()
+                self.__game.update_screen(self.__widgets, self.__background)
+            else:
+                if self.__win:
+                    return True
+                elif self.__lose:
+                    return False
+                self.__game.update_screen(widgets_fin)
             pg.display.update()

@@ -1,6 +1,7 @@
 import pygame as pg
 from CustomButton import Button
 from CustomLabel import Label
+import threading
 from Environnement_ecran import EnvironnementEcran
 
 
@@ -69,7 +70,20 @@ class Game(EnvironnementEcran):
         for i in lst_widgets:
             i.draw(self.ecran)
 
+    @staticmethod
+    def events():
+
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
+                pg.quit()
+                exit()
+            elif event.type == pg.QUIT:
+                pg.quit()
+                exit()
+
     def run(self):
+        events = threading.Thread(target=self.events())
+        events.start()
         from main_menu_gui import MainMenu
         main_menu = MainMenu(self)
         main_menu.run()

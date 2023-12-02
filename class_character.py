@@ -1,6 +1,8 @@
 from __future__ import annotations
 import random
 
+from game import Game
+
 
 class Character:
     def __init__(self, _id: int, name: str, critrate: int, critdamage: int) -> None:
@@ -8,7 +10,7 @@ class Character:
         self.__maxhp: int = 0
         self.__id: int = _id
         self.__hp: int = self.__maxhp
-        self.__atk: int = 999
+        self.__atk: int = 0
         self.__def: int = 0
         self.__shield: int = 0
         self.__critdmg: int = critdamage  # dégats crit %
@@ -56,24 +58,25 @@ class Character:
             print(f"{self.name} : ULT READY")
             self.__ultpts = self.__maxultpts
 
-    def check_buffs(self) -> None:
-        if self.__buf["ability"]:
-            if self.__buf["id"] == 1:
-                self.__critdmg -= 20
-            elif self.__buf["id"] == 2:
-                self.__critrate -= 35
-            elif self.__buf["id"] == 3:
-                self.__atk -= int((self.__atk * (25 / 100)))
-            self.__buf["ability"] = False
-            self.__buf["id"] = 0
-        if self.__buf["remaining"] > 0:
-            self.__buf["remaining"] -= 1
-        if self.__buf["remaining"] == 0:
-            self.__atk = self.__buf["atk"]
-            self.__critrate = self.__buf["critrate"]
-            self.__critdmg = self.__buf["critdmg"]
+    def check_buffs(self, game: Game) -> None:
+        if self not in game.monsters:
+            if self.__buf["ability"]:
+                if self.__buf["id"] == 1:
+                    self.__critdmg -= 20
+                elif self.__buf["id"] == 2:
+                    self.__critrate -= 35
+                elif self.__buf["id"] == 3:
+                    self.__atk -= int((self.__atk * (25 / 100)))
+                self.__buf["ability"] = False
+                self.__buf["id"] = 0
+            if self.__buf["remaining"] > 0:
+                self.__buf["remaining"] -= 1
+            if self.__buf["remaining"] == 0:
+                self.__atk = self.__buf["atk"]
+                self.__critrate = self.__buf["critrate"]
+                self.__critdmg = self.__buf["critdmg"]
 
-    def attack(self, target: Character) -> list:
+    def attack(self, target: Character, game: Game) -> list:
         if not self.is_alive():
             return
         elif not target.is_alive():
@@ -82,7 +85,7 @@ class Character:
         self.add_ultpts(15)
         damages = int(self.compute_damages())
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
-        self.check_buffs()
+        self.check_buffs(game)
         self.turn = False
         target.defense(damages)
         return [self.name, Character.name]

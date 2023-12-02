@@ -11,7 +11,7 @@ class Golem(Monster):
         self._def = 55
         self.speed = 8
 
-    def ability(self, target: list):
+    def ability(self, target: list, game):
         print(f"{self.name} utilise sa compétence spéciale : Bouclier de pierre")
         self.shield = self._def + (self._def * (45 / 100))
         self.turn = False

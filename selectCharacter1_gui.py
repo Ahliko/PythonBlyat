@@ -12,6 +12,7 @@ class CharacterMenu1:
         self.__quit = False
         self.__widgets = None
         self.__textbox_text = ""
+        self.textbox = None
 
     def __disable(self):
         self.__quit = True
@@ -22,10 +23,13 @@ class CharacterMenu1:
         if self.__game.characters.get("character1") is None or self.__game.characters.get("character1")[1] == "":
             print("You must choose a character")
             return
+
         from selectCharacter2_gui import CharacterMenu2
         character2_menu = CharacterMenu2(self.__game)
         character2_menu.run()
         print("Return to back1")
+        self.textbox.enable()
+        self.textbox.show()
         self.__widgets = self.__widgets_init()
 
     def __on_click_back(self):
@@ -74,9 +78,9 @@ class CharacterMenu1:
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Select First Character')
-        textbox = TextBox(self.__game.ecran, self.__game.largeur / 2 - 250,
+        self.textbox = TextBox(self.__game.ecran, self.__game.largeur / 2 - 250,
                           self.__game.hauteur / 4 * 3, 500, 50, font=self.__game.font, textColour=(0, 0, 0),
-                          borderColour=(255, 255, 255), onSubmit=lambda: print(textbox.getText()))
+                          borderColour=(255, 255, 255), onSubmit=lambda: print(self.textbox.getText()))
         self.__widgets = self.__widgets_init()
         self.__game.update_screen(self.__widgets)
         pg.display.flip()
@@ -92,6 +96,8 @@ class CharacterMenu1:
                     pg.quit()
                     exit()
             self.__game.update_screen(self.__widgets)
-            self.__textbox_text = textbox.getText()
+            self.__textbox_text = self.textbox.getText()
             pygame_widgets.update(events)
             pg.display.update()
+        self.textbox.disable()
+        self.textbox.hide()

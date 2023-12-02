@@ -52,3 +52,4 @@ class SettingsMenu:
             pygame_widgets.update(events)
             pg.display.update()
         slider.disable()
+        slider.hide()

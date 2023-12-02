@@ -1,7 +1,6 @@
 import pygame
 import pytmx
 import pyscroll
-from CustomButton import Button
 from game import Game
 
 
@@ -20,8 +19,8 @@ class Carte:
         player_position = tmx_data.get_object_by_name("Player")
         self.player = Player(player_position.x, player_position.y, self)
 
-        monster_position = tmx_data.get_object_by_name("Monster")
-        self.monster = Monster(monster_position.x, monster_position.y)
+        self.monsters = [Monster(i.x, i.y) for i in tmx_data.objects if
+                         i.type == "Monster"]
 
         vendor_position = tmx_data.get_object_by_name("Vendor")
         self.vendor = Vendor(vendor_position.x, vendor_position.y)
@@ -32,12 +31,18 @@ class Carte:
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
         self.group.center(self.player.rect.center)
         self.group.add(self.player)
-        self.group.add(self.monster)
+        for i in self.monsters:
+            self.group.add(i)
         self.group.add(self.vendor)
 
     @property
     def game(self):
-        return self.__game        
+        return self.__game
+
+    def get_collision_sprite(self):
+        for i in self.monsters:
+            if self.check_collision(self.player, [i]):
+                return i
 
     def handle_input(self):
         pressed = pygame.key.get_pressed()
@@ -61,23 +66,40 @@ class Carte:
     def update(self):
         self.group.update()
         self.player.animate()
-        self.monster.animate()
+        for i in self.monsters:
+            i.animate()
         self.vendor.animate()
         pygame.display.flip()
         for sprite in self.group.sprites():
             if sprite.feet.collidelist(self.walls) > -1:
                 sprite.move_back()
-    
+
     def shop(self):
         pygame.event.wait(self.__game.framerate * 100 // 6)
         from shop_gui import ShopMenu
         shop = ShopMenu(self.__game)
         shop.run()
 
+    def lose(self):
+        from lose import Lose
+        lose = Lose(self.game)
+        lose.run()
+
+    def win(self):
+        from win import Win
+        win = Win(self.game)
+        win.run()
+
+    def check_win(self):
+        if len(self.monsters) == 0:
+            self.win()
+
     def run(self):
         while True:
+            self.check_win()
             self.player.save_location()
-            self.monster.save_location()
+            for i in self.monsters:
+                i.save_location()
             self.vendor.save_location()
             self.handle_input()
             self.update()
@@ -146,7 +168,7 @@ class Player(pygame.sprite.Sprite):
     def start_fight(self):
         from fight_gui import FightMenu
         fight = FightMenu(self.carte.game)
-        fight.run()        
+        return fight.run()
 
     def move_right(self):
         if not self.carte.check_collision(self, [self.carte.monster]):
@@ -156,8 +178,12 @@ class Player(pygame.sprite.Sprite):
                 self.position[0] -= self.speed * 2
                 self.carte.shop()
         else:
+            monster = self.carte.get_collision_sprite()
             self.position[0] -= self.speed * 2
-            self.start_fight()
+            if self.start_fight():
+                monster.kill()
+            else:
+                self.carte.lose()
 
     def move_left(self):
         if not self.carte.check_collision(self, [self.carte.monster]):

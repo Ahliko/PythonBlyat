@@ -12,7 +12,7 @@ class Chimere(Monster):
         self._def = 15
         self.speed = 13
 
-    def ability(self, target : list):
+    def ability(self, target : list, game):
         self.turn = False
         self.aoe(target)
         self.cooldown = 2

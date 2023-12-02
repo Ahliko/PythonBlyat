@@ -22,7 +22,7 @@ class Hunt(Character):
         self.atk += (self.atk * (15 / 100))
         self.critrate += 30
         self.critdmg += self.critdmg * (20 / 100)
-        self.attack(target)
+        self.attack(target, game)
         self.atk = old_atk
         self.critdmg = old_critdmg
         self.critrate = old_critrate
@@ -37,7 +37,7 @@ class Hunt(Character):
             print(f"{self.name} utlise son ultime !")
             old_atk = self.atk
             self.atk = (self.atk * (240 / 100))
-            self.attack(target)
+            self.attack(target, game)
             self.atk = old_atk
             self.ultpts = 0
             self.turn = False

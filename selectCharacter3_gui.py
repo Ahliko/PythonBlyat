@@ -16,6 +16,7 @@ class CharacterMenu3:
         self.__quit = False
         self.__widgets = None
         self.__textbox_text = ""
+        self.textbox = None
 
     def __disable(self):
         self.__quit = True
@@ -37,9 +38,13 @@ class CharacterMenu3:
             elif value[0] == 4:
                 self.__game.characters.update({key: Preservation(i, value[1], 5, 10)})
             i += 1
+        self.textbox.disable()
+        self.textbox.hide()
         from carte import Carte
         carte = Carte(self.__game)
         carte.run()
+        self.textbox.enable()
+        self.textbox.show()
         self.__widgets = self.__widgets_init()
 
     def __on_click_back(self):
@@ -88,9 +93,9 @@ class CharacterMenu3:
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Select Last Character')
-        textbox = TextBox(self.__game.ecran, self.__game.largeur / 2 - 250,
+        self.textbox = TextBox(self.__game.ecran, self.__game.largeur / 2 - 250,
                           self.__game.hauteur / 4 * 3, 500, 50, font=self.__game.font, textColour=(0, 0, 0),
-                          borderColour=(255, 255, 255), onSubmit=lambda: print(textbox.getText()))
+                          borderColour=(255, 255, 255), onSubmit=lambda: print(self.textbox.getText()))
         self.__widgets = self.__widgets_init()
         self.__game.update_screen(self.__widgets)
         pg.display.flip()
@@ -105,6 +110,8 @@ class CharacterMenu3:
                     pg.quit()
                     exit()
             self.__game.update_screen(self.__widgets)
-            self.__textbox_text = textbox.getText()
+            self.__textbox_text = self.textbox.getText()
             pygame_widgets.update(events)
             pg.display.update()
+        self.textbox.disable()
+        self.textbox.hide()
