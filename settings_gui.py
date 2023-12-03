@@ -40,6 +40,7 @@ class SettingsMenu:
         self.__game.update_screen(self.__widgets)
         pg.display.flip()
         while not self.__quit:
+            self.__widgets = self.__widgets_init()
             self.__game.volume = slider.getValue()
             self.__widgets[2].text = f"Volume {self.__game.volume}"
             self.__game.clock.tick(self.__game.framerate)
@@ -53,6 +54,8 @@ class SettingsMenu:
                     pg.quit()
                     exit()
             self.__game.update_screen(self.__widgets)
+            slider.setX((self.__game.largeur // 2) - 100)
+            slider.setY((self.__game.hauteur // 2) + 140)
             pygame_widgets.update(events)
             pg.display.update()
         slider.disable()

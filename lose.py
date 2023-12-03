@@ -16,13 +16,12 @@ class Lose:
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Lose')
-        widgets = [Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
-                          'Return to main menu', self.__on_click_return, False, ('#2a75a1', '#666666', '#333333'),
-                          center=True),
-                   Label("You lose", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50), None,
-                         True)]
-        self.__game.update_screen(widgets)
         while not self.__quit:
+            widgets = [Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
+                              'Return to main menu', self.__on_click_return, False, ('#2a75a1', '#666666', '#333333'),
+                              center=True),
+                       Label("You lose", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50), None,
+                             True)]
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:

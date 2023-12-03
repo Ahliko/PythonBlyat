@@ -13,8 +13,8 @@ class Carte:
 
         tmx_data = pytmx.util_pygame.load_pygame("assets/carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
-        map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__game.ecran.get_size())
-        map_layer.zoom = 3
+        self.map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__game.ecran.get_size())
+        self.map_layer.zoom = 6
 
         player_position = tmx_data.get_object_by_name("Player")
         self.player = Player(player_position.x, player_position.y, self)
@@ -29,9 +29,9 @@ class Carte:
                       obj.type == "wall"]
 
         self.fin = [pygame.Rect(obj.x, obj.y, obj.width, obj.height) for obj in tmx_data.objects if
-                      obj.type == "Fin"]
+                    obj.type == "Fin"]
 
-        self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
+        self.group = pyscroll.PyscrollGroup(map_layer=self.map_layer, default_layer=3)
         self.group.center(self.player.rect.center)
         self.group.add(self.player)
         for i in self.monsters:
@@ -67,30 +67,36 @@ class Carte:
         return pygame.sprite.spritecollide(sprite, group, False, pygame.sprite.collide_mask)
 
     def update(self):
+        self.__game.update_display()
+        self.map_layer.set_size(self.__game.ecran.get_size())
         self.group.update()
         self.player.animate()
         for i in self.monsters:
             i.animate()
         self.vendor.animate()
         pygame.display.flip()
-        for sprite in self.group.sprites():
+        for sprite in [self.group.sprites()[0]]:
             if sprite.feet.collidelist(self.walls) > -1:
                 pygame.event.wait(self.__game.framerate * 100 // 6)
                 self.__game.play_sound_bump()
                 sprite.move_back()
 
     def shop(self):
+        self.__game.stop_sound_donjon()
         pygame.event.wait(self.__game.framerate * 100 // 6)
         from shop_gui import ShopMenu
         shop = ShopMenu(self.__game)
         shop.run()
+        self.__game.play_sound_donjon()
 
     def lose(self):
+        self.__game.stop_sound_donjon()
         from lose import Lose
         lose = Lose(self.game)
         lose.run()
 
     def win(self):
+        self.__game.stop_sound_donjon()
         from win import Win
         win = Win(self.game)
         win.run()
@@ -102,6 +108,7 @@ class Carte:
                 self.win()
 
     def run(self):
+        self.__game.play_sound_donjon()
         while True:
             self.check_win()
             self.player.save_location()
@@ -173,9 +180,12 @@ class Player(pygame.sprite.Sprite):
         self.old_position = self.position.copy()
 
     def start_fight(self):
+        self.carte.game.stop_sound_donjon()
         from fight_gui import FightMenu
         fight = FightMenu(self.carte.game)
-        return fight.run()
+        result = fight.run()
+        self.carte.game.play_sound_donjon()
+        return result
 
     def move_right(self):
         if not self.carte.check_collision(self, self.carte.monsters):
@@ -252,7 +262,7 @@ class Monster(pygame.sprite.Sprite):
         self.image = self.get_image(0, 0)
         self.rect = self.image.get_rect()
         self.sleep = 0
-        self.position = [x, y]
+        self.position = [x - 16, y - 16]
         self.speed = 2
         self.current_image = 0
         self.direction = 'idle'

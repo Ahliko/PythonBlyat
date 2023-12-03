@@ -23,13 +23,15 @@ class Game(EnvironnementEcran):
         self.__sound_win_fight = pg.mixer.Sound("assets/win_fight.mp3")
         self.__sound_lose_fight = pg.mixer.Sound("assets/lose_fight.mp3")
         self.__sound_bump = pg.mixer.Sound("assets/bump.mp3")
-        self.__volume = 100
+        self.__sound_donjon = pg.mixer.Sound("assets/donjon.mp3")
+        self.__volume = 4
         self.__sound_menu.set_volume(self.__volume / 100)
         self.__sound_button.set_volume(self.__volume / 100)
         self.__sound_fight.set_volume(self.__volume / 100)
         self.__sound_win_fight.set_volume(self.__volume / 100)
         self.__sound_lose_fight.set_volume(self.__volume / 100)
         self.__sound_bump.set_volume(self.__volume / 100)
+        self.__sound_donjon.set_volume(self.__volume / 100)
 
     @property
     def volume(self):
@@ -44,13 +46,20 @@ class Game(EnvironnementEcran):
         self.__sound_win_fight.set_volume(self.__volume / 100)
         self.__sound_lose_fight.set_volume(self.__volume / 100)
         self.__sound_bump.set_volume(self.__volume / 100)
+        self.__sound_donjon.set_volume(self.__volume / 100)
+
+    def play_sound_donjon(self):
+        self.__sound_donjon.play(-1)
+
+    def stop_sound_donjon(self):
+        self.__sound_donjon.stop()
 
     def play_sound_bump(self):
         self.__sound_bump.play()
 
     def play_sound_win_fight(self):
         self.__sound_win_fight.play()
-    
+
     def stop_sound_win_fight(self):
         self.__sound_win_fight.stop()
 
@@ -74,6 +83,35 @@ class Game(EnvironnementEcran):
 
     def play_sound_button(self):
         self.__sound_button.play()
+
+    def widgets_init_characters(self, nb, __on_click_next, __on_click_back, __on_click_choice1, __on_click_choice2, __on_click_choice3, __on_click_choice4):
+        bouton_next = Button((self.largeur / 8) * 7, self.hauteur / 4 * 3, 130, 40,
+                             self.font, 'Next',
+                             __on_click_next, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_back = Button((self.largeur / 8), self.hauteur / 4 * 3, 200, 40,
+                             self.font, 'Back',
+                             __on_click_back, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_choice1 = Button((self.largeur / 5), (self.hauteur / 2), 200, 40,
+                                self.font, 'Hunt',
+                                __on_click_choice1, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_choice2 = Button((self.largeur / 5) * 2, (self.hauteur / 2), 200, 40,
+                                self.font, 'Harmony',
+                                __on_click_choice2, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_choice3 = Button((self.largeur / 5) * 3, (self.hauteur / 2), 200, 40,
+                                self.font, 'Abundance',
+                                __on_click_choice3, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_choice4 = Button((self.largeur / 5) * 4, (self.hauteur / 2), 200, 40,
+                                self.font, 'Preservation',
+                                __on_click_choice4, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        label_title = Label("PythonBlyat", 100, (0, 0, 0),
+                            (self.largeur / 2, self.hauteur / 2 - 300), None, True)
+        label_name = Label("Choose your character's name :", 50, (0, 0, 0),
+                           (self.largeur / 2, self.hauteur / 4 * 3 - 50), None, True)
+        label_selection = Label(f"Choose your character {nb}", 50, (0, 0, 0),
+                                (self.largeur / 2, self.hauteur / 2 - 150),
+                                None, True)
+        return [bouton_next, bouton_back, bouton_choice1, bouton_choice2, bouton_choice3, bouton_choice4, label_title,
+                label_selection, label_name]
 
     @property
     def characters(self):
@@ -119,10 +157,11 @@ class Game(EnvironnementEcran):
         self.__font = pg.font.SysFont(font, taille)
 
     def update_screen(self, lst_widgets: list[Button, Label], background: pg.Surface = None):
+        self.update_display()
         if background is None:
-            self.ecran.blit(self.__background, (0, 0))
+            self.ecran.blit(pg.transform.scale(self.__background, (self.largeur, self.hauteur)), (0, 0))
         else:
-            self.ecran.blit(background, (0, 0))
+            self.ecran.blit(pg.transform.scale(background, (self.largeur, self.hauteur)), (0, 0))
         for i in lst_widgets:
             i.draw(self.ecran)
 

@@ -52,6 +52,7 @@ class ShopMenu:
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
         while not self.__quit:
+            self.__widgets = self.__widgets_init()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:

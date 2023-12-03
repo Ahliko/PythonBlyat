@@ -233,11 +233,12 @@ class FightMenu:
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
         self.__engine.final_list()
-        widgets_fin = [self.__widgets[-1],
-                       Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
-                              'Terminate Fight', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
-                              center=True)]
         while not self.__quit:
+            widgets_fin = [self.__widgets[-1],
+                           Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
+                                  'Terminate Fight', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
+                                  center=True)]
+            self.__widgets = self.__widgets_init()
             if self.__func is not None:
                 self.__func()
             self.__game.clock.tick(self.__game.framerate)

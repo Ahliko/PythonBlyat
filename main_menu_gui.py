@@ -56,6 +56,7 @@ class MainMenu:
 
     def run(self):
         while not self.__quit:
+            self.__widgets = self.__widgets_init()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:
