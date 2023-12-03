@@ -48,6 +48,7 @@ class Harmony(Character):
         target.buf["ability"] = True
         self.turn = False
         self.cooldown = 2
+        self.add_ultpts(30)
 
     def ultime(self, target: [], game):
         if target in game.monsters:

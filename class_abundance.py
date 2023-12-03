@@ -31,6 +31,7 @@ class Abundance(Character):
             target.hp += heal
         self.turn = False
         self.cooldown = 3
+        self.add_ultpts(30)
 
     def ultime(self, target: [], game: Game):
         if target in game.monsters:

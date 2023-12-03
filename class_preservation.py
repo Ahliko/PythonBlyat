@@ -21,7 +21,7 @@ class Preservation(Character):
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
         target.shield = int(target.maxhp * (15 / 100))
-        self.ultpts += 20
+        self.add_ultpts(30)
         self.cooldown = 3
         return self.shield
 

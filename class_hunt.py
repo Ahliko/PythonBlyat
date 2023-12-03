@@ -26,7 +26,7 @@ class Hunt(Character):
         self.atk = old_atk
         self.critdmg = old_critdmg
         self.critrate = old_critrate
-        self.ultpts += 30
+        self.add_ultpts(30)
         self.cooldown = 2
         if self.ultpts > self.maxultpts:
             self.ultpts = self.maxultpts

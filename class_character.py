@@ -59,7 +59,7 @@ class Character:
         if (self.__ultpts + amount < self.__maxultpts):
             self.__ultpts += amount
         else:
-            print(f"{self.name} : ULT READY")
+            print(f"{self.name} : ULTIME READY")
             self.__ultpts = self.__maxultpts
 
     def check_buffs(self, game: Game) -> None:
@@ -90,7 +90,7 @@ class Character:
         damages = int(self.compute_damages(game))
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
         game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
-        # self.check_buffs(game)
+        self.check_buffs(game)
         self.turn = False
         target.defense(damages, game)
         return [self.name, Character.name]
