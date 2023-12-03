@@ -11,6 +11,7 @@ from engine import Engine
 
 class FightMenu:
     def __init__(self, game: Game):
+        self.__sound_run = False
         self.__turn_fin = True
         self.__game = game
         self.__engine = Engine(self.__game)
@@ -27,7 +28,7 @@ class FightMenu:
         self.__game.play_sound_fight()
 
     def show(self, carac, enable=False):
-        if not (type(carac).__name__ == "Hunt" and enable):
+        if type(carac).__name__ == "Hunt" or not enable:
             self.__widgets[9].text = self.__game.monsters[0].name
             self.__widgets[10].text = self.__game.monsters[1].name
             self.__widgets[11].text = self.__game.monsters[2].name
@@ -40,6 +41,7 @@ class FightMenu:
         self.__widgets[9].show()
         self.__widgets[10].show()
         self.__widgets[11].show()
+        self.__widgets[12].show()
         self.__widgets[-1].text = f"Choose your target !"
         pg.display.update()
 
@@ -49,6 +51,7 @@ class FightMenu:
         self.__widgets[9].hide()
         self.__widgets[10].hide()
         self.__widgets[11].hide()
+        self.__widgets[12].hide()
 
     def on_attack(self):
         self.__running = True
@@ -123,6 +126,13 @@ class FightMenu:
         self.__func = self.on_ultime
         self.on_ultime()
 
+    def __on_click_back_action(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
+        self.__func = None
+        self.__choice = None
+        self.hide()
+
     def __on_click_next(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
@@ -140,7 +150,6 @@ class FightMenu:
             self.__win = True
         elif self.__engine.is_win(self.__game.monsters):
             self.__lose = True
-        self.__game.stop_sound_fight()
 
     def __on_click_one(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
@@ -207,8 +216,13 @@ class FightMenu:
                                      (self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 100),
                                      None, True)
         label_status = Label("Status", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
-                             (bouton_attack_de_base_width - int(self.__game.largeur / self.__game.hauteur * 20), bouton_attack_de_base_height - 100),
+                             (bouton_attack_de_base_width - int(self.__game.largeur / self.__game.hauteur * 20),
+                              bouton_attack_de_base_height - 100),
                              None, True)
+        back_action = Button(bouton_ultime_width, bouton_ultime_height + 60, 200, 40, self.__game.font, 'Back',
+                             self.__on_click_back_action, False, ('#2a75a1', '#666666', '#333333'), center=True,
+                             hide=True)
+
         next_turn = Button(self.__game.largeur / 2, self.__game.hauteur / 2, 200, 40, self.__game.font,
                            'Next Turn',
                            self.__on_click_next, False, ('#2a75a1', '#666666', '#333333'), center=True, hide=True)
@@ -218,9 +232,8 @@ class FightMenu:
                             False)
 
         return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_stats2, label_stats3,
-                label_monster_stats,
-                label_monster_stats2, label_monster_stats3, bouton_1, bouton_2, bouton_3, history, next_turn,
-                label_status]
+                label_monster_stats, label_monster_stats2, label_monster_stats3, bouton_1, bouton_2, bouton_3,
+                back_action, history, next_turn, label_status]
 
     def get_character(self, id):
         for i in range(len(self.__game.all_characters)):
@@ -239,12 +252,16 @@ class FightMenu:
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__fin = True
             self.__game.stop_sound_fight()
-            self.__game.play_sound_lose_fight()
+            if not self.__sound_run:
+                self.__sound_run = True
+                self.__game.play_sound_lose_fight()
             self.__widgets[-1].text = f"Vous avez perdu !"
         elif self.__engine.is_win([i for i in self.__game.monsters]):
             self.__fin = True
             self.__game.stop_sound_fight()
-            self.__game.play_sound_win_fight()
+            if not self.__sound_run:
+                self.__sound_run = True
+                self.__game.play_sound_win_fight()
             self.__widgets[-1].text = f"Vous avez gagné !"
         else:
             self.__fin = False
@@ -266,6 +283,7 @@ class FightMenu:
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
         self.__engine.final_list()
+        self.__game.history = []
         while not self.__quit:
             widgets_fin = [self.__widgets[-1],
                            Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
@@ -302,9 +320,13 @@ class FightMenu:
             else:
                 if self.__win:
                     self.__game.stop_sound_fight()
+                    self.__game.stop_sound_lose_fight()
+                    pg.event.wait(self.__game.framerate * 100 // 6)
                     return False
                 elif self.__lose:
                     self.__game.stop_sound_fight()
+                    self.__game.stop_sound_win_fight()
+                    pg.event.wait(self.__game.framerate * 100 // 6)
                     return True
                 self.__game.update_screen(widgets_fin, self.__background)
 

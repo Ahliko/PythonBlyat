@@ -208,11 +208,17 @@ class Player(pygame.sprite.Sprite):
             if not self.carte.check_collision(self, [self.carte.vendor]):
                 self.position[0] -= self.speed
             else:
+                monster = self.carte.get_collision_sprite()
                 self.position[0] += self.speed * 2
                 self.carte.shop()
         else:
+            monster = self.carte.get_collision_sprite()
             self.position[0] += self.speed * 2
-            self.start_fight()
+            if self.start_fight():
+                self.carte.monsters.remove(monster)
+                monster.kill()
+            else:
+                self.carte.lose()
 
     def move_up(self):
         if not self.carte.check_collision(self, self.carte.monsters):
@@ -222,8 +228,13 @@ class Player(pygame.sprite.Sprite):
                 self.position[1] += self.speed * 2
                 self.carte.shop()
         else:
+            monster = self.carte.get_collision_sprite()
             self.position[1] += self.speed * 2
-            self.start_fight()
+            if self.start_fight():
+                self.carte.monsters.remove(monster)
+                monster.kill()
+            else:
+                self.carte.lose()
 
     def move_down(self):
         if not self.carte.check_collision(self, self.carte.monsters):
@@ -233,8 +244,13 @@ class Player(pygame.sprite.Sprite):
                 self.position[1] -= self.speed * 2
                 self.carte.shop()
         else:
+            monster = self.carte.get_collision_sprite()
             self.position[1] -= self.speed * 2
-            self.start_fight()
+            if self.start_fight():
+                self.carte.monsters.remove(monster)
+                monster.kill()
+            else:
+                self.carte.lose()
 
     def update(self):
         self.rect.topleft = self.position

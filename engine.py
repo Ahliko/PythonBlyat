@@ -48,6 +48,7 @@ class Engine:
     def random_monster(self):
         nb = 1
         id = 4
+        self.__game.monsters = []
         for i in range(3):
             random.seed()
             rd = random.randint(1, 3)
@@ -69,6 +70,8 @@ class Engine:
         self.__game.all_characters = []
         self.random_monster()
         for key, charac in self.__game.characters.items():
+            charac.turn = True
+            charac.hp = charac.maxhp
             self.__game.all_characters.append(charac)
         for charac in self.__game.monsters:
             self.__game.all_characters.append(charac)
