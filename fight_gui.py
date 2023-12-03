@@ -14,7 +14,7 @@ class FightMenu:
         self.__game = game
         self.__engine = Engine(self.__game)
         self.__quit = False
-        self.__sound = pg.mixer.Sound("assets/Testicular Tango.mp3")
+        self.__sound = pg.mixer.Sound("assets/fight.mp3")
         self.__widgets = None
         self.__fin = False
         self.__win = False
@@ -98,27 +98,32 @@ class FightMenu:
 
     def __on_click_attacks(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__func = self.on_attack
         self.on_attack()
 
     def __on_click_ability(self):
         pg.event.wait(self.__game.framerate * 100)
+        self.__game.play_sound_button()
         self.__func = self.on_ability
         self.on_ability()
 
     def __on_click_ultime(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__func = self.on_ultime
         self.on_ultime()
 
     def __on_click_next(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         if self.__turn_fin:
             self.__engine.next_turn(self.__game.all_characters)
             self.__turn_fin = False
 
     def __disable(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__sound.stop()
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__win = True
@@ -128,14 +133,17 @@ class FightMenu:
 
     def __on_click_one(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__choice = 0
 
     def __on_click_two(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__choice = 1
 
     def __on_click_three(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__choice = 2
 
     def __widgets_init(self):

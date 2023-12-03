@@ -28,6 +28,9 @@ class Carte:
         self.walls = [pygame.Rect(obj.x, obj.y, obj.width, obj.height) for obj in tmx_data.objects if
                       obj.type == "wall"]
 
+        self.fin = [pygame.Rect(obj.x, obj.y, obj.width, obj.height) for obj in tmx_data.objects if
+                      obj.type == "Fin"]
+
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
         self.group.center(self.player.rect.center)
         self.group.add(self.player)
@@ -94,8 +97,10 @@ class Carte:
         win.run()
 
     def check_win(self):
-        if len(self.monsters) == 0:
-            self.win()
+        for sprite in self.group.sprites():
+            if sprite.feet.collidelist(self.fin) > -1:
+                pygame.event.wait(self.__game.framerate * 100 // 6)
+                self.win()
 
     def run(self):
         while True:

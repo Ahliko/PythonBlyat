@@ -16,6 +16,7 @@ class SettingsMenu:
         self.__game.framerate = value
 
     def disable(self):
+        self.__game.play_sound_button()
         self.__quit = True
         pg.event.wait(self.__game.framerate * 100 // 6)
 

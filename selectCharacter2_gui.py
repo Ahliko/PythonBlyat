@@ -20,6 +20,7 @@ class CharacterMenu2:
 
     def on_click_next(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         if self.__game.characters.get("character2") is None or self.__game.characters.get("character2")[1] == "":
             print("You must choose a character")
             return
@@ -34,18 +35,28 @@ class CharacterMenu2:
         self.__widgets = self.__widgets_init()
 
     def __on_click_back(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__disable()
 
     def __on_click_choice1(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__game.characters.update({"character2": [1, self.__textbox_text]})
 
     def __on_click_choice2(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__game.characters.update({"character2": [2, self.__textbox_text]})
 
     def __on_click_choice3(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__game.characters.update({"character2": [3, self.__textbox_text]})
 
     def __on_click_choice4(self):
+        pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__game.characters.update({"character2": [4, self.__textbox_text]})
 
     def __widgets_init(self) -> list[Button, Label]:

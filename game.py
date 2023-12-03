@@ -17,6 +17,17 @@ class Game(EnvironnementEcran):
         }
         self.__monsters = []
         self.__all_characters = []
+        self.__sound_button = pg.mixer.Sound("assets/bouton_click.wav")
+        self.__sound_menu = pg.mixer.Sound("assets/menu.mp3")
+
+    def play_sound_menu(self):
+        self.__sound_menu.play(-1)
+
+    def stop_sound_menu(self):
+        self.__sound_menu.stop()
+
+    def play_sound_button(self):
+        self.__sound_button.play()
 
     @property
     def characters(self):

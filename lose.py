@@ -10,6 +10,8 @@ class Lose:
         self.__quit = False
 
     def __on_click_return(self):
+        self.__game.play_sound_button()
+        pg.event.wait(self.__game.framerate * 100 // 6)
         self.__quit = True
 
     def run(self):

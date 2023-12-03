@@ -9,20 +9,23 @@ class ShopMenu:
         self.__game = game
         self.__quit = False
         self.__widgets = None
-        self.__sound = pg.mixer.Sound("assets/The Penis (Eek!).mp3")
+        self.__sound = pg.mixer.Sound("assets/shop.mp3")
         self.__background = pg.image.load("assets/Vendor.jpg")
         self.__sound.play(-1)
 
     def __on_click_buy(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         print("Pas chère, pas chère")
 
     def __on_click_sell(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         print("*tchip*")
 
     def __on_click_exit(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__game.play_sound_button()
         self.__disable()
 
     def __disable(self):

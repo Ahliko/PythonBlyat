@@ -480,7 +480,7 @@
   <object id="59" type="wall" x="56.6667" y="235.333" width="350.667" height="21.3333"/>
   <object id="60" type="wall" x="57" y="235.667" width="3.33333" height="237"/>
   <object id="62" type="wall" x="215.667" y="279.333" width="5" height="220.333"/>
-  <object id="64" x="441.563" y="358" width="13.4375" height="6.0625">
+  <object id="64" type="Fin" x="441.563" y="358" width="13.4375" height="6.0625">
    <ellipse/>
   </object>
  </objectgroup>
