@@ -33,7 +33,7 @@ class Character:
         random.seed()
 
     def __str__(self) -> str:
-        return (f"name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
+        return (f"id : {self.__id}, name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
                 f" TC : {self.__critrate}, DC : {self.__critdmg}, needs {self.__maxultpts} ULTPTS")
 
     def is_alive(self) -> bool:
