@@ -7,9 +7,9 @@ from game import Game
 class Aberration(Monster):
     def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
         super().__init__(_id, name, critrate, critdmg)
-        self.maxhp = 730
+        self.maxhp = 750
         self.hp = self.maxhp
-        self.atk = 70
+        self.atk = 150
         self._def = 30
         self.speed = 12
 

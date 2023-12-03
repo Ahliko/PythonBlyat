@@ -9,9 +9,9 @@ class Harmony(Character):
 
     def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
         super().__init__(_id, name, critrate, critdmg)
-        self.maxhp = 700
+        self.maxhp = 725
         self.hp = self.maxhp
-        self.atk = 50
+        self.atk = 240
         self._def = 25
         self.maxultpts = 130
         self.speed = 11
@@ -22,6 +22,10 @@ class Harmony(Character):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
+        if target.buf["remaining"] > 0:
+            target.buf["remaining"] = 1
+            print(f"Les stats de {target.name} ont été améliorés ", end="")
+            return
         print(f"Les stats de {target.name} ont été améliorés ", end="")
         boost = random.randint(1, 3)
         if boost == 1:

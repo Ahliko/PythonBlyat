@@ -8,7 +8,7 @@ class Chimere(Monster):
         super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 600
         self.hp = self.maxhp
-        self.atk = 90
+        self.atk = 120
         self._def = 15
         self.speed = 13
 

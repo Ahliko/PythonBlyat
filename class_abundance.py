@@ -6,9 +6,9 @@ from game import Game
 class Abundance(Character):
     def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
         super().__init__(_id, name, critrate, critdmg)
-        self.maxhp = 650
+        self.maxhp = 960
         self.hp = self.maxhp
-        self.atk = 30
+        self.atk = 190
         self._def = 20
         self.maxultpts = 125
         self.speed = 10

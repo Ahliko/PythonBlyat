@@ -7,9 +7,9 @@ class Hunt(Character):
         super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 650
         self.hp = self.maxhp
-        self.atk = 100
+        self.atk = 325
         self._def = 15
-        self.maxultpts = 100
+        self.maxultpts = 110
         self.speed = 14
 
     def ability(self, target: Character, game):

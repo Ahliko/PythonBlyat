@@ -5,9 +5,9 @@ import random
 class Golem(Monster):
     def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
         super().__init__(_id, name, critrate, critdmg)
-        self.maxhp = 900
+        self.maxhp = 1325
         self.hp = self.maxhp
-        self.atk = 30
+        self.atk = 220
         self._def = 55
         self.speed = 8
 
