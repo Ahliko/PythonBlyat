@@ -66,12 +66,15 @@ class Engine:
                     id += 1
 
     def final_list(self):
+        self.__game.all_characters = []
         self.random_monster()
         for key, charac in self.__game.characters.items():
             self.__game.all_characters.append(charac)
         for charac in self.__game.monsters:
             self.__game.all_characters.append(charac)
         self.__game.all_characters = self.sort_speed(self.__game.all_characters)
+        for i in self.__game.all_characters:
+            print(i.__str__() + "\n")
 
     @staticmethod
     def is_win(lst: list):
