@@ -155,46 +155,46 @@ class FightMenu:
         self.__choice = 2
 
     def __widgets_init(self):
-        bouton_attack_de_base = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 180, 300, 50,
+        bouton_attack_de_base = Button((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2) + 220, 200, 50,
                                        self.__game.font,
                                        'Attack de base',
                                        self.__on_click_attacks, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_competences = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 240, 300, 50,
+        bouton_competences = Button((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2) + 275, 200, 50,
                                     self.__game.font,
                                     'Compétences',
                                     self.__on_click_ability, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_ultime = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 300, 300, 50,
+        bouton_ultime = Button((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2) + 330, 200, 50,
                                self.__game.font,
                                'Ultime',
                                self.__on_click_ultime, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_1 = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 180, 300, 50,
+        bouton_1 = Button((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2) + 220, 200, 50,
                           self.__game.font,
                           'Target 1',
                           self.__on_click_one, False, ('#2a75a1', '#666666', '#333333'), hide=True)
-        bouton_2 = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 240, 300, 50,
+        bouton_2 = Button((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2) + 275, 200, 50,
                           self.__game.font,
                           'Target 2',
                           self.__on_click_two, False, ('#2a75a1', '#666666', '#333333'), hide=True)
-        bouton_3 = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 300, 300, 50,
+        bouton_3 = Button((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2) + 330, 200, 50,
                           self.__game.font,
                           'Target 3',
                           self.__on_click_three, False, ('#2a75a1', '#666666', '#333333'), hide=True)
-        label_stats = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 + 350),
+        label_stats = Label("Stats", 35, (0, 0, 0), (self.__game.largeur / 2 - 120, self.__game.hauteur / 2 + 250),
                             None, True)
-        label_stats2 = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2 + 150, self.__game.hauteur / 2 + 400),
+        label_stats2 = Label("Stats", 35, (0, 0, 0), (self.__game.largeur / 2 - 100, self.__game.hauteur / 2 + 300),
                              None, True)
-        label_stats3 = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 + 450),
+        label_stats3 = Label("Stats", 35, (0, 0, 0), (self.__game.largeur / 2 - 80, self.__game.hauteur / 2 + 350),
                              None, True)
-        label_monster_stats = Label("Stats_ennemi", 50, (0, 0, 0),
-                                    (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 - 250),
+        label_monster_stats = Label("Stats_ennemi", 35, (0, 0, 0),
+                                    (self.__game.largeur / 2 + 280, self.__game.hauteur / 2 - 300),
                                     None, True)
-        label_monster_stats2 = Label("Stats_ennemi", 50, (0, 0, 0),
-                                     (self.__game.largeur / 2 + 450, self.__game.hauteur / 2 - 200),
+        label_monster_stats2 = Label("Stats_ennemi", 35, (0, 0, 0),
+                                     (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 - 250),
                                      None, True)
-        label_monster_stats3 = Label("Stats_ennemi", 50, (0, 0, 0),
-                                     (self.__game.largeur / 2 + 600, self.__game.hauteur / 2 - 150),
+        label_monster_stats3 = Label("Stats_ennemi", 35, (0, 0, 0),
+                                     (self.__game.largeur / 2 + 320, self.__game.hauteur / 2 - 200),
                                      None, True)
-        label_status = Label("Status", 50, (0, 0, 0), (self.__game.largeur / 2 - 300, self.__game.hauteur / 2 - 350),
+        label_status = Label("Status", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 400),
                              None, True)
 
         return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_stats2, label_stats3,
