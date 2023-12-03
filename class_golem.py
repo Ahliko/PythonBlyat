@@ -7,7 +7,7 @@ class Golem(Monster):
         super().__init__(_id, name, critrate, critdmg)
         self.maxhp = 900
         self.hp = self.maxhp
-        self.atk = 300
+        self.atk = 30
         self._def = 55
         self.speed = 8
 

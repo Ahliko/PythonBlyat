@@ -83,7 +83,13 @@ class FightMenu:
         next_carac = self.get_character(self.__engine.next_character(self.__game.all_characters))
         if next_carac in self.__game.characters.values():
             if type(next_carac).__name__ == "Hunt":
-                target = [i for i in self.__game.monsters if i.is_alive()]
+                self.show()
+                if self.__choice is None:
+                    return
+                target = [i for i in self.__game.monsters][self.__choice]
+                self.__choice = None
+                self.hide()
+                self.__func = None
             else:
                 target = [i for i in self.__game.characters.values() if i.is_alive()]
             self.__game.all_characters[self.__game.all_characters.index(next_carac)].ultime(
@@ -102,6 +108,7 @@ class FightMenu:
 
     def __on_click_ultime(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
+        self.__func = self.on_ultime
         self.on_ultime()
 
     def __on_click_next(self):
@@ -191,9 +198,15 @@ class FightMenu:
     def update_status(self):
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__fin = True
+            self.__sound.stop()
+            self.__sound = pg.mixer.Sound("assets/lose.mp3")
+            self.__sound.play()
             self.__widgets[-1].text = f"Vous avez perdu !"
         elif self.__engine.is_win([i for i in self.__game.monsters]):
             self.__fin = True
+            self.__sound.stop()
+            self.__sound = pg.mixer.Sound("assets/victory.mp3")
+            self.__sound.play()
             self.__widgets[-1].text = f"Vous avez gagné !"
         else:
             self.__fin = False
@@ -245,8 +258,10 @@ class FightMenu:
                 self.__game.update_screen(self.__widgets, self.__background)
             else:
                 if self.__win:
+                    self.__sound.stop()
                     return False
                 elif self.__lose:
+                    self.__sound.stop()
                     return True
                 self.__game.update_screen(widgets_fin, self.__background)
 

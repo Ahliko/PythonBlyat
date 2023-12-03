@@ -72,6 +72,9 @@ class Carte:
         pygame.display.flip()
         for sprite in self.group.sprites():
             if sprite.feet.collidelist(self.walls) > -1:
+                pygame.event.wait(self.__game.framerate * 100 // 6)
+                sound = pygame.mixer.Sound("assets/bump.mp3")
+                sound.play()
                 sprite.move_back()
 
     def shop(self):

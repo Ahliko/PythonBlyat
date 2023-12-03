@@ -1,6 +1,8 @@
 from __future__ import annotations
 import random
 
+import pygame
+
 from game import Game
 
 
@@ -43,6 +45,8 @@ class Character:
     def compute_damages(self) -> int | float:
         if random.randint(0, 100) <= self.__critrate:
             print("CRIT DAMAGE")
+            sound = pygame.mixer.Sound("assets/critdmg.mp3")
+            sound.play()
             return self.__atk + (self.__atk * (self.__critdmg / 100))
         else:
             return self.__atk
