@@ -25,13 +25,22 @@ class FightMenu:
         self.__background = pg.image.load("assets/Fight.png")
         self.__game.play_sound_fight()
 
-    def show(self):
+    def show(self, carac, enable=False):
+        if not (type(carac).__name__ == "Hunt" and enable):
+            self.__widgets[9].text = self.__game.monsters[0].name
+            self.__widgets[10].text = self.__game.monsters[1].name
+            self.__widgets[11].text = self.__game.monsters[2].name
+        else:
+            self.__widgets[9].text = [i for i in self.__game.characters.values()][0].name
+            self.__widgets[10].text = [i for i in self.__game.characters.values()][1].name
+            self.__widgets[11].text = [i for i in self.__game.characters.values()][2].name
         for i in self.__widgets[:3]:
             i.hide()
         self.__widgets[9].show()
         self.__widgets[10].show()
         self.__widgets[11].show()
         self.__widgets[-1].text = f"Choose your target !"
+        pg.display.update()
 
     def hide(self):
         for i in self.__widgets[:3]:
@@ -42,13 +51,13 @@ class FightMenu:
 
     def on_attack(self):
         self.__running = True
-        next_carac = self.__engine.next_character(self.__game.all_characters)
-        if self.get_character(next_carac) in self.__game.characters.values():
-            self.show()
+        next_carac = self.get_character(self.__engine.next_character(self.__game.all_characters))
+        if next_carac in self.__game.characters.values():
+            self.show(next_carac)
             if self.__choice is not None:
                 target_monster = self.__game.monsters[self.__choice]
                 if target_monster.is_alive():
-                    self.__game.all_characters[self.__game.all_characters.index(self.get_character(next_carac))].attack(
+                    self.__game.all_characters[self.__game.all_characters.index(next_carac)].attack(
                         target_monster, self.__game)
                 self.__choice = None
                 self.hide()
@@ -59,7 +68,7 @@ class FightMenu:
         self.__running = True
         next_carac = self.get_character(self.__engine.next_character(self.__game.all_characters))
         if next_carac in self.__game.characters.values():
-            self.show()
+            self.show(next_carac, True)
             if self.__choice is not None:
                 if type(next_carac).__name__ == "Hunt":
                     print("hunt")
@@ -82,7 +91,7 @@ class FightMenu:
         next_carac = self.get_character(self.__engine.next_character(self.__game.all_characters))
         if next_carac in self.__game.characters.values():
             if type(next_carac).__name__ == "Hunt":
-                self.show()
+                self.show(next_carac, True)
                 if self.__choice is None:
                     return
                 target = [i for i in self.__game.monsters][self.__choice]
@@ -217,7 +226,7 @@ class FightMenu:
             self.__fin = False
             try:
                 self.__widgets[
-                    -1].text = f"It's {self.get_character(self.__engine.next_character(self.__game.all_characters)).name} to play !"
+                    -1].text = f"{self.get_character(self.__engine.next_character(self.__game.all_characters)).name}' turn !"
             except AttributeError:
                 self.__widgets[
                     -1].text = f"Next turn !"
@@ -236,7 +245,7 @@ class FightMenu:
         while not self.__quit:
             widgets_fin = [self.__widgets[-1],
                            Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
-                                  'Terminate Fight', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
+                                  'Return to the Dungeon', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
                                   center=True)]
             self.__widgets = self.__widgets_init()
             if self.__func is not None:
