@@ -23,22 +23,25 @@ class SettingsMenu:
     def __widgets_init(self) -> list[Button, Label]:
         label = Label("Settings", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
                       None, True)
+        label_volume = Label(f"Volume {self.__game.volume}", 100, (0, 0, 0), (self.__game.largeur / 2 - 350, self.__game.hauteur / 2 + 160),
+                      None, True)
         button = Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50,
                         self.__game.font,
                         'Return to main menu', self.disable,
                         False, ('#2a75a1', '#666666', '#333333'), center=True)
-        return [button, label]
+        return [button, label, label_volume]
 
     def run(self):
         pg.display.set_caption('PythonBlyat - SettingsMenu')
         slider = Slider(self.__game.ecran, (self.__game.largeur // 2) - 100,
                         (self.__game.hauteur // 2) + 140,
                         200,
-                        40, min=10, max=170, step=10, initial=self.__game.framerate, colour=(255, 255, 255))
+                        40, min=0, max=100, step=1, initial=self.__game.volume, colour=(255, 255, 255))
         self.__game.update_screen(self.__widgets)
         pg.display.flip()
         while not self.__quit:
-            self.__game.framerate = slider.getValue()
+            self.__game.volume = slider.getValue()
+            self.__widgets[2].text = f"Volume {self.__game.volume}"
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:

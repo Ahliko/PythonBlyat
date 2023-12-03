@@ -19,12 +19,58 @@ class Game(EnvironnementEcran):
         self.__all_characters = []
         self.__sound_button = pg.mixer.Sound("assets/bouton_click.wav")
         self.__sound_menu = pg.mixer.Sound("assets/menu.mp3")
+        self.__sound_fight = pg.mixer.Sound("assets/fight.mp3")
+        self.__sound_win_fight = pg.mixer.Sound("assets/win_fight.mp3")
+        self.__sound_lose_fight = pg.mixer.Sound("assets/lose_fight.mp3")
+        self.__sound_bump = pg.mixer.Sound("assets/bump.mp3")
+        self.__volume = 100
+        self.__sound_menu.set_volume(self.__volume / 100)
+        self.__sound_button.set_volume(self.__volume / 100)
+        self.__sound_fight.set_volume(self.__volume / 100)
+        self.__sound_win_fight.set_volume(self.__volume / 100)
+        self.__sound_lose_fight.set_volume(self.__volume / 100)
+        self.__sound_bump.set_volume(self.__volume / 100)
+
+    @property
+    def volume(self):
+        return self.__volume
+
+    @volume.setter
+    def volume(self, value):
+        self.__volume = value
+        self.__sound_menu.set_volume(self.__volume / 100)
+        self.__sound_button.set_volume(self.__volume / 100)
+        self.__sound_fight.set_volume(self.__volume / 100)
+        self.__sound_win_fight.set_volume(self.__volume / 100)
+        self.__sound_lose_fight.set_volume(self.__volume / 100)
+        self.__sound_bump.set_volume(self.__volume / 100)
+
+    def play_sound_bump(self):
+        self.__sound_bump.play()
+
+    def play_sound_win_fight(self):
+        self.__sound_win_fight.play()
+    
+    def stop_sound_win_fight(self):
+        self.__sound_win_fight.stop()
+
+    def play_sound_lose_fight(self):
+        self.__sound_lose_fight.play()
+
+    def stop_sound_lose_fight(self):
+        self.__sound_lose_fight.stop()
 
     def play_sound_menu(self):
         self.__sound_menu.play(-1)
 
     def stop_sound_menu(self):
         self.__sound_menu.stop()
+
+    def play_sound_fight(self):
+        self.__sound_fight.play(-1)
+
+    def stop_sound_fight(self):
+        self.__sound_fight.stop()
 
     def play_sound_button(self):
         self.__sound_button.play()

@@ -14,7 +14,6 @@ class FightMenu:
         self.__game = game
         self.__engine = Engine(self.__game)
         self.__quit = False
-        self.__sound = pg.mixer.Sound("assets/fight.mp3")
         self.__widgets = None
         self.__fin = False
         self.__win = False
@@ -24,7 +23,7 @@ class FightMenu:
         self.__func = None
         self.__running = False
         self.__background = pg.image.load("assets/Fight.png")
-        self.__sound.play(-1)
+        self.__game.play_sound_fight()
 
     def show(self):
         for i in self.__widgets[:3]:
@@ -124,12 +123,12 @@ class FightMenu:
     def __disable(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        self.__sound.stop()
+        self.__game.stop_sound_fight()
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__win = True
         elif self.__engine.is_win(self.__game.monsters):
             self.__lose = True
-        self.__sound.stop()
+        self.__game.stop_sound_fight()
 
     def __on_click_one(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
@@ -206,15 +205,13 @@ class FightMenu:
     def update_status(self):
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__fin = True
-            self.__sound.stop()
-            self.__sound = pg.mixer.Sound("assets/lose.mp3")
-            self.__sound.play()
+            self.__game.stop_sound_fight()
+            self.__game.play_sound_lose_fight()
             self.__widgets[-1].text = f"Vous avez perdu !"
         elif self.__engine.is_win([i for i in self.__game.monsters]):
             self.__fin = True
-            self.__sound.stop()
-            self.__sound = pg.mixer.Sound("assets/victory.mp3")
-            self.__sound.play()
+            self.__game.stop_sound_fight()
+            self.__game.play_sound_win_fight()
             self.__widgets[-1].text = f"Vous avez gagné !"
         else:
             self.__fin = False
@@ -266,10 +263,10 @@ class FightMenu:
                 self.__game.update_screen(self.__widgets, self.__background)
             else:
                 if self.__win:
-                    self.__sound.stop()
+                    self.__game.stop_sound_fight()
                     return False
                 elif self.__lose:
-                    self.__sound.stop()
+                    self.__game.stop_sound_fight()
                     return True
                 self.__game.update_screen(widgets_fin, self.__background)
 
