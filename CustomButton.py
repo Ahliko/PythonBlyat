@@ -9,8 +9,10 @@ class Button:
         self.onclickFunction = onclick_function
         self.onePress = one_press
         self.__hide = hide
+        self.__text = button_text
         self.alreadyPressed = False
         self.normal_color = '#3E3E3E'
+        self.__font = font
         self.fillColors = {
             'normal': fill_colors[0],
             'hover': fill_colors[1],
@@ -26,7 +28,7 @@ class Button:
             self.y = y
 
         self.buttonRect = pygame.Rect(self.x, self.y, self.width, self.height)
-        self.buttonSurf = font.render(button_text, True, (20, 20, 20))
+        self.buttonSurf = self.__font.render(self.__text, True, (20, 20, 20))
 
     def draw(self, screen):
         if self.__hide:
@@ -55,3 +57,12 @@ class Button:
 
     def show(self):
         self.__hide = False
+
+    @property
+    def text(self):
+        return self.__text
+
+    @text.setter
+    def text(self, value):
+        self.__text = value
+        self.buttonSurf = self.__font.render(self.__text, True, (20, 20, 20))
