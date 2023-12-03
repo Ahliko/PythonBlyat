@@ -27,17 +27,21 @@ class Harmony(Character):
             print(f"Les stats de {target.name} ont été améliorés ", end="")
             return
         print(f"Les stats de {target.name} ont été améliorés ", end="")
+        game.history.append(f"Les stats de {target.name} ont été améliorés ")
         boost = random.randint(1, 3)
         if boost == 1:
             print(f"({target.critdmg} CRITDMG -> {target.critdmg + 20} CRITDMG)")
+            game.history.append(f"({target.critdmg} CRITDMG -> {target.critdmg + 20} CRITDMG)")
             target.critdmg += 20
             target.buf["id"] = 1
         elif boost == 2:
             print(f"({target.critrate} CRITRATE -> {target.critrate + 35} CRITRATE)")
+            game.history.append(f"({target.critrate} CRITRATE -> {target.critrate + 35} CRITRATE)")
             target.critrate += 35
             target.buf["id"] = 2
         elif boost == 3:
             print(f"({target.atk} ATK -> {int(target.atk + target.atk * (25 / 100))} ATK)")
+            game.history.append(f"({target.atk} ATK -> {int(target.atk + target.atk * (25 / 100))} ATK)")
             target.atk += int((target.atk * (25 / 100)))
             target.buf["id"] = 3
         target.buf["remaining"] = 1

@@ -4,6 +4,7 @@ import threading
 import pygame as pg
 from CustomButton import Button
 from CustomLabel import Label
+from CustomListLabel import ListLabel
 from game import Game
 from engine import Engine
 
@@ -125,9 +126,11 @@ class FightMenu:
     def __on_click_next(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        if self.__turn_fin:
+        if self.__engine.next_character(self.__game.all_characters) is None:
             self.__engine.next_turn(self.__game.all_characters)
-            self.__turn_fin = False
+        self.__widgets[-2].hide()
+        for i in self.__widgets[:3]:
+            i.show()
 
     def __disable(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
@@ -155,51 +158,69 @@ class FightMenu:
         self.__choice = 2
 
     def __widgets_init(self):
-        bouton_attack_de_base = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 180, 300, 50,
+        bouton_attack_de_base_width = (self.__game.largeur / 2)
+        bouton_attack_de_base_height = (self.__game.hauteur / 2)
+        bouton_competences_width = (self.__game.largeur / 2)
+        bouton_competences_height = (self.__game.hauteur / 2) + 60
+        bouton_ultime_width = (self.__game.largeur / 2)
+        bouton_ultime_height = (self.__game.hauteur / 2) + 120
+        bouton_attack_de_base = Button(bouton_attack_de_base_width, bouton_attack_de_base_height, 300, 50,
                                        self.__game.font,
                                        'Attack de base',
-                                       self.__on_click_attacks, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_competences = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 240, 300, 50,
+                                       self.__on_click_attacks, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_competences = Button(bouton_competences_width, bouton_competences_height, 300, 50,
                                     self.__game.font,
                                     'Compétences',
-                                    self.__on_click_ability, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_ultime = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 300, 300, 50,
+                                    self.__on_click_ability, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_ultime = Button(bouton_ultime_width, bouton_ultime_height, 300, 50,
                                self.__game.font,
                                'Ultime',
-                               self.__on_click_ultime, False, ('#2a75a1', '#666666', '#333333'))
-        bouton_1 = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 180, 300, 50,
+                               self.__on_click_ultime, False, ('#2a75a1', '#666666', '#333333'), center=True)
+        bouton_1 = Button(bouton_attack_de_base_width, bouton_attack_de_base_height, 300, 50,
                           self.__game.font,
                           'Target 1',
-                          self.__on_click_one, False, ('#2a75a1', '#666666', '#333333'), hide=True)
-        bouton_2 = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 240, 300, 50,
+                          self.__on_click_one, False, ('#2a75a1', '#666666', '#333333'), hide=True, center=True)
+        bouton_2 = Button(bouton_competences_width, bouton_competences_height, 300, 50,
                           self.__game.font,
                           'Target 2',
-                          self.__on_click_two, False, ('#2a75a1', '#666666', '#333333'), hide=True)
-        bouton_3 = Button((self.__game.largeur / 2) - 350, (self.__game.hauteur / 2) + 300, 300, 50,
+                          self.__on_click_two, False, ('#2a75a1', '#666666', '#333333'), hide=True, center=True)
+        bouton_3 = Button(bouton_ultime_width, bouton_ultime_height, 300, 50,
                           self.__game.font,
                           'Target 3',
-                          self.__on_click_three, False, ('#2a75a1', '#666666', '#333333'), hide=True)
-        label_stats = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 + 350),
+                          self.__on_click_three, False, ('#2a75a1', '#666666', '#333333'), hide=True, center=True)
+        label_stats = Label("Stats", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                            (self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 350),
                             None, True)
-        label_stats2 = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2 + 150, self.__game.hauteur / 2 + 400),
+        label_stats2 = Label("Stats", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                             (self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 400),
                              None, True)
-        label_stats3 = Label("Stats", 50, (0, 0, 0), (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 + 450),
+        label_stats3 = Label("Stats", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                             (self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 450),
                              None, True)
-        label_monster_stats = Label("Stats_ennemi", 50, (0, 0, 0),
-                                    (self.__game.largeur / 2 + 300, self.__game.hauteur / 2 - 250),
+        label_monster_stats = Label("Stats_ennemi", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                                    (self.__game.largeur / 3 * 2, self.__game.hauteur / 10),
                                     None, True)
-        label_monster_stats2 = Label("Stats_ennemi", 50, (0, 0, 0),
-                                     (self.__game.largeur / 2 + 450, self.__game.hauteur / 2 - 200),
+        label_monster_stats2 = Label("Stats_ennemi", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                                     (self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 50),
                                      None, True)
-        label_monster_stats3 = Label("Stats_ennemi", 50, (0, 0, 0),
-                                     (self.__game.largeur / 2 + 600, self.__game.hauteur / 2 - 150),
+        label_monster_stats3 = Label("Stats_ennemi", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                                     (self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 100),
                                      None, True)
-        label_status = Label("Status", 50, (0, 0, 0), (self.__game.largeur / 2 - 300, self.__game.hauteur / 2 - 350),
+        label_status = Label("Status", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
+                             (bouton_attack_de_base_width - int(self.__game.largeur / self.__game.hauteur * 20), bouton_attack_de_base_height - 100),
                              None, True)
+        next_turn = Button(self.__game.largeur / 2, self.__game.hauteur / 2, 200, 40, self.__game.font,
+                           'Next Turn',
+                           self.__on_click_next, False, ('#2a75a1', '#666666', '#333333'), center=True, hide=True)
+        history = ListLabel("History", self.__game.history, int(self.__game.largeur / self.__game.hauteur * 20),
+                            (0, 0, 0),
+                            (10, 10), None,
+                            False)
 
         return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_stats2, label_stats3,
                 label_monster_stats,
-                label_monster_stats2, label_monster_stats3, bouton_1, bouton_2, bouton_3, label_status]
+                label_monster_stats2, label_monster_stats3, bouton_1, bouton_2, bouton_3, history, next_turn,
+                label_status]
 
     def get_character(self, id):
         for i in range(len(self.__game.all_characters)):
@@ -212,6 +233,9 @@ class FightMenu:
                 i + 3].text = f"{self.get_character(i + 1).name} : {self.get_character(i + 1).hp}/{self.get_character(i + 1).maxhp} HP | {self.get_character(i + 1).ultpts}/{self.get_character(i + 1).maxultpts} ULTPTS | {self.get_character(i + 1).cooldown} CD"
 
     def update_status(self):
+        if self.__func is not None:
+            self.__widgets[-1].text = f"Choose your target !"
+            return
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
             self.__fin = True
             self.__game.stop_sound_fight()
@@ -226,7 +250,7 @@ class FightMenu:
             self.__fin = False
             try:
                 self.__widgets[
-                    -1].text = f"{self.get_character(self.__engine.next_character(self.__game.all_characters)).name}' turn !"
+                    -1].text = f"{self.get_character(self.__engine.next_character(self.__game.all_characters)).name}'s turn !"
             except AttributeError:
                 self.__widgets[
                     -1].text = f"Next turn !"
@@ -268,8 +292,12 @@ class FightMenu:
             self.update_status()
             if not self.__fin:
                 self.update_stats()
-                if not self.__running:
+                if not self.__running and self.__engine.next_character(self.__game.all_characters) is not None:
                     self.update_game()
+                elif self.__engine.next_character(self.__game.all_characters) is None:
+                    self.__widgets[-2].show()
+                    for i in self.__widgets[:3]:
+                        i.hide()
                 self.__game.update_screen(self.__widgets, self.__background)
             else:
                 if self.__win:

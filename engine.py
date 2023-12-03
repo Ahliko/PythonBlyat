@@ -17,13 +17,15 @@ class Engine:
         sorted_list = sorted(lst, key=lambda x: x.speed)
         return sorted_list
 
-    def next_character(self, lst: list):
+    @staticmethod
+    def next_character(lst: list):
         for charac in lst:
             if charac.turn and charac.is_alive():
                 return charac.id
-        self.next_turn(lst)
 
     def next_turn(self, lst: list):
+        self.__game.history = []
+        self.__game.history.append(f"Turn {self.turng}")
         occ = 0
         for charac in lst:
             if not charac.turn:

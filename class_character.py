@@ -42,9 +42,10 @@ class Character:
             return False
         return True
 
-    def compute_damages(self) -> int | float:
+    def compute_damages(self, game: Game) -> int | float:
         if random.randint(0, 100) <= self.__critrate:
             print("CRIT DAMAGE")
+            game.history.append("CRIT DAMAGE")
             sound = pygame.mixer.Sound("assets/critdmg.mp3")
             sound.play()
             return self.__atk + (self.__atk * (self.__critdmg / 100))
@@ -86,34 +87,36 @@ class Character:
             print(f"Impossible d'attaquer {target.name}, il est déjà vaincu!")
             return
         self.add_ultpts(15)
-        damages = int(self.compute_damages())
+        damages = int(self.compute_damages(game))
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
+        game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
         # self.check_buffs(game)
         self.turn = False
-        target.defense(damages)
+        target.defense(damages, game)
         return [self.name, Character.name]
 
-    def aoe(self, target: list):
+    def aoe(self, target: list, game: Game):
         if not self.is_alive():
             return
-        damages = int(self.compute_damages())
+        damages = int(self.compute_damages(game))
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
+        game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         self.turn = False
         for charac in target:
-            charac.defense(damages)
+            charac.defense(damages, game)
 
-    def defense(self, damages: int) -> None:
+    def defense(self, damages: int, game) -> None:
         wounds = self.compute_wounds(damages)
         if wounds < 0:
             wounds = 0
         print(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
+        game.history.append(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
         self.add_ultpts(10)
         self.decrease_health(wounds)
         if self.is_alive():
             print(f"{self.__hp} HP restants")
 
     def decrease_health(self, amount: int) -> None:
-        print(amount)
         if self.__hp - amount < 0:
             self.__hp = 0
         else:

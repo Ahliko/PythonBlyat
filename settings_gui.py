@@ -21,10 +21,11 @@ class SettingsMenu:
         pg.event.wait(self.__game.framerate * 100 // 6)
 
     def __widgets_init(self) -> list[Button, Label]:
-        label = Label("Settings", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
+        label = Label("Settings", self.__game.size, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
                       None, True)
-        label_volume = Label(f"Volume {self.__game.volume}", 100, (0, 0, 0), (self.__game.largeur / 2 - 350, self.__game.hauteur / 2 + 160),
-                      None, True)
+        label_volume = Label(f"Volume {self.__game.volume}", self.__game.size, (0, 0, 0),
+                             (self.__game.largeur / 2 - 350, self.__game.hauteur / 2 + 160),
+                             None, True)
         button = Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50,
                         self.__game.font,
                         'Return to main menu', self.disable,

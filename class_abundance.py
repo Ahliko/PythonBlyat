@@ -3,6 +3,7 @@ from random import randint
 from class_character import Character
 from game import Game
 
+
 class Abundance(Character):
     def __init__(self, _id: int, name: str, critrate: int, critdmg: int):
         super().__init__(_id, name, critrate, critdmg)
@@ -22,13 +23,14 @@ class Abundance(Character):
         heal = int(target.maxhp * (15 / 100))
         print(f"{self.name} utilise sa compétence spéciale ! \n"
               f"{target.name} se fait soigne de 15% de ses HP max (+{heal})")
+        game.history.append(f"{self.name} utilise sa compétence spéciale ! \n"
+                            f"{target.name} se fait soigne de 15% de ses HP max (+{heal})")
         if target.maxhp <= heal + target.hp:
             target.hp = target.maxhp
         else:
             target.hp += heal
         self.turn = False
-        self.cooldown != 3
-        
+        self.cooldown = 3
 
     def ultime(self, target: [], game: Game):
         if target in game.monsters:

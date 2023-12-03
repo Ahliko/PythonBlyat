@@ -10,6 +10,8 @@ class Game(EnvironnementEcran):
         pg.font.init()
         self.__font = None
         self.__background = pg.image.load("assets/mainmenu_background.jpg")
+        self.__history = []
+        self.__size = int(self.largeur / self.hauteur * 100)
         self.__characters = {
             "character1": None,
             "character2": None,
@@ -48,6 +50,14 @@ class Game(EnvironnementEcran):
         self.__sound_bump.set_volume(self.__volume / 100)
         self.__sound_donjon.set_volume(self.__volume / 100)
 
+    @property
+    def size(self):
+        return self.__size
+
+    @size.setter
+    def size(self, value):
+        self.__size = value
+
     def play_sound_donjon(self):
         self.__sound_donjon.play(-1)
 
@@ -84,7 +94,8 @@ class Game(EnvironnementEcran):
     def play_sound_button(self):
         self.__sound_button.play()
 
-    def widgets_init_characters(self, nb, __on_click_next, __on_click_back, __on_click_choice1, __on_click_choice2, __on_click_choice3, __on_click_choice4):
+    def widgets_init_characters(self, nb, __on_click_next, __on_click_back, __on_click_choice1, __on_click_choice2,
+                                __on_click_choice3, __on_click_choice4):
         bouton_next = Button((self.largeur / 8) * 7, self.hauteur / 4 * 3, 130, 40,
                              self.font, 'Next',
                              __on_click_next, False, ('#2a75a1', '#666666', '#333333'), center=True)
@@ -103,11 +114,11 @@ class Game(EnvironnementEcran):
         bouton_choice4 = Button((self.largeur / 5) * 4, (self.hauteur / 2), 200, 40,
                                 self.font, 'Preservation',
                                 __on_click_choice4, False, ('#2a75a1', '#666666', '#333333'), center=True)
-        label_title = Label("PythonBlyat", 100, (0, 0, 0),
+        label_title = Label("PythonBlyat", self.__size, (0, 0, 0),
                             (self.largeur / 2, self.hauteur / 2 - 300), None, True)
-        label_name = Label("Choose your character's name :", 50, (0, 0, 0),
+        label_name = Label("Choose your character's name :", self.__size // 2, (0, 0, 0),
                            (self.largeur / 2, self.hauteur / 4 * 3 - 50), None, True)
-        label_selection = Label(f"Choose your character {nb}", 50, (0, 0, 0),
+        label_selection = Label(f"Choose your character {nb}", self.__size // 2, (0, 0, 0),
                                 (self.largeur / 2, self.hauteur / 2 - 150),
                                 None, True)
         return [bouton_next, bouton_back, bouton_choice1, bouton_choice2, bouton_choice3, bouton_choice4, label_title,
@@ -153,11 +164,20 @@ class Game(EnvironnementEcran):
     def font(self, value):
         self.__font = value
 
+    @property
+    def history(self):
+        return self.__history
+
+    @history.setter
+    def history(self, value):
+        self.__history = value
+
     def change_font(self, font: str, taille: int):
         self.__font = pg.font.SysFont(font, taille)
 
     def update_screen(self, lst_widgets: list[Button, Label], background: pg.Surface = None):
         self.update_display()
+        self.__size = int(self.largeur / self.hauteur * 50)
         if background is None:
             self.ecran.blit(pg.transform.scale(self.__background, (self.largeur, self.hauteur)), (0, 0))
         else:

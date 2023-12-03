@@ -14,5 +14,7 @@ class Chimere(Monster):
 
     def ability(self, target : list, game):
         self.turn = False
-        self.aoe(target)
+        print(f"{self.name} utilise sa compétence spéciale : Chimère")
+        game.history.append(f"{self.name} utilise sa compétence spéciale : Chimère")
+        self.aoe(target, game)
         self.cooldown = 2

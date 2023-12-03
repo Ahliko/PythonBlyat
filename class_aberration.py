@@ -19,6 +19,8 @@ class Aberration(Monster):
         boost = int(self.atk + (self.atk * (20 / 100)))
         old_atk = self.atk
         self.atk = boost
+        print(f"{self.name} utilise sa compétence spéciale : Aberration")
+        game.history.append(f"{self.name} utilise sa compétence spéciale : Aberration")
         self.attack(target[charach_to_att], game)
         self.atk = old_atk
         self.turn = False

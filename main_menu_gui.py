@@ -49,7 +49,7 @@ class MainMenu:
                              self.__game.font,
                              'Exit',
                              self.__on_click_exit, False, ('#2a75a1', '#666666', '#333333'))
-        label_title = Label("PythonBlyat", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
+        label_title = Label("PythonBlyat", self.__game.size, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
                             None,
                             True)
         return [bouton_play, bouton_settings, bouton_exit, label_title]
