@@ -5,6 +5,15 @@ This first version of the game was developped in two weeks for a school project,
 
 
 ## ⚙️ Installation
+
+**Before running** the project, make sure you have **Python** (**3.11.5**) and **pip** installed on your computer
+```
+python --version
+
+pip --version
+```
+
+
 To install the projet you need to :
 ```
 git clone https://github.com/Ahliko/PythonBlyat.git
