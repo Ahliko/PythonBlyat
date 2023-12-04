@@ -37,6 +37,7 @@ class ShopMenu:
         self.__widgets[1].update_pos((self.__game.largeur / 2) - 745, (self.__game.hauteur / 2) + 360)
         self.__widgets[2].update_pos((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2))
         self.__widgets[3].update_pos(self.__game.largeur / 2, self.__game.hauteur / 2 - 300)
+        self.__widgets[4].update_pos(self.__game.largeur / 2, self.__game.hauteur / 2 - 200)
 
     def __widgets_init(self):
         bouton_buy = Button((self.__game.largeur / 2) + 615, (self.__game.hauteur / 2) + 360, 130, 40,
@@ -50,7 +51,9 @@ class ShopMenu:
                              self.__on_click_exit, False, ('#2a75a1', '#666666', '#333333'))
         label_shop = Label("Welcome to my shop my frieennnd", 100, (255, 255, 255),
                            (self.__game.largeur / 2, self.__game.hauteur / 2 - 300), None, True)
-        return [bouton_buy, bouton_sell, bouton_exit, label_shop]
+        label_not_implemented = Label("Not implemented yet", 50, (255, 255, 255),
+                                      (self.__game.largeur / 2, self.__game.hauteur / 2 - 200), None, True)
+        return [bouton_buy, bouton_sell, bouton_exit, label_shop, label_not_implemented]
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Shop')
