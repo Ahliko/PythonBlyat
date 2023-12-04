@@ -3,6 +3,15 @@ PythonBlyat is a game project that provides a turn-based combat gameplay experie
 
 This first version of the game was developped in two weeks for a school project, [some upgrades are planned](#📰-upgrades-planned).
 
+## Summary
+
+- [⚙️ Installation](#-installation)
+- [🚀 First Launch Note](#-first-launch-note)
+- [📂 Repository Structure](#-repository-structure)
+- [📰 Upgrades planned](#-upgrades-planned)
+- [🤝 Contribute & Help us](#-contribute--help-us)
+- [©️ Credits](#-credits)
+
 
 ## ⚙️ Installation
 
@@ -26,7 +35,7 @@ Before the first run, make sure to :
 ```
 pip install -r requirement.txt
 ```
-and make sure to read the [**First Launch Note**](#🚀-first-launch-note)
+and make sure to read the [**First Launch Note**](#-first-launch-note)
 
 And now enjoy the game : 
 ```
