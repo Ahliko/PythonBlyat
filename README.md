@@ -17,7 +17,7 @@ Before the first run, make sure to :
 ```
 pip install -r requirement.txt
 ```
-and make sure to read the [**First Launch Note**](#🚀-first-launch)
+and make sure to read the [**First Launch Note**](#🚀-first-launch-note)
 
 And now enjoy the game : 
 ```
@@ -31,7 +31,7 @@ Here are a few things you need to know before launching the game :
 - There are some knowns issues, but this one is the most common :
     - The game can be **too zoomed**. To avoid this bug, do **Win** + **I**, then "**System**", and make sure that the size of text, apps and others items is on **100%**.
     - If you meet other bugs, feel free to **[report an issue](https://github.com/Ahliko/PythonBlyat/issues)**.
-- On the "**Choose character**" screen, you need to **first provide a name** for your character, **then choose the [path](https://github.com/Ahliko/PythonBlyat/wiki/Classes)** you want to play with.
+- On the "**Choose character**" screen, you need to **first provide a name** for your character, **then choose the [path](https://github.com/Ahliko/PythonBlyat/wiki/Paths)** you want to play with.
 - For more information, please refer to the [**wiki**](https://github.com/Ahliko/PythonBlyat/wiki).
 
 ## 📂 Repository Structure
