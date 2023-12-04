@@ -31,9 +31,9 @@ class Abundance(Character):
             return self.cooldown
         heal = int(target.maxhp * (25 / 100))
         print(f"{self.name} utilise sa compétence spéciale ! : Prière de la fleur de l'abîme \n"
-              f"{target.name} se fait soigne de 15% de ses HP max (+{heal})")
+              f"{target.name} se fait soigne de 25% de ses HP max (+{heal})")
         game.history.append(f"{self.name} utilise sa compétence spéciale ! : Prière de la fleur de l'abîme")
-        game.history.append(f"{target.name} se fait soigne de 15% de ses HP max (+{heal})")
+        game.history.append(f"{target.name} se fait soigner de 25% de ses HP max (+{heal})")
         if target.maxhp <= heal + target.hp:
             target.hp = target.maxhp
         else:
@@ -49,13 +49,13 @@ class Abundance(Character):
             print(f"{self.name} utilise son ultime ! : Talisman de guérison")
             game.history.append(f"{self.name} utilise son ultime ! : Talisman de guérison")
             for i in target:
-                heal = int(i.maxhp * (15 / 100) + 40)
+                heal = int(i.maxhp * (20 / 100) + 40)
                 if i.maxhp <= heal + i.hp:
                     i.hp = i.maxhp
                 else:
                     i.hp += heal
-            print("Tous les personnages ont été soignés de 15% de leurs HP max +40 pv")
-            game.history.append("Tous les personnages ont été soignés de 15% de leurs HP max +40 pv")
+            print(f"Tous les personnages ont été soignés de 20% de leurs HP max + 40")
+            game.history.append(f"Tous les personnages ont été soignés de 20% de leurs HP max + 40")
             self.turn = False
             self.ultpts = 0
         else:
