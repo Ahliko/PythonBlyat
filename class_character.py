@@ -98,7 +98,8 @@ class Character:
     def aoe(self, target: list, game: Game):
         if not self.is_alive():
             return
-        damages = int(self.compute_damages(game))
+        sup_damages = radom.randint(0, 80)
+        damages = int(self.compute_damages(game)) + sup_damages
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         self.turn = False
