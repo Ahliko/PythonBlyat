@@ -1,5 +1,4 @@
-from class_monster import Monster
-import random
+from classes.monsters.class_monster import Monster
 
 
 class Golem(Monster):

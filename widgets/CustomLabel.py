@@ -5,6 +5,7 @@ class Label:
     def __init__(self, text: str, size: int, color: tuple[int, int, int], pos: tuple[int, int],
                  font_name: str = None,
                  center: bool = False):
+        self.__size = size
         self.__text = text
         self.__color = color
         self.__pos = pos

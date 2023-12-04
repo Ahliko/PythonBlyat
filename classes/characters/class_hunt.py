@@ -1,4 +1,4 @@
-from class_character import Character
+from classes.class_character import Character
 
 
 class Hunt(Character):

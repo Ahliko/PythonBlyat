@@ -1,6 +1,6 @@
 from random import randint
 
-from class_character import Character
+from classes.class_character import Character
 
 
 class Preservation(Character):

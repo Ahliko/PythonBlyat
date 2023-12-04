@@ -1,8 +1,7 @@
-from class_character import Character
+from classes.class_character import Character
 import random
-import pygame
 
-from game import Game
+from lib.game import Game
 
 
 class Monster(Character):

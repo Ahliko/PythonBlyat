@@ -1,9 +1,9 @@
 import pygame as pg
-from game import Game
+from lib.game import Game
 import pygame_widgets
 from pygame_widgets.slider import Slider
-from CustomLabel import Label
-from CustomButton import Button
+from widgets.CustomLabel import Label
+from widgets.CustomButton import Button
 
 
 class SettingsMenu:

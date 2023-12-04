@@ -1,7 +1,7 @@
 from random import randint
 
-from class_character import Character
-from game import Game
+from classes.class_character import Character
+from lib.game import Game
 
 
 class Abundance(Character):

@@ -1,8 +1,7 @@
 from __future__ import annotations
-from class_aberration import Aberration
-from class_chimere import Chimere
-from class_golem import Golem
-from class_hunt import Hunt
+from classes.monsters.class_aberration import Aberration
+from classes.monsters.class_chimere import Chimere
+from classes.monsters.class_golem import Golem
 import random
 from game import Game
 

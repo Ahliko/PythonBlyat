@@ -1,7 +1,7 @@
-from class_monster import Monster
+from classes.monsters.class_monster import Monster
 import random
 
-from game import Game
+from lib.game import Game
 
 
 class Aberration(Monster):

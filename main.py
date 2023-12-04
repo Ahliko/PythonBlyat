@@ -1,4 +1,4 @@
-from game import Game
+from lib.game import Game
 
 if __name__ == "__main__":
     while True:

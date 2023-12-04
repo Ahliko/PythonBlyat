@@ -1,6 +1,6 @@
 import pygame as pg
-from CustomButton import Button
-from CustomLabel import Label
+from widgets.CustomButton import Button
+from widgets.CustomLabel import Label
 from Environnement_ecran import EnvironnementEcran
 
 
@@ -9,7 +9,7 @@ class Game(EnvironnementEcran):
         super().__init__(1920, 1080, (255, 255, 255), 60)
         pg.font.init()
         self.__font = None
-        self.__background = pg.image.load("assets/mainmenu_background.jpg")
+        self.__background = pg.image.load("../assets/mainmenu_background.jpg")
         self.__history = []
         self.__size = int(self.largeur / self.hauteur * 100)
         self.__characters = {
@@ -19,13 +19,13 @@ class Game(EnvironnementEcran):
         }
         self.__monsters = []
         self.__all_characters = []
-        self.__sound_button = pg.mixer.Sound("assets/bouton_click.wav")
-        self.__sound_menu = pg.mixer.Sound("assets/menu.mp3")
-        self.__sound_fight = pg.mixer.Sound("assets/fight.mp3")
-        self.__sound_win_fight = pg.mixer.Sound("assets/win_fight.mp3")
-        self.__sound_lose_fight = pg.mixer.Sound("assets/lose_fight.mp3")
-        self.__sound_bump = pg.mixer.Sound("assets/bump.mp3")
-        self.__sound_donjon = pg.mixer.Sound("assets/donjon.mp3")
+        self.__sound_button = pg.mixer.Sound("../assets/bouton_click.wav")
+        self.__sound_menu = pg.mixer.Sound("../assets/menu.mp3")
+        self.__sound_fight = pg.mixer.Sound("../assets/fight.mp3")
+        self.__sound_win_fight = pg.mixer.Sound("../assets/win_fight.mp3")
+        self.__sound_lose_fight = pg.mixer.Sound("../assets/lose_fight.mp3")
+        self.__sound_bump = pg.mixer.Sound("../assets/bump.mp3")
+        self.__sound_donjon = pg.mixer.Sound("../assets/donjon.mp3")
         self.__volume = 4
         self.__sound_menu.set_volume(self.__volume / 100)
         self.__sound_button.set_volume(self.__volume / 100)

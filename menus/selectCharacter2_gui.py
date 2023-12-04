@@ -1,16 +1,10 @@
 import pygame as pg
-from game import Game
-from CustomButton import Button
-from CustomLabel import Label
-from class_hunt import Hunt
-from class_harmony import Harmony
-from class_abundance import Abundance
-from class_preservation import Preservation
+from lib.game import Game
 import pygame_widgets
 from pygame_widgets.textbox import TextBox
 
 
-class CharacterMenu3:
+class CharacterMenu2:
     def __init__(self, game: Game):
         self.__game = game
         self.__quit = False
@@ -25,29 +19,20 @@ class CharacterMenu3:
     def __on_click_next(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        if self.__game.characters.get("character3") is None or self.__game.characters.get("character3")[1] == "":
+        if self.__game.characters.get("character2") is None or self.__game.characters.get("character2")[1] == "":
             print("You must choose a character")
             return
-        i = 1
-        for key, value in self.__game.characters.items():
-            if value[0] == 1:
-                self.__game.characters.update({key: Hunt(i, value[1], 5, 50)})
-            elif value[0] == 2:
-                self.__game.characters.update({key: Harmony(i, value[1], 5, 50)})
-            elif value[0] == 3:
-                self.__game.characters.update({key: Abundance(i, value[1], 5, 50)})
-            elif value[0] == 4:
-                self.__game.characters.update({key: Preservation(i, value[1], 5, 50)})
-            i += 1
         self.textbox.disable()
         self.textbox.hide()
-        self.__game.stop_sound_menu()
-        from carte import Carte
-        carte = Carte(self.__game)
-        carte.run()
+        from selectCharacter3_gui import CharacterMenu3
+        character3_menu = CharacterMenu3(self.__game)
+        character3_menu.run()
+        print("Return to back2")
         self.textbox.enable()
         self.textbox.show()
-        self.__widgets = self.__widgets_init()
+        self.__widgets = self.__game.widgets_init_characters(1, self.__on_click_next, self.__on_click_back,
+                                                             self.__on_click_choice1, self.__on_click_choice2,
+                                                             self.__on_click_choice3, self.__on_click_choice4)
 
     def __on_click_back(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
@@ -57,35 +42,35 @@ class CharacterMenu3:
     def __on_click_choice1(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        self.__game.characters.update({"character3": [1, self.__textbox_text]})
+        self.__game.characters.update({"character2": [1, self.__textbox_text]})
 
     def __on_click_choice2(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        self.__game.characters.update({"character3": [2, self.__textbox_text]})
+        self.__game.characters.update({"character2": [2, self.__textbox_text]})
 
     def __on_click_choice3(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        self.__game.characters.update({"character3": [3, self.__textbox_text]})
+        self.__game.characters.update({"character2": [3, self.__textbox_text]})
 
     def __on_click_choice4(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        self.__game.characters.update({"character3": [4, self.__textbox_text]})
+        self.__game.characters.update({"character2": [4, self.__textbox_text]})
 
     def run(self):
-        pg.display.set_caption('PythonBlyat - Select Last Character')
-        self.__widgets = self.__game.widgets_init_characters(3, self.__on_click_next, self.__on_click_back,
+        pg.display.set_caption('PythonBlyat - Select Second Character')
+        self.__widgets = self.__game.widgets_init_characters(2, self.__on_click_next, self.__on_click_back,
                                                              self.__on_click_choice1, self.__on_click_choice2,
                                                              self.__on_click_choice3, self.__on_click_choice4)
-        self.__game.update_screen(self.__widgets)
         self.textbox = TextBox(self.__game.ecran, (self.__game.largeur / 8) * 4 - 250,
                                self.__game.hauteur / 4 * 3, 500, 50, font=self.__game.font, textColour=(0, 0, 0),
                                borderColour=(255, 255, 255), onSubmit=lambda: print(self.textbox.getText()))
+        self.__game.update_screen(self.__widgets)
         pg.display.flip()
         while not self.__quit:
-            self.__widgets = self.__game.widgets_init_characters(3, self.__on_click_next, self.__on_click_back,
+            self.__widgets = self.__game.widgets_init_characters(2, self.__on_click_next, self.__on_click_back,
                                                                  self.__on_click_choice1, self.__on_click_choice2,
                                                                  self.__on_click_choice3, self.__on_click_choice4)
             self.textbox.setX(self.__game.largeur / 2 - 250)

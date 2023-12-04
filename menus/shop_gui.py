@@ -1,7 +1,7 @@
 import pygame as pg
-from CustomButton import Button
-from CustomLabel import Label
-from game import Game
+from widgets.CustomButton import Button
+from widgets.CustomLabel import Label
+from lib.game import Game
 
 
 class ShopMenu:
@@ -9,8 +9,8 @@ class ShopMenu:
         self.__game = game
         self.__quit = False
         self.__widgets = None
-        self.__sound = pg.mixer.Sound("assets/shop.mp3")
-        self.__background = pg.image.load("assets/Vendor.jpg")
+        self.__sound = pg.mixer.Sound("../assets/shop.mp3")
+        self.__background = pg.image.load("../assets/Vendor.jpg")
         self.__sound.play(-1)
 
     def __on_click_buy(self):

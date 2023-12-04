@@ -3,7 +3,7 @@ import random
 
 import pygame
 
-from game import Game
+from lib.game import Game
 
 
 class Character:
@@ -47,7 +47,7 @@ class Character:
         if random.randint(0, 100) <= self.__critrate:
             print("CRIT DAMAGE")
             game.history.append("CRIT DAMAGE")
-            sound = pygame.mixer.Sound("assets/critdmg.mp3")
+            sound = pygame.mixer.Sound("../assets/critdmg.mp3")
             sound.play()
             return self.__atk + (self.__atk * (self.__critdmg / 100))
         else:
@@ -105,7 +105,7 @@ class Character:
     def aoe(self, target: list, game: Game):
         if not self.is_alive():
             return
-        sup_damages = radom.randint(0, 80)
+        sup_damages = random.randint(0, 80)
         damages = int(self.compute_damages(game)) + sup_damages
         print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")

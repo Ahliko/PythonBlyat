@@ -1,5 +1,5 @@
 from __future__ import annotations
-from class_monster import Monster
+from classes.monsters.class_monster import Monster
 import random
 
 class Chimere(Monster):

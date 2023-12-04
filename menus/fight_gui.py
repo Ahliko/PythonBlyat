@@ -1,12 +1,9 @@
-from random import randint
-
-import threading
 import pygame as pg
-from CustomButton import Button
-from CustomLabel import Label
-from CustomListLabel import ListLabel
-from game import Game
-from engine import Engine
+from widgets.CustomButton import Button
+from widgets.CustomLabel import Label
+from widgets.CustomListLabel import ListLabel
+from lib.game import Game
+from lib.engine import Engine
 
 
 class FightMenu:
@@ -24,7 +21,7 @@ class FightMenu:
         self.__threads = []
         self.__func = None
         self.__running = False
-        self.__background = pg.image.load("assets/Fight.png")
+        self.__background = pg.image.load("../assets/Fight.png")
         self.__game.play_sound_fight()
 
     def show(self, carac, enable=False):

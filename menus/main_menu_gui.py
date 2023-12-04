@@ -1,7 +1,7 @@
 import pygame as pg
-from CustomButton import Button
-from CustomLabel import Label
-from game import Game
+from widgets.CustomButton import Button
+from widgets.CustomLabel import Label
+from lib.game import Game
 
 
 class MainMenu:
