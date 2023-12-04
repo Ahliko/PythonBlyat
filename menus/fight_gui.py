@@ -106,32 +106,27 @@ class FightMenu:
         self.__running = False
 
     def __on_click_attacks(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = self.on_attack
         self.on_attack()
 
     def __on_click_ability(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = self.on_ability
         self.on_ability()
 
     def __on_click_ultime(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = self.on_ultime
         self.on_ultime()
 
     def __on_click_back_action(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = None
         self.__choice = None
         self.hide()
 
     def __on_click_next(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         if self.__engine.next_character(self.__game.all_characters) is None:
             self.__engine.next_turn(self.__game.all_characters)
@@ -140,7 +135,6 @@ class FightMenu:
             i.show()
 
     def __disable(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
         self.__game.stop_sound_fight()
         if self.__engine.is_win([i for i in self.__game.characters.values()]):
@@ -149,17 +143,14 @@ class FightMenu:
             self.__lose = True
 
     def __on_click_one(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__choice = 0
 
     def __on_click_two(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__choice = 1
 
     def __on_click_three(self):
-        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__choice = 2
 
@@ -292,7 +283,6 @@ class FightMenu:
         if self.get_character(self.__engine.next_character(self.__game.all_characters)) in self.__game.monsters:
             self.get_character(self.__engine.next_character(self.__game.all_characters)).choice(
                 [i for i in self.__game.characters.values()], self.__game)
-            pg.event.wait(self.__game.framerate * 100)
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Fight')
@@ -309,6 +299,7 @@ class FightMenu:
                               'Return to the Dungeon', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
                               center=True)]
         while not self.__quit:
+            self.__game.handle_fullscreen()
             widgets_fin[1].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50)
             if self.__func is not None:
                 self.__func()
@@ -338,12 +329,12 @@ class FightMenu:
                 if self.__win:
                     self.__game.stop_sound_fight()
                     self.__game.stop_sound_lose_fight()
-                    pg.event.wait(self.__game.framerate * 100 // 6)
+
                     return False
                 elif self.__lose:
                     self.__game.stop_sound_fight()
                     self.__game.stop_sound_win_fight()
-                    pg.event.wait(self.__game.framerate * 100 // 6)
+
                     return True
                 self.__game.update_screen(widgets_fin, self.__background)
 

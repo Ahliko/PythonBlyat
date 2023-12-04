@@ -38,11 +38,9 @@ class Button:
         if self.buttonRect.collidepoint(mouse_pos):
             self.buttonSurface.fill(self.fillColors['hover'])
             if pygame.mouse.get_pressed(num_buttons=3)[0]:
-                print("Button clicked")
                 self.buttonSurface.fill(self.fillColors['pressed'])
                 self.alreadyPressed = True
             elif self.alreadyPressed:
-                print("Button pressed")
                 if self.onePress:
                     self.onreleaseFunction()
                 else:
@@ -50,7 +48,6 @@ class Button:
                 self.alreadyPressed = False
         else:
             if self.alreadyPressed:
-                print("reverse")
                 self.alreadyPressed = False
         self.buttonSurface.blit(self.buttonSurf, [
             self.buttonRect.width / 2 - self.buttonSurf.get_rect().width / 2,

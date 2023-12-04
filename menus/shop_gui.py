@@ -14,17 +14,17 @@ class ShopMenu:
         self.__sound.play(-1)
 
     def __on_click_buy(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         print("Pas chère, pas chère")
 
     def __on_click_sell(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         print("*tchip*")
 
     def __on_click_exit(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__disable()
 
@@ -59,6 +59,7 @@ class ShopMenu:
         pg.display.flip()
         self.__widgets = self.__widgets_init()
         while not self.__quit:
+            self.__game.handle_fullscreen()
             self.__widgets_pos_update()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()

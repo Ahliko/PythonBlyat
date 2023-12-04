@@ -116,6 +116,7 @@ class Carte:
                 i.save_location()
             self.vendor.save_location()
             self.handle_input()
+            self.__game.handle_fullscreen()
             self.update()
             self.group.center(self.player.rect.center)
             self.group.draw(self.__game.ecran)

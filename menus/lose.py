@@ -11,7 +11,7 @@ class Lose:
 
     def __on_click_return(self):
         self.__game.play_sound_button()
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__quit = True
 
     def run(self):
@@ -22,6 +22,7 @@ class Lose:
                    Label("You lose", 100, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50), None,
                          True)]
         while not self.__quit:
+            self.__game.handle_fullscreen()
             widgets[0].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50)
             widgets[1].update_pos((self.__game.largeur / 2), self.__game.hauteur / 2 - 50)
             self.__game.clock.tick(self.__game.framerate)

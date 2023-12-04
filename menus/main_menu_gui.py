@@ -14,21 +14,21 @@ class MainMenu:
         self.__quit = False
 
     def __on_click_play(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         from menus.selectCharacter1_gui import CharacterMenu1
         character1_menu = CharacterMenu1(self.__game)
         character1_menu.run()
 
     def __on_click_settings(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         from menus.settings_gui import SettingsMenu
         settings_menu = SettingsMenu(self.__game)
         settings_menu.run()
 
     def __on_click_exit(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__quit = True
 
@@ -64,6 +64,7 @@ class MainMenu:
     def run(self):
         self.__widgets = self.__widgets_init()
         while not self.__quit:
+            self.__game.handle_fullscreen()
             self.__widgets_pos_update()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()

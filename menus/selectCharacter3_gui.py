@@ -18,10 +18,10 @@ class CharacterMenu3:
 
     def __disable(self):
         self.__quit = True
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
 
     def __on_click_next(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         if self.__game.characters.get("character3") is None or self.__game.characters.get("character3")[1] == "":
             print("You must choose a character")
@@ -50,27 +50,27 @@ class CharacterMenu3:
                                                              self.__on_click_choice3, self.__on_click_choice4)
 
     def __on_click_back(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__disable()
 
     def __on_click_choice1(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__game.characters.update({"character3": [1, self.__textbox_text]})
 
     def __on_click_choice2(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__game.characters.update({"character3": [2, self.__textbox_text]})
 
     def __on_click_choice3(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__game.characters.update({"character3": [3, self.__textbox_text]})
 
     def __on_click_choice4(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        
         self.__game.play_sound_button()
         self.__game.characters.update({"character3": [4, self.__textbox_text]})
 
@@ -88,6 +88,7 @@ class CharacterMenu3:
                                                              self.__on_click_choice1, self.__on_click_choice2,
                                                              self.__on_click_choice3, self.__on_click_choice4)
         while not self.__quit:
+            self.__game.handle_fullscreen()
             self.__game.widgets_pos_update(self.__widgets)
             self.textbox.setX(self.__game.largeur / 2 - 250)
             self.textbox.setY(self.__game.hauteur / 4 * 3)
