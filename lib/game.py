@@ -186,6 +186,6 @@ class Game(EnvironnementEcran):
             i.draw(self.ecran)
 
     def run(self):
-        from main_menu_gui import MainMenu
+        from menus.main_menu_gui import MainMenu
         main_menu = MainMenu(self)
         main_menu.run()
