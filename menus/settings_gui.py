@@ -20,6 +20,12 @@ class SettingsMenu:
         self.__quit = True
         pg.event.wait(self.__game.framerate * 100 // 6)
 
+    def __widgets_pos_update(self) -> None:
+        self.__widgets[0].update_pos((self.__game.largeur / 2) - 100, self.__game.hauteur / 2)
+        self.__widgets[1].update_pos((self.__game.largeur / 2) - 100, (self.__game.hauteur / 2) + 60)
+        self.__widgets[2].update_pos((self.__game.largeur / 2) - 100, (self.__game.hauteur / 2) + 120)
+        self.__widgets[3].update_pos(self.__game.largeur / 2, self.__game.hauteur / 2 - 50)
+
     def __widgets_init(self) -> list[Button, Label]:
         label = Label("Settings", self.__game.size, (0, 0, 0), (self.__game.largeur / 2, self.__game.hauteur / 2 - 50),
                       None, True)
@@ -40,8 +46,9 @@ class SettingsMenu:
                         40, min=0, max=100, step=1, initial=self.__game.volume, colour=(255, 255, 255))
         self.__game.update_screen(self.__widgets)
         pg.display.flip()
+        self.__widgets = self.__widgets_init()
         while not self.__quit:
-            self.__widgets = self.__widgets_init()
+            self.__widgets_pos_update()
             self.__game.volume = slider.getValue()
             self.__widgets[2].text = f"Volume {self.__game.volume}"
             self.__game.clock.tick(self.__game.framerate)
