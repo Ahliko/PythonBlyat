@@ -1,5 +1,5 @@
 import pygame
-from CustomLabel import Label
+from widgets.CustomLabel import Label
 
 
 class ListLabel(Label):
