@@ -28,6 +28,7 @@ python main.py
 
 Here are a few things you need to know before launching the game :
 
+- It is highly recommanded to read the [**Paths Wiki**](https://github.com/Ahliko/PythonBlyat/wiki/Paths) to understand how each path works.
 - There are some knowns issues, but this one is the most common :
     - The game can be **too zoomed**. To avoid this bug, do **Win** + **I**, then "**System**", and make sure that the size of text, apps and others items is on **100%**.
     - If you meet other bugs, feel free to **[report an issue](https://github.com/Ahliko/PythonBlyat/issues)**.
@@ -87,8 +88,9 @@ Here are a few things you need to know before launching the game :
     - Saves
 - In-Game :
     - How to play
+    - Tutorial
     - More stages
-    - More ennemies
+    - More enemies
     - Shop
     - Weapons
     - Inventory
