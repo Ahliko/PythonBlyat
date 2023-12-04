@@ -20,7 +20,7 @@ class Abundance(Character):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
-        heal = int(target.maxhp * (15 / 100))
+        heal = int(target.maxhp * (25 / 100))
         print(f"{self.name} utilise sa compétence spéciale ! \n"
               f"{target.name} se fait soigne de 15% de ses HP max (+{heal})")
         game.history.append(f"{self.name} utilise sa compétence spéciale ! \n"

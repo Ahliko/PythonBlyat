@@ -31,13 +31,13 @@ class CharacterMenu3:
         i = 1
         for key, value in self.__game.characters.items():
             if value[0] == 1:
-                self.__game.characters.update({key: Hunt(i, value[1], 5, 10)})
+                self.__game.characters.update({key: Hunt(i, value[1], 5, 50)})
             elif value[0] == 2:
-                self.__game.characters.update({key: Harmony(i, value[1], 5, 10)})
+                self.__game.characters.update({key: Harmony(i, value[1], 5, 50)})
             elif value[0] == 3:
-                self.__game.characters.update({key: Abundance(i, value[1], 5, 10)})
+                self.__game.characters.update({key: Abundance(i, value[1], 5, 50)})
             elif value[0] == 4:
-                self.__game.characters.update({key: Preservation(i, value[1], 5, 10)})
+                self.__game.characters.update({key: Preservation(i, value[1], 5, 50)})
             i += 1
         self.textbox.disable()
         self.textbox.hide()

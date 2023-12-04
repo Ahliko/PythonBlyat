@@ -36,7 +36,7 @@ class Hunt(Character):
         if self.ultpts == self.maxultpts:
             print(f"{self.name} utlise son ultime !")
             old_atk = self.atk
-            self.atk = (self.atk * (240 / 100))
+            self.atk = (self.atk * (190 / 100))
             self.attack(target, game)
             self.atk = old_atk
             self.ultpts = 0
