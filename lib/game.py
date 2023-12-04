@@ -26,7 +26,7 @@ class Game(EnvironnementEcran):
         self.__sound_lose_fight = pg.mixer.Sound("../assets/lose_fight.mp3")
         self.__sound_bump = pg.mixer.Sound("../assets/bump.mp3")
         self.__sound_donjon = pg.mixer.Sound("../assets/donjon.mp3")
-        self.__volume = 4
+        self.__volume = 50
         self.__sound_menu.set_volume(self.__volume / 100)
         self.__sound_button.set_volume(self.__volume / 100)
         self.__sound_fight.set_volume(self.__volume / 100)
