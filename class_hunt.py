@@ -23,13 +23,24 @@ class Hunt(Character):
     def ability(self, target: Character, game):
         if self.cooldown > 0:
             print("Vous ne pouvez pas utiliser cette compétence pour le moment")
+            game.history.append("Vous ne pouvez pas utiliser cette compétence pour le moment")
             return self.cooldown
         old_atk = self.atk
+        print(f"{self.name} utilise sa compétence spéciale ! : Balle de Plomb")
+        game.history.append(f"{self.name} utilise sa compétence spéciale ! : Balle de Plomb")
         old_critrate = self.critrate
         old_critdmg = self.critdmg
         self.atk += (self.atk * (15 / 100))
         self.critrate += 30
         self.critdmg += self.critdmg * (20 / 100)
+        print(f"L'attaque de {self.name} est passé de {old_atk} à {self.atk} pour ce tour")
+        game.history.append(f"L'attaque de {self.name} est passé de {old_atk} à {self.atk} pour ce tour")
+        print(f"Le taux de critique de {self.name} est passé de {old_critrate} à {self.critrate} pour ce tour")
+        game.history.append(
+            f"Le taux de critique de {self.name} est passé de {old_critrate} à {self.critrate} pour ce tour")
+        print(f"Les dégâts de critiques de {self.name} sont passés de {old_critdmg} à {self.critdmg} pour ce tour")
+        game.history.append(
+            f"Les dégâts de critiques de {self.name} sont passés de {old_critdmg} à {self.critdmg} pour ce tour")
         self.attack(target, game)
         self.atk = old_atk
         self.critdmg = old_critdmg
@@ -42,12 +53,16 @@ class Hunt(Character):
 
     def ultime(self, target: Character, game) -> bool:
         if self.ultpts == self.maxultpts:
-            print(f"{self.name} utlise son ultime !")
+            print(f"{self.name} utlise son ultime ! : Lacération")
+            game.history.append(f"{self.name} utlise son ultime ! : Lacération")
             old_atk = self.atk
             self.atk = (self.atk * (190 / 100))
+            print(f"L'attaque de {self.name} est passé de {old_atk} à {self.atk} pour ce tour")
+            game.history.append(f"L'attaque de {self.name} est passé de {old_atk} à {self.atk} pour ce tour")
             self.attack(target, game)
             self.atk = old_atk
             self.ultpts = 0
             self.turn = False
         else:
             print("Vous n'avez pas assez de points d'ultime")
+            game.history.append("Vous n'avez pas assez de points d'ultime")

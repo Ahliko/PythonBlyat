@@ -33,8 +33,9 @@ class Character:
         random.seed()
 
     def __str__(self) -> str:
-        return (f"id : {self.__id}, name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
-                f" TC : {self.__critrate}, DC : {self.__critdmg}, needs {self.__maxultpts} ULTPTS")
+        return (
+            f"id : {self.__id}, name : {self.__name}, HPMAX : {self.__maxhp}, HP {self.__hp}, ATK : {self.__atk}, DEF : {self.__def},"
+            f" TC : {self.__critrate}, DC : {self.__critdmg}, needs {self.__maxultpts} ULTPTS")
 
     def is_alive(self) -> bool:
         if self.__hp <= 0:
@@ -53,6 +54,12 @@ class Character:
             return self.__atk
 
     def compute_wounds(self, damages: int) -> int:
+        if self.__shield > damages:
+            self.__shield -= damages
+            return 0
+        else:
+            damages -= self.__shield
+            self.__shield = 0
         return damages - self.__def
 
     def add_ultpts(self, amount: int) -> None:
@@ -88,8 +95,8 @@ class Character:
             return
         self.add_ultpts(15)
         damages = int(self.compute_damages(game))
-        print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
-        game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {damages})")
+        print(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
+        game.history.append(f"⚔️ {self.__name} attack with {damages} damages in your face ! (attack: {self.__atk})")
         self.check_buffs(game)
         self.turn = False
         target.defense(damages, game)
@@ -106,15 +113,17 @@ class Character:
             charac.defense(damages, game)
 
     def defense(self, damages: int, game) -> None:
+        shield = self.__shield
+        print(damages)
         wounds = self.compute_wounds(damages)
         if wounds < 0:
             wounds = 0
-        print(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
-        game.history.append(f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def})")
+        print(
+            f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def} - shield: {shield})")
+        game.history.append(
+            f"🛡️ {self.__name} take {wounds} wounds in his face ! (damages: {damages} - defense: {self.__def} - shield: {shield})")
         self.add_ultpts(10)
         self.decrease_health(wounds)
-        if self.is_alive():
-            print(f"{self.__hp} HP restants")
 
     def decrease_health(self, amount: int) -> None:
         if self.__hp - amount < 0:

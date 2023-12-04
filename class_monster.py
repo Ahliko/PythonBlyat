@@ -10,10 +10,9 @@ class Monster(Character):
         super().__init__(_id, name, critrate, critdmg)
 
     def choice(self, lst: list, game: Game):
-        pygame.event.wait(3000)
         ch = random.randint(0, 100)
         charach_to_att = random.randint(0, len(lst) - 1)
-        if ch < 80:
+        if ch < 60:
             self.attack(lst[charach_to_att], game)
         else:
             if self.cooldown > 0:
