@@ -40,7 +40,7 @@ class CharacterMenu3:
         self.textbox.disable()
         self.textbox.hide()
         self.__game.stop_sound_menu()
-        from carte import Carte
+        from menus.carte import Carte
         carte = Carte(self.__game)
         carte.run()
         self.textbox.enable()

@@ -11,7 +11,7 @@ class Carte:
         self.__game = game
         self.__quit = False
 
-        tmx_data = pytmx.util_pygame.load_pygame("../assets/carte.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("assets/carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         self.map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.__game.ecran.get_size())
         self.map_layer.zoom = 6
@@ -84,20 +84,20 @@ class Carte:
     def shop(self):
         self.__game.stop_sound_donjon()
         pygame.event.wait(self.__game.framerate * 100 // 6)
-        from shop_gui import ShopMenu
+        from menus.shop_gui import ShopMenu
         shop = ShopMenu(self.__game)
         shop.run()
         self.__game.play_sound_donjon()
 
     def lose(self):
         self.__game.stop_sound_donjon()
-        from lose import Lose
+        from menus.lose import Lose
         lose = Lose(self.game)
         lose.run()
 
     def win(self):
         self.__game.stop_sound_donjon()
-        from win import Win
+        from menus.win import Win
         win = Win(self.game)
         win.run()
 
@@ -130,7 +130,7 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x, y, carte):
         super().__init__()
         self.carte = carte
-        self.sprite_sheet = pygame.image.load("../assets/test3.png")
+        self.sprite_sheet = pygame.image.load("assets/test3.png")
         self.__space_image_width = 16
         self.__space_image_height = 32
         self.image = self.get_image(0, 0)
@@ -181,7 +181,7 @@ class Player(pygame.sprite.Sprite):
 
     def start_fight(self):
         self.carte.game.stop_sound_donjon()
-        from fight_gui import FightMenu
+        from menus.fight_gui import FightMenu
         fight = FightMenu(self.carte.game)
         result = fight.run()
         self.carte.game.play_sound_donjon()
@@ -270,7 +270,7 @@ class Player(pygame.sprite.Sprite):
 class Monster(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.sprite_sheet = pygame.image.load("../assets/monster.png")
+        self.sprite_sheet = pygame.image.load("assets/monster.png")
         self.__space_start_image_width = 0
         self.__space_start_image_height = 1
         self.__space_image_width = 32
@@ -351,7 +351,7 @@ class Monster(pygame.sprite.Sprite):
 class Vendor(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
-        self.sprite_sheet = pygame.image.load("../assets/vendor.png")
+        self.sprite_sheet = pygame.image.load("assets/vendor.png")
         self.__space_start_image_width = 32
         self.__space_start_image_height = 0
         self.__space_image_width = 32

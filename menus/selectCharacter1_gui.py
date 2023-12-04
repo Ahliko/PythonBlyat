@@ -23,7 +23,7 @@ class CharacterMenu1:
             print("You must choose a character")
             return
 
-        from selectCharacter2_gui import CharacterMenu2
+        from menus.selectCharacter2_gui import CharacterMenu2
         character2_menu = CharacterMenu2(self.__game)
         character2_menu.run()
         print("Return to back1")

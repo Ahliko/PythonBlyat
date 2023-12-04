@@ -9,8 +9,8 @@ class ShopMenu:
         self.__game = game
         self.__quit = False
         self.__widgets = None
-        self.__sound = pg.mixer.Sound("../assets/shop.mp3")
-        self.__background = pg.image.load("../assets/Vendor.jpg")
+        self.__sound = pg.mixer.Sound("assets/shop.mp3")
+        self.__background = pg.image.load("assets/Vendor.jpg")
         self.__sound.play(-1)
 
     def __on_click_buy(self):

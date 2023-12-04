@@ -15,14 +15,14 @@ class MainMenu:
     def __on_click_play(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        from selectCharacter1_gui import CharacterMenu1
+        from menus.selectCharacter1_gui import CharacterMenu1
         character1_menu = CharacterMenu1(self.__game)
         character1_menu.run()
 
     def __on_click_settings(self):
         pg.event.wait(self.__game.framerate * 100 // 6)
         self.__game.play_sound_button()
-        from settings_gui import SettingsMenu
+        from menus.settings_gui import SettingsMenu
         settings_menu = SettingsMenu(self.__game)
         settings_menu.run()
 

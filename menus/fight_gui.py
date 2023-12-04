@@ -21,7 +21,7 @@ class FightMenu:
         self.__threads = []
         self.__func = None
         self.__running = False
-        self.__background = pg.image.load("../assets/Fight.png")
+        self.__background = pg.image.load("assets/Fight.png")
         self.__game.play_sound_fight()
 
     def show(self, carac, enable=False):

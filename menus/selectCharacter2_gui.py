@@ -24,7 +24,7 @@ class CharacterMenu2:
             return
         self.textbox.disable()
         self.textbox.hide()
-        from selectCharacter3_gui import CharacterMenu3
+        from menus.selectCharacter3_gui import CharacterMenu3
         character3_menu = CharacterMenu3(self.__game)
         character3_menu.run()
         print("Return to back2")

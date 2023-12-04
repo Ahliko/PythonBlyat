@@ -3,7 +3,7 @@ from classes.monsters.class_aberration import Aberration
 from classes.monsters.class_chimere import Chimere
 from classes.monsters.class_golem import Golem
 import random
-from game import Game
+from lib.game import Game
 
 
 class Engine:
