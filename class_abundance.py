@@ -13,6 +13,14 @@ class Abundance(Character):
         self._def = 20
         self.maxultpts = 125
         self.speed = 10
+        self.buf = {
+            "id": 0,
+            "ability": False,
+            "atk": self.atk,
+            "critrate": self.critrate,
+            "critdmg": self.critdmg,
+            "remaining": 0
+        }
 
     def ability(self, target: Character, game: Game):
         if target in game.monsters:

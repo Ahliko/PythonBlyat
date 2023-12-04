@@ -13,6 +13,14 @@ class Preservation(Character):
         self._def = 120
         self.maxultpts = 130
         self.speed = 9
+        self.buf = {
+            "id": 0,
+            "ability": False,
+            "atk": self.atk,
+            "critrate": self.critrate,
+            "critdmg": self.critdmg,
+            "remaining": 0
+        }
 
     def ability(self, target: Character, game):
         if target in game.monsters:

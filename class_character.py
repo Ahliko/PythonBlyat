@@ -223,6 +223,10 @@ class Character:
     def buf(self):
         return self.__buf
 
+    @buf.setter
+    def buf(self, value):
+        self.__buf = value
+
     @property
     def cooldown(self):
         return self.__cooldown

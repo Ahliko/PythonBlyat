@@ -33,7 +33,7 @@ class Engine:
         if occ == len(lst):
             for charac in lst:
                 charac.turn = True
-                self.competence_cooldown(lst)
+            self.competence_cooldown(lst)
             self.turng += 1
             self.next_character(lst)
         else:
@@ -97,3 +97,14 @@ class Engine:
     @turng.setter
     def turng(self, amount):
         self.__turng = amount
+
+    @staticmethod
+    def reset_cooldown(all_characters):
+        for charac in all_characters:
+            if charac.cooldown > 0:
+                charac.cooldown = 0
+
+    @staticmethod
+    def reset_buf(param):
+        for charac in param:
+            charac.buf["remaining"] = 0

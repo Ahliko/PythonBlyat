@@ -284,6 +284,8 @@ class FightMenu:
         pg.display.flip()
         self.__engine.final_list()
         self.__game.history = []
+        self.__engine.reset_cooldown(self.__game.all_characters)
+        self.__engine.reset_buf([i for i in self.__game.characters.values()])
         while not self.__quit:
             widgets_fin = [self.__widgets[-1],
                            Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
