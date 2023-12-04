@@ -15,6 +15,14 @@ class Harmony(Character):
         self._def = 25
         self.maxultpts = 130
         self.speed = 11
+        self.buf = {
+            "id": 0,
+            "ability": False,
+            "atk": self.atk,
+            "critrate": self.critrate,
+            "critdmg": self.critdmg,
+            "remaining": 0
+        }
 
     def ability(self, target: Character, game):
         if target in game.monsters:
@@ -24,7 +32,8 @@ class Harmony(Character):
             return self.cooldown
         if target.buf["remaining"] > 0:
             target.buf["remaining"] = 1
-            print(f"Les stats de {target.name} ont été améliorés ", end="")
+            print(f"Les stats de {target.name} ont déjà été améliorés ", end="")
+            game.history.append(f"Les stats de {target.name} ont déjà été améliorés ")
             return
         print(f"Les stats de {target.name} ont été améliorés ", end="")
         game.history.append(f"Les stats de {target.name} ont été améliorés ")

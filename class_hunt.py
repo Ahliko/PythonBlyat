@@ -11,6 +11,14 @@ class Hunt(Character):
         self._def = 15
         self.maxultpts = 110
         self.speed = 14
+        self.buf = {
+            "id": 0,
+            "ability": False,
+            "atk": self.atk,
+            "critrate": self.critrate,
+            "critdmg": self.critdmg,
+            "remaining": 0
+        }
 
     def ability(self, target: Character, game):
         if self.cooldown > 0:
