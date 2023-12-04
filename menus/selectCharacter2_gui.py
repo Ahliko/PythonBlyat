@@ -69,10 +69,11 @@ class CharacterMenu2:
                                borderColour=(255, 255, 255), onSubmit=lambda: print(self.textbox.getText()))
         self.__game.update_screen(self.__widgets)
         pg.display.flip()
+        self.__widgets = self.__game.widgets_init_characters(2, self.__on_click_next, self.__on_click_back,
+                                                             self.__on_click_choice1, self.__on_click_choice2,
+                                                             self.__on_click_choice3, self.__on_click_choice4)
         while not self.__quit:
-            self.__widgets = self.__game.widgets_init_characters(2, self.__on_click_next, self.__on_click_back,
-                                                                 self.__on_click_choice1, self.__on_click_choice2,
-                                                                 self.__on_click_choice3, self.__on_click_choice4)
+            self.__game.widgets_pos_update(self.__widgets)
             self.textbox.setX(self.__game.largeur / 2 - 250)
             self.textbox.setY(self.__game.hauteur / 4 * 3)
             self.__game.clock.tick(self.__game.framerate)

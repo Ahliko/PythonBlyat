@@ -47,7 +47,7 @@ class Character:
         if random.randint(0, 100) <= self.__critrate:
             print("CRIT DAMAGE")
             game.history.append("CRIT DAMAGE")
-            sound = pygame.mixer.Sound("../assets/critdmg.mp3")
+            sound = pygame.mixer.Sound("assets/critdmg.mp3")
             sound.play()
             return self.__atk + (self.__atk * (self.__critdmg / 100))
         else:

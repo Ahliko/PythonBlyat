@@ -95,3 +95,10 @@ class Label:
             self.__rect = self.__label.get_rect(center=self.__pos)
         else:
             self.__rect = self.__label.get_rect(topleft=self.__pos)
+
+    def update_pos(self, x, y):
+        self.__pos = (x, y)
+        if self.__center:
+            self.__rect = self.__label.get_rect(center=self.__pos)
+        else:
+            self.__rect = self.__label.get_rect(topleft=self.__pos)

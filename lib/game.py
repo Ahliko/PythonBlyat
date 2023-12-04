@@ -94,6 +94,19 @@ class Game(EnvironnementEcran):
     def play_sound_button(self):
         self.__sound_button.play()
 
+    def widgets_pos_update(self, lst: list[Button, Label]):
+        lst[0].update_pos((self.largeur / 8) * 7, self.hauteur / 4 * 3)
+        lst[1].update_pos(self.largeur / 8, self.hauteur / 4 * 3)
+        lst[2].update_pos(self.largeur / 5, self.hauteur / 2)
+        lst[3].update_pos(self.largeur / 5 * 2, self.hauteur / 2)
+        lst[4].update_pos(self.largeur / 5 * 3, self.hauteur / 2)
+        lst[5].update_pos(self.largeur / 5 * 4, self.hauteur / 2)
+        lst[6].update_pos(self.largeur / 2, self.hauteur / 2 - 300)
+        lst[7].update_pos(self.largeur / 2, self.hauteur / 2 - 150)
+        lst[8].update_pos(self.largeur / 2, self.hauteur / 4 * 3 - 50)
+
+
+
     def widgets_init_characters(self, nb, __on_click_next, __on_click_back, __on_click_choice1, __on_click_choice2,
                                 __on_click_choice3, __on_click_choice4):
         bouton_next = Button((self.largeur / 8) * 7, self.hauteur / 4 * 3, 130, 40,
@@ -116,11 +129,11 @@ class Game(EnvironnementEcran):
                                 __on_click_choice4, False, ('#2a75a1', '#666666', '#333333'), center=True)
         label_title = Label("PythonBlyat", self.__size, (0, 0, 0),
                             (self.largeur / 2, self.hauteur / 2 - 300), None, True)
-        label_name = Label("Choose your character's name :", self.__size // 2, (0, 0, 0),
-                           (self.largeur / 2, self.hauteur / 4 * 3 - 50), None, True)
         label_selection = Label(f"Choose your character {nb}", self.__size // 2, (0, 0, 0),
                                 (self.largeur / 2, self.hauteur / 2 - 150),
                                 None, True)
+        label_name = Label("Choose your character's name :", self.__size // 2, (0, 0, 0),
+                           (self.largeur / 2, self.hauteur / 4 * 3 - 50), None, True)
         return [bouton_next, bouton_back, bouton_choice1, bouton_choice2, bouton_choice3, bouton_choice4, label_title,
                 label_selection, label_name]
 

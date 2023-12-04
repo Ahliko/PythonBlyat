@@ -18,7 +18,6 @@ class FightMenu:
         self.__win = False
         self.__lose = False
         self.__choice = None
-        self.__threads = []
         self.__func = None
         self.__running = False
         self.__background = pg.image.load("assets/Fight.png")
@@ -197,26 +196,26 @@ class FightMenu:
                           self.__on_click_three, False, ('#2a75a1', '#666666', '#333333'), hide=True, center=True)
         label_stats = Label("Stats", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                             (self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 350),
-                            None, True)
+                            None, False)
         label_stats2 = Label("Stats", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                              (self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 400),
-                             None, True)
+                             None, False)
         label_stats3 = Label("Stats", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                              (self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 450),
-                             None, True)
+                             None, False)
         label_monster_stats = Label("Stats_ennemi", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                                     (self.__game.largeur / 3 * 2, self.__game.hauteur / 10),
-                                    None, True)
+                                    None, False)
         label_monster_stats2 = Label("Stats_ennemi", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                                      (self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 50),
-                                     None, True)
+                                     None, False)
         label_monster_stats3 = Label("Stats_ennemi", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                                      (self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 100),
-                                     None, True)
+                                     None, False)
         label_status = Label("Status", int(self.__game.largeur / self.__game.hauteur * 20), (0, 0, 0),
                              (bouton_attack_de_base_width - int(self.__game.largeur / self.__game.hauteur * 20),
                               bouton_attack_de_base_height - 100),
-                             None, True)
+                             None, False)
         back_action = Button(bouton_ultime_width, bouton_ultime_height + 60, 200, 40, self.__game.font, 'Back',
                              self.__on_click_back_action, False, ('#2a75a1', '#666666', '#333333'), center=True,
                              hide=True)
@@ -232,6 +231,25 @@ class FightMenu:
         return [bouton_attack_de_base, bouton_competences, bouton_ultime, label_stats, label_stats2, label_stats3,
                 label_monster_stats, label_monster_stats2, label_monster_stats3, bouton_1, bouton_2, bouton_3,
                 back_action, history, next_turn, label_status]
+
+    def __widgets_pos_update(self):
+        self.__widgets[0].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2))
+        self.__widgets[1].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 60)
+        self.__widgets[2].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 120)
+        self.__widgets[3].update_pos(self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 350)
+        self.__widgets[4].update_pos(self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 400)
+        self.__widgets[5].update_pos(self.__game.largeur / 5 * 2, self.__game.hauteur / 2 + 450)
+        self.__widgets[6].update_pos(self.__game.largeur / 3 * 2, self.__game.hauteur / 10)
+        self.__widgets[7].update_pos(self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 50)
+        self.__widgets[8].update_pos(self.__game.largeur / 3 * 2, self.__game.hauteur / 10 + 100)
+        self.__widgets[9].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2))
+        self.__widgets[10].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 60)
+        self.__widgets[11].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 120)
+        self.__widgets[12].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 120 + 60)
+        self.__widgets[13].update_pos_all(10, 10)
+        self.__widgets[14].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 120)
+        self.__widgets[15].update_pos((self.__game.largeur / 2) - int(self.__game.largeur / self.__game.hauteur * 20),
+                                      (self.__game.hauteur / 2) - 100)
 
     def get_character(self, id):
         for i in range(len(self.__game.all_characters)):
@@ -279,32 +297,28 @@ class FightMenu:
     def run(self):
         pg.display.set_caption('PythonBlyat - Fight')
         self.__widgets = self.__widgets_init()
+        print(len(self.__widgets))
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
         self.__engine.final_list()
         self.__game.history = []
         self.__engine.reset_cooldown(self.__game.all_characters)
         self.__engine.reset_buf([i for i in self.__game.characters.values()])
+        widgets_fin = [self.__widgets[-1],
+                       Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
+                              'Return to the Dungeon', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
+                              center=True)]
         while not self.__quit:
-            widgets_fin = [self.__widgets[-1],
-                           Button((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50, 400, 50, self.__game.font,
-                                  'Return to the Dungeon', self.__disable, False, ('#2a75a1', '#666666', '#333333'),
-                                  center=True)]
-            self.__widgets = self.__widgets_init()
+            widgets_fin[1].update_pos((self.__game.largeur / 2), (self.__game.hauteur / 2) + 50)
             if self.__func is not None:
                 self.__func()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:
                 if event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE:
-                    print("Touche Echap")
-                    for i in self.__threads:
-                        i.join()
                     pg.quit()
                     exit()
                 elif event.type == pg.QUIT:
-                    for i in self.__threads:
-                        i.join()
                     pg.quit()
                     exit()
 
@@ -317,6 +331,8 @@ class FightMenu:
                     self.__widgets[-2].show()
                     for i in self.__widgets[:3]:
                         i.hide()
+                self.__widgets_pos_update()
+                self.__widgets[13].text = self.__game.history
                 self.__game.update_screen(self.__widgets, self.__background)
             else:
                 if self.__win:
