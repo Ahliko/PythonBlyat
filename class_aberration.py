@@ -21,6 +21,8 @@ class Aberration(Monster):
         self.atk = boost
         print(f"{self.name} utilise sa compétence spéciale : Aberration")
         game.history.append(f"{self.name} utilise sa compétence spéciale : Aberration")
+        print(f"L'attaque de {self.name} est passé de {old_atk} à {self.atk} pour ce tour")
+        game.history.append(f"L'attaque de {self.name} est passé de {old_atk} à {self.atk} pour ce tour")
         self.attack(target[charach_to_att], game)
         self.atk = old_atk
         self.turn = False

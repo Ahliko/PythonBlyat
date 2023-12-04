@@ -16,5 +16,7 @@ class Chimere(Monster):
         self.turn = False
         print(f"{self.name} utilise sa compétence spéciale : Chimère")
         game.history.append(f"{self.name} utilise sa compétence spéciale : Chimère")
+        print(f"{self.name} attaque tout le monde")
+        game.history.append(f"{self.name} attaque tout le monde")
         self.aoe(target, game)
         self.cooldown = 2

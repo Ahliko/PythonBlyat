@@ -15,5 +15,7 @@ class Golem(Monster):
         print(f"{self.name} utilise sa compétence spéciale : Bouclier de pierre")
         game.history.append(f"{self.name} utilise sa compétence spéciale : Bouclier de pierre")
         self.shield = self._def + (self._def * (45 / 100))
+        print(f"{self.name} gagne {self.shield} points de bouclier")
+        game.history.append(f"{self.name} gagne {self.shield} points de bouclier")
         self.turn = False
         self.cooldown = 2

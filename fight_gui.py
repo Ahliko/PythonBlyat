@@ -104,12 +104,13 @@ class FightMenu:
                 self.__func = None
             else:
                 target = [i for i in self.__game.characters.values() if i.is_alive()]
+                self.__func = None
             self.__game.all_characters[self.__game.all_characters.index(next_carac)].ultime(
                 target, self.__game)
         self.__running = False
 
     def __on_click_attacks(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = self.on_attack
         self.on_attack()
@@ -121,20 +122,20 @@ class FightMenu:
         self.on_ability()
 
     def __on_click_ultime(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = self.on_ultime
         self.on_ultime()
 
     def __on_click_back_action(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__func = None
         self.__choice = None
         self.hide()
 
     def __on_click_next(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         if self.__engine.next_character(self.__game.all_characters) is None:
             self.__engine.next_turn(self.__game.all_characters)
@@ -152,17 +153,17 @@ class FightMenu:
             self.__lose = True
 
     def __on_click_one(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__choice = 0
 
     def __on_click_two(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__choice = 1
 
     def __on_click_three(self):
-        pg.event.wait(self.__game.framerate * 100 // 6)
+        pg.event.wait(self.__game.framerate * 100)
         self.__game.play_sound_button()
         self.__choice = 2
 
@@ -243,7 +244,7 @@ class FightMenu:
     def update_stats(self):
         for i in range(len(self.__game.all_characters)):
             self.__widgets[
-                i + 3].text = f"{self.get_character(i + 1).name} : {self.get_character(i + 1).hp}/{self.get_character(i + 1).maxhp} HP | {self.get_character(i + 1).ultpts}/{self.get_character(i + 1).maxultpts} ULTPTS | {self.get_character(i + 1).cooldown} CD"
+                i + 3].text = f"{self.get_character(i + 1).name} : {self.get_character(i + 1).hp}/{self.get_character(i + 1).maxhp} HP | {self.get_character(i + 1).shield} SHIELD | {self.get_character(i + 1).ultpts}/{self.get_character(i + 1).maxultpts} ULTPTS | {self.get_character(i + 1).cooldown} CD"
 
     def update_status(self):
         if self.__func is not None:
@@ -276,6 +277,7 @@ class FightMenu:
         if self.get_character(self.__engine.next_character(self.__game.all_characters)) in self.__game.monsters:
             self.get_character(self.__engine.next_character(self.__game.all_characters)).choice(
                 [i for i in self.__game.characters.values()], self.__game)
+            pg.event.wait(self.__game.framerate * 100)
 
     def run(self):
         pg.display.set_caption('PythonBlyat - Fight')
