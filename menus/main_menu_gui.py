@@ -1,4 +1,5 @@
 import pygame as pg
+import time
 from widgets.CustomButton import Button
 from widgets.CustomLabel import Label
 from lib.game import Game
@@ -37,6 +38,12 @@ class MainMenu:
         pg.display.set_caption('PythonBlyat - MainMenu')
         pg.display.flip()
 
+    def __widgets_pos_update(self) -> None:
+        self.__widgets[0].update_pos((self.__game.largeur / 2) - 100, self.__game.hauteur / 2)
+        self.__widgets[1].update_pos((self.__game.largeur / 2) - 100, (self.__game.hauteur / 2) + 60)
+        self.__widgets[2].update_pos((self.__game.largeur / 2) - 100, (self.__game.hauteur / 2) + 120)
+        self.__widgets[3].update_pos(self.__game.largeur / 2, self.__game.hauteur / 2 - 50)
+
     def __widgets_init(self) -> list[Button, Label]:
         bouton_play = Button((self.__game.largeur / 2) - 100, self.__game.hauteur / 2, 200, 50, self.__game.font,
                              'Play',
@@ -55,8 +62,9 @@ class MainMenu:
         return [bouton_play, bouton_settings, bouton_exit, label_title]
 
     def run(self):
+        self.__widgets = self.__widgets_init()
         while not self.__quit:
-            self.__widgets = self.__widgets_init()
+            self.__widgets_pos_update()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:

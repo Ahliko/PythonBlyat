@@ -32,6 +32,12 @@ class ShopMenu:
         self.__sound.stop()
         self.__quit = True
 
+    def __widgets_pos_update(self):
+        self.__widgets[0].update_pos((self.__game.largeur / 2) + 615, (self.__game.hauteur / 2) + 360)
+        self.__widgets[1].update_pos((self.__game.largeur / 2) - 745, (self.__game.hauteur / 2) + 360)
+        self.__widgets[2].update_pos((self.__game.largeur / 2) - 450, (self.__game.hauteur / 2))
+        self.__widgets[3].update_pos(self.__game.largeur / 2, self.__game.hauteur / 2 - 300)
+
     def __widgets_init(self):
         bouton_buy = Button((self.__game.largeur / 2) + 615, (self.__game.hauteur / 2) + 360, 130, 40,
                             self.__game.font, 'Buy',
@@ -51,8 +57,9 @@ class ShopMenu:
         self.__widgets = self.__widgets_init()
         self.__game.update_screen(self.__widgets, self.__background)
         pg.display.flip()
+        self.__widgets = self.__widgets_init()
         while not self.__quit:
-            self.__widgets = self.__widgets_init()
+            self.__widgets_pos_update()
             self.__game.clock.tick(self.__game.framerate)
             events = pg.event.get()
             for event in events:
