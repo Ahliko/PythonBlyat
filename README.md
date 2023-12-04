@@ -90,7 +90,7 @@ Here are a few things you need to know before launching the game :
     - How to play
     - Tutorial
     - More stages
-    - More ennemies
+    - More enemies
     - Shop
     - Weapons
     - Inventory
